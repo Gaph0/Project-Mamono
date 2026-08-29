@@ -146,6 +146,9 @@ namespace ProjectMomo
         // Let Momos autonomously infuse downed, corruptible women (the forced path).
         public bool AutonomousCorruptionEnabled = true;
 
+        // VPE integration: allow Momo xenotypes to spawn with VPE psycasts.
+        public bool VPEPsycastsEnabled = true;
+
         public void ResetToDefaults()
         {
             VitWillpowerPerPoint = 0.02f;
@@ -204,6 +207,7 @@ namespace ProjectMomo
             VoluntaryCorruptionAttemptCooldownHours = 6f;
             VoluntaryCorruptionRejectionCooldownHours = 24f;
             AutonomousCorruptionEnabled = true;
+            VPEPsycastsEnabled = true;
         }
 
         public override void ExposeData()
@@ -265,6 +269,7 @@ namespace ProjectMomo
             Scribe_Values.Look(ref VoluntaryCorruptionAttemptCooldownHours, "VoluntaryCorruptionAttemptCooldownHours", 6f);
             Scribe_Values.Look(ref VoluntaryCorruptionRejectionCooldownHours, "VoluntaryCorruptionRejectionCooldownHours", 24f);
             Scribe_Values.Look(ref AutonomousCorruptionEnabled, "AutonomousCorruptionEnabled", true);
+            Scribe_Values.Look(ref VPEPsycastsEnabled, "VPEPsycastsEnabled", true);
 
             // Self-heal an inverted grief-duration range (e.g. a hand-edited config
             // file): min must never exceed max.

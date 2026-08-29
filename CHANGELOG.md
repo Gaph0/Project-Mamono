@@ -1,2 +1,3 @@
 # Changelog
+- 2026-08-29: fix: CS1738 named args, add missing VPEPsycastsEnabled setting
 - 2026-08-29: fix: changelog hook sed address (1a)

@@ -174,7 +174,7 @@ namespace ProjectMomo
             // cleanup.
             if (momo.IsWildMan() && !momo.IsColonist && man.Faction != null && man.Faction.IsPlayer)
             {
-                BondOutcomeComponent.Queue(momo, man, join: true, chance: 1f, IsekaiCompat.GetLevel(man), IsekaiCompat.GetLevel(momo));
+                BondOutcomeComponent.Queue(momo, man, join: true, chance: 1f, manLevel: IsekaiCompat.GetLevel(man), momoLevel: IsekaiCompat.GetLevel(momo));
                 return;
             }
 
