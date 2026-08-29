@@ -14,6 +14,6 @@ date=$(date +%Y-%m-%d)
 file=CHANGELOG.md
 [ -f "$file" ] || echo "# Changelog" > "$file"
 
-sed -i "2a\\- $date: $msg" "$file"
+sed -i "1a\\- $date: $msg" "$file"
 git add "$file"
 git commit --amend --no-edit --no-verify
