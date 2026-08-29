@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Project Momo</name>
+	<author>Gapho</author>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<packageId>PMM.Core</packageId>
+	<description>
+		Various changes and additions for the Momo Project.
+	</description>
+	<modDependencies>
+		<li>
+			<packageId>Garethp.ModlistConfigurator</packageId>
+			<displayName>Modlist Configurator</displayName>
+			<downloadUrl>https://steamcommunity.com/linkfilter/?url=https://github.com/Garethp/rimworld-modlist-configurator</downloadUrl>
+            <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3009304695</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>Ludeon.RimWorld.Biotech</packageId>
+			<displayName>Biotech</displayName>
+		</li>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld</downloadUrl>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>JellyCreative.IsekaiLeveling</packageId>
+			<displayName>ISEKAI RPG LEVELING</displayName>
+			<downloadUrl>https://github.com/JellyCreative/IsekaiLeveling</downloadUrl>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3657580708</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld</li>
+		<li>Ludeon.RimWorld.Royalty</li>
+		<li>Ludeon.RimWorld.Ideology</li>
+		<li>Ludeon.RimWorld.Biotech</li>
+		<li>Ludeon.RimWorld.Anomaly</li>
+		<li>Ludeon.RimWorld.Odyssey</li>
+		<li>JellyCreative.IsekaiLeveling</li>
+		<li>com.yayo.yayoAni.continued</li>
+		<li>LovelyDovey.Sex.WithEuterpe</li>
+		<li>VanillaExpanded.VPsycastsE</li>
+	</loadAfter>
+</ModMetaData>

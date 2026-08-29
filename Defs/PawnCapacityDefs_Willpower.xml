@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <PawnCapacityDef>
+        <defName>ProjectMomo_Willpower</defName>
+        <label>willpower</label>
+        <description>Strength of mind and resistance to teasing influence. Willpower falls as tease damage builds up; a pawn who reaches 0% willpower collapses.</description>
+        <listOrder>15</listOrder>
+        <workerClass>ProjectMomo.PawnCapacityWorker_Willpower</workerClass>
+        <showOnCaravanHealthTab>true</showOnCaravanHealthTab>
+        <showOnMechanoids>false</showOnMechanoids>
+        <showOnAnomalyEntities>false</showOnAnomalyEntities>
+        <showOnDrones>false</showOnDrones>
+    </PawnCapacityDef>
+</Defs>

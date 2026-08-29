@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+    <!--
+        Hook the essence-berserk hunt into MentalStateCritical.
+
+        Why a dedicated ConditionalMentalStateClass branch: the vanilla
+        <state>Berserk</state> branch uses ThinkNode_ConditionalMentalState, whose
+        Satisfied() does an EXACT def-name match (pawn.MentalStateDef == Berserk).
+        Our state's def is ProjectMomo_EssenceBerserk (ParentName="Berserk" only
+        inherits fields — def names don't inherit), so the Berserk branch never
+        matches it. ThinkNode_ConditionalMentalStateClass instead uses
+        Type.IsInstanceOfType, which matches our MentalState_EssenceBerserk class
+        (a MentalState_Berserk subclass) regardless of the def name.
+
+        This branch is prepended ahead of the vanilla Berserk branch so the giver
+        runs first; it no-ops for any pawn not in MentalState_EssenceBerserk, and
+        for the essence state it always returns a job (hunt, flee, or wander) so the
+        animal-attacking vanilla JobGiver_Berserk is never reached while a Momo is
+        essence-berserk.
+    -->
+    <Operation Class="PatchOperationInsert">
+        <success>Always</success>
+        <order>Prepend</order>
+        <xpath>Defs/ThinkTreeDef[defName="MentalStateCritical"]/thinkRoot/subNodes/li[@Class="ThinkNode_ConditionalMentalState"][state="Berserk"]</xpath>
+        <value>
+            <li Class="ThinkNode_ConditionalMentalStateClass" MayRequire="PMM.Core">
+                <stateClass>ProjectMomo.MentalState_EssenceBerserk</stateClass>
+                <subNodes>
+                    <li Class="ThinkNode_Priority">
+                        <subNodes>
+                            <li Class="ProjectMomo.JobGiver_EssenceBerserk" />
+                            <li Class="JobGiver_WanderAnywhere">
+                                <maxDanger>Deadly</maxDanger>
+                            </li>
+                        </subNodes>
+                    </li>
+                </subNodes>
+            </li>
+        </value>
+    </Operation>
+</Patch>

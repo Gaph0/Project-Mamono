@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- A human gives some of their essence to a Momo, restoring her mana. -->
+    <JobDef>
+        <defName>ProjectMomo_GiveEssence</defName>
+        <driverClass>ProjectMomo.JobDriver_GiveEssence</driverClass>
+        <reportString>giving essence to TargetA.</reportString>
+        <casualInterruptible>true</casualInterruptible>
+    </JobDef>
+
+    <!-- A Momo drains essence from a human, restoring her mana. -->
+    <JobDef>
+        <defName>ProjectMomo_DrainEssence</defName>
+        <driverClass>ProjectMomo.JobDriver_DrainEssence</driverClass>
+        <reportString>draining essence from TargetA.</reportString>
+        <casualInterruptible>true</casualInterruptible>
+    </JobDef>
+
+    <!-- An essence-berserk Momo chases down an unbonded humanlike across the map. -->
+    <JobDef>
+        <defName>ProjectMomo_EssenceBerserkAttack</defName>
+        <driverClass>ProjectMomo.JobDriver_EssenceBerserkAttack</driverClass>
+        <reportString>hunting TargetA.</reportString>
+        <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+
+    <!-- A colonist Momo leaves the player faction and exits the map when no bondable prey remains. -->
+    <JobDef>
+        <defName>ProjectMomo_LeaveColony</defName>
+        <driverClass>ProjectMomo.JobDriver_LeaveColony</driverClass>
+        <reportString>leaving the colony.</reportString>
+        <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+</Defs>

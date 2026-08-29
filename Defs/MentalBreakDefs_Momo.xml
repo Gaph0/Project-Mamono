@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <MentalStateDef>
+        <defName>ProjectMomo_ManaFeedingState</defName>
+        <stateClass>ProjectMomo.MentalState_ManaFeeding</stateClass>
+        <label>feeding on essence</label>
+        <category>Misc</category>
+        <blockNormalThoughts>true</blockNormalThoughts>
+        <!-- Don't stop jobs on entry: the break issues the Drain Essence job right
+             after the state starts, and the state must not cancel it. -->
+        <stopsJobs>false</stopsJobs>
+        <beginLetter>{0} is overcome by a desperate hunger for essence and seeks out {0}_objective's bonded mate to feed.</beginLetter>
+        <beginLetterLabel>Essence hunger</beginLetterLabel>
+        <beginLetterDef>NegativeEvent</beginLetterDef>
+        <recoveryMessage>{0} is no longer overcome by hunger.</recoveryMessage>
+        <minTicksBeforeRecovery>0</minTicksBeforeRecovery>
+        <maxTicksBeforeRecovery>15000</maxTicksBeforeRecovery>
+        <recoverFromDowned>true</recoverFromDowned>
+        <recoverFromCollapsingExhausted>true</recoverFromCollapsingExhausted>
+    </MentalStateDef>
+
+    <!--
+        The essence-starvation berserk state. Inherits vanilla Berserk (so all of its
+        think nodes apply — our Patches/ThinkTree_Berserk.xml hooks the unbonded-hunt
+        job giver into the Berserk branch of MentalStateCritical) but tracks and hunts
+        the nearest unbonded humanlike across the whole map.
+    -->
+    <MentalStateDef ParentName="Berserk">
+        <defName>ProjectMomo_EssenceBerserk</defName>
+        <stateClass>ProjectMomo.MentalState_EssenceBerserk</stateClass>
+    </MentalStateDef>
+</Defs>

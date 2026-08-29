@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Granted to a woman at the moment her corruption completes and she awakens as a monster. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_MomoAwakened</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>10</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>reborn as a monster</label>
+                <description>My old body and my old worries melted away in the mana. I have never felt so alive — or so hungry for a mate.</description>
+                <baseMoodEffect>12</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+    <!-- What the new monster remembers of the Momo whose mana remade her. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_MomoTurned</defName>
+        <thoughtClass>Thought_MemorySocial</thoughtClass>
+        <durationDays>10</durationDays>
+        <stackLimit>2</stackLimit>
+        <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+        <stages>
+            <li>
+                <label>remade me</label>
+                <description>Her mana remade me. I am hers in a way I can't explain — and I don't want to.</description>
+                <baseMoodEffect>6</baseMoodEffect>
+                <baseOpinionOffset>20</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <!-- The initiator's sting when a transformation offer is turned down. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_TransformRejected</defName>
+        <thoughtClass>Thought_MemorySocial</thoughtClass>
+        <durationDays>2</durationDays>
+        <stackLimit>3</stackLimit>
+        <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+        <stages>
+            <li>
+                <label>transformation refused</label>
+                <description>I offered her a new life as one of us and she clung to her old one. It stings more than I expected.</description>
+                <baseMoodEffect>-4</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

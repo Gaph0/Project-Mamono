@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Mood penalty for losing a tsugai bond — stronger than a spouse's death. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_TsugaiLossThought</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>30</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>lost my bonded mate</label>
+                <description>The one my heart and body were bound to is gone. A part of me died with them; the emptiness is unbearable.</description>
+                <baseMoodEffect>-20</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

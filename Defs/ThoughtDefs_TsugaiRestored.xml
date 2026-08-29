@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Positive moodlet replacing bond grief when a dead tsugai bond returns to life. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_TsugaiRestored</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>15</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>my bonded mate returned</label>
+                <description>The one I thought I'd lost forever has come back to me. The emptiness is gone; I feel whole again.</description>
+                <baseMoodEffect>12</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

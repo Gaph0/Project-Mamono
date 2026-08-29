@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        Log-only interaction defs: these exist so voluntary transformation
+        proposals are recorded in each pawn's character log, exactly the way
+        voluntary tsugai proposals are (PlayLogEntry_Interaction). They are never
+        performed through TryInteractWith — VoluntaryTransformation adds the log
+        entry directly when a proposal is accepted or rejected — so they need no
+        worker class.
+    -->
+    <InteractionDef>
+        <defName>ProjectMomo_TransformProposalAccepted</defName>
+        <label>transformation offer</label>
+        <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
+        <logRulesInitiator>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_nameDef] offered to remake [RECIPIENT_nameDef] as a monster. [RECIPIENT_pronoun] said yes.</li>
+                <li>r_logentry->[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to accept the mana and become a monster, and was accepted.</li>
+            </rulesStrings>
+        </logRulesInitiator>
+        <logRulesRecipient>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_nameDef] accepted [INITIATOR_nameDef]'s offer to become a monster.</li>
+                <li>r_logentry->[RECIPIENT_nameDef] was offered the mana by [INITIATOR_nameDef], and said yes.</li>
+            </rulesStrings>
+        </logRulesRecipient>
+    </InteractionDef>
+
+    <InteractionDef>
+        <defName>ProjectMomo_TransformProposalRejected</defName>
+        <label>transformation offer</label>
+        <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
+        <logRulesInitiator>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_nameDef] offered to remake [RECIPIENT_nameDef] as a monster, but was turned down.</li>
+                <li>r_logentry->[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to become a monster. [RECIPIENT_pronoun] refused.</li>
+            </rulesStrings>
+        </logRulesInitiator>
+        <logRulesRecipient>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_nameDef] turned down [INITIATOR_nameDef]'s offer to become a monster.</li>
+                <li>r_logentry->[RECIPIENT_nameDef] was offered the mana by [INITIATOR_nameDef], and refused.</li>
+            </rulesStrings>
+        </logRulesRecipient>
+    </InteractionDef>
+</Defs>

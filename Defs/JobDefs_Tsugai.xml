@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <JobDef>
+        <defName>ProjectMomo_FormTsugai</defName>
+        <driverClass>ProjectMomo.JobDriver_FormTsugai</driverClass>
+        <reportString>bonding with TargetA.</reportString>
+        <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+
+    <!-- Voluntary bonding: a short, consensual ceremony with a willing partner. -->
+    <JobDef>
+        <defName>ProjectMomo_ProposeTsugaiBond</defName>
+        <driverClass>ProjectMomo.JobDriver_ProposeTsugaiBond</driverClass>
+        <reportString>bonding with TargetA.</reportString>
+        <casualInterruptible>true</casualInterruptible>
+    </JobDef>
+</Defs>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SettingsBlock>
+	<ModSettings Class="IsekaiLeveling.IsekaiSettings">
+		<XPMultiplier>0.285200149</XPMultiplier>
+		<EnableXPNotifications>False</EnableXPNotifications>
+		<UseLevelUpNotice>True</UseLevelUpNotice>
+		<MaxLevel>99</MaxLevel>
+		<MaxStatCap>99</MaxStatCap>
+		<ExcludeAnimalsFromRanking>True</ExcludeAnimalsFromRanking>
+		<ExcludeMechsFromRanking>True</ExcludeMechsFromRanking>
+		<ExcludeEntitiesFromRanking>True</ExcludeEntitiesFromRanking>
+		<StartingPawnLevel>1</StartingPawnLevel>
+		<RaidRankPointsMultiplier>0.471399069</RaidRankPointsMultiplier>
+		<AdaptiveRaidRanks>True</AdaptiveRaidRanks>
+		<EnableGuildQuests>False</EnableGuildQuests>
+		<StatsWindowX>1034</StatsWindowX>
+		<StatsWindowY>416</StatsWindowY>
+		<EnableDraftedAura>False</EnableDraftedAura>
+		<EnableAuraPulse>False</EnableAuraPulse>
+		<AutoAllowCrystalHauling>True</AutoAllowCrystalHauling>
+	</ModSettings>
+</SettingsBlock>

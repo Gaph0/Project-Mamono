@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        The base Momo xenotype. A woman corrupted by a Momo who has no def-based
+        monster xenotype of her own (e.g. a custom-xenotype Momo) becomes this.
+        Monster xenotypes from other mods (e.g. the Slime Faction's) include the
+        ProjectMomo_Momo gene, so a slime corruptor imprints her own xenotype
+        instead — this def is only the fallback. It never spawns naturally
+        (factionlessGenerationWeight 0): the only ways to become one are birth,
+        mana corruption, or a xenogerm.
+    -->
+    <XenotypeDef>
+        <defName>ProjectMomo_Xenotype_Momo</defName>
+        <label>momo</label>
+        <description>A woman who has inherited the "Inma" of the current Mamono Lord. Outwardly she still looks human, but her body runs on mana now — mana she can only replenish by drawing essence from men. Her teasing strikes erode the will of anyone she touches, and her fertility never fades with age.</description>
+        <descriptionShort>A human-looking monster who feeds on male essence. Her teasing strikes erode willpower, and her fertility never fades with age.</descriptionShort>
+        <!-- Placeholder icon reusing a vanilla texture. Replace with your own art in Textures/UI/Icons/Xenotypes/ and update this path. -->
+        <iconPath>UI/Icons/Xenotypes/Highmate</iconPath>
+        <inheritable>true</inheritable>
+        <factionlessGenerationWeight>0</factionlessGenerationWeight>
+        <!-- No MomoPsycastExtension here: the base Momo never spawns with a
+             psylink. Project Momo core only provides the VPE mechanism — which
+             Momo races become psycasters is decided per-xenotype by submods
+             (see the Slime Faction's Xenotype_Slime.xml). -->
+        <genes>
+            <li>ProjectMomo_Momo</li>
+        </genes>
+    </XenotypeDef>
+</Defs>

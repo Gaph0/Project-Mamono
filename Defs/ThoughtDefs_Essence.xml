@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Shared mood buff for both parties after an essence transfer. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_EssenceShared</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>1</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>shared essence</label>
+                <description>We shared something intimate and vital. I feel warm and content.</description>
+                <baseMoodEffect>5</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <!-- Relief for a Momo who broke from starvation and finally fed. The mood
+         boost is deliberately large — vanilla's Catharsis is +40 — because the
+         low-mana break is one of the worst states a Momo can reach. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_ManaCatharsis</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>3</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>feeding catharsis</label>
+                <description>The hunger nearly consumed me... but I fed. The warmth flooding back through me is indescribable. I feel alive again.</description>
+                <baseMoodEffect>30</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Forced corruption: a Momo pours mana into a will-broken woman. -->
+    <JobDef>
+        <defName>ProjectMomo_InfuseMomo</defName>
+        <driverClass>ProjectMomo.JobDriver_InfuseMomo</driverClass>
+        <reportString>infusing TargetA with mana.</reportString>
+        <casualInterruptible>false</casualInterruptible>
+    </JobDef>
+    <!-- Voluntary transformation: a short, consensual ceremony with a willing woman. -->
+    <JobDef>
+        <defName>ProjectMomo_TransformProposal</defName>
+        <driverClass>ProjectMomo.JobDriver_TransformProposal</driverClass>
+        <reportString>infusing TargetA with mana.</reportString>
+        <casualInterruptible>true</casualInterruptible>
+    </JobDef></Defs>
