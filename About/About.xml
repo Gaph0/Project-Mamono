@@ -7,7 +7,15 @@
 	</supportedVersions>
 	<packageId>PMM.Core</packageId>
 	<description>
-		Various changes and additions for the Momo Project.
+Core mod of the Momo Project: monster-girl mechanics for RimWorld. Momos - women carrying the Mamono Lord's "Inma" - feed on the essence of men, erode wills with teasing strikes, claim mates through the tsugai bond, remake women into monsters, and slowly turn the men they feed on into incubi.
+
+The Momo gene forces its holder female, cures the ailments of age, and keeps her fertility forever - but her body runs on mana now, and mana comes only from the essence of men. Her melee strikes deal tease damage instead of wounds: enough of it breaks a victim's will, leaving them collapsed, conscious and helpless.
+
+A will-broken man can be claimed as a tsugai mate - a lifelong bond that steels both partners' wills. A will-broken woman can be infused with mana until she awakens as a monster herself, remade in her corrupter's image. Men she feeds on slowly become incubi: tireless, long-lived, marked as hers. And a Momo who goes hungry for too long will stop at nothing to feed.
+
+Everything is tunable in the mod settings. Optional integrations: Vanilla Psycasts Expanded (monster xenotypes can spawn as psycasters), yayo's Animation, and Intimacy - Friends n' Lovers.
+
+Requires Harmony, Biotech, ISEKAI RPG LEVELING and Modlist Configurator.
 	</description>
 	<modDependencies>
 		<li>

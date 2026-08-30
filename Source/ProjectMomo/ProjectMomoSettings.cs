@@ -146,6 +146,31 @@ namespace ProjectMomo
         // Let Momos autonomously infuse downed, corruptible women (the forced path).
         public bool AutonomousCorruptionEnabled = true;
 
+        // Incubisation: master switch for the male-human-to-incubus gradual
+        // transformation system (intimate essence transfer accrues progress).
+        public bool IncubisationEnabled = true;
+        // Incubisation progress per full point of essence a man transfers to a
+        // Momo (0.0075 = a full-bar feeding moves him 0.75% of the way).
+        public float IncubisationPerEssenceFactor = 0.0075f;
+        // Dose multiplier when the feeding Momo is bonded (tsugai) to the man.
+        public float IncubisationBondedMultiplier = 2f;
+        // Max incubisation progress one man can gain per day.
+        public float IncubisationDailyCap = 0.0075f;
+        // Severity at which the marker Momo's claim sets: other unbonded Momos
+        // will no longer feed from him.
+        public float IncubisationMarkThreshold = 0.25f;
+        // Essence regen multiplier for a full incubus (partial stages scale up
+        // toward it: 1.25x once marked, halfway to full once near-incubus).
+        public float IncubisationEssenceRegenFull = 2f;
+        // Willpower bonus once incubisation passes the near-incubus stage (0.75).
+        public float IncubisationWillpowerBonus = 0.15f;
+        // Incubisation progress lost per day (0 = permanent, lore-accurate; a
+        // completed incubus never regresses).
+        public float IncubisationDecayPerDay = 0f;
+        // Food a full incubus regains per full point of essence he transfers to
+        // a Momo (0.5 = a full-bar feeding restores half his food bar).
+        public float IncubusFoodPerEssence = 0.5f;
+
         // VPE integration: allow Momo xenotypes to spawn with VPE psycasts.
         public bool VPEPsycastsEnabled = true;
 
@@ -207,6 +232,15 @@ namespace ProjectMomo
             VoluntaryCorruptionAttemptCooldownHours = 6f;
             VoluntaryCorruptionRejectionCooldownHours = 24f;
             AutonomousCorruptionEnabled = true;
+            IncubisationEnabled = true;
+            IncubisationPerEssenceFactor = 0.0075f;
+            IncubisationBondedMultiplier = 2f;
+            IncubisationDailyCap = 0.0075f;
+            IncubisationMarkThreshold = 0.25f;
+            IncubisationEssenceRegenFull = 2f;
+            IncubisationWillpowerBonus = 0.15f;
+            IncubisationDecayPerDay = 0f;
+            IncubusFoodPerEssence = 0.5f;
             VPEPsycastsEnabled = true;
         }
 
@@ -269,6 +303,15 @@ namespace ProjectMomo
             Scribe_Values.Look(ref VoluntaryCorruptionAttemptCooldownHours, "VoluntaryCorruptionAttemptCooldownHours", 6f);
             Scribe_Values.Look(ref VoluntaryCorruptionRejectionCooldownHours, "VoluntaryCorruptionRejectionCooldownHours", 24f);
             Scribe_Values.Look(ref AutonomousCorruptionEnabled, "AutonomousCorruptionEnabled", true);
+            Scribe_Values.Look(ref IncubisationEnabled, "IncubisationEnabled", true);
+            Scribe_Values.Look(ref IncubisationPerEssenceFactor, "IncubisationPerEssenceFactor", 0.0075f);
+            Scribe_Values.Look(ref IncubisationBondedMultiplier, "IncubisationBondedMultiplier", 2f);
+            Scribe_Values.Look(ref IncubisationDailyCap, "IncubisationDailyCap", 0.0075f);
+            Scribe_Values.Look(ref IncubisationMarkThreshold, "IncubisationMarkThreshold", 0.25f);
+            Scribe_Values.Look(ref IncubisationEssenceRegenFull, "IncubisationEssenceRegenFull", 2f);
+            Scribe_Values.Look(ref IncubisationWillpowerBonus, "IncubisationWillpowerBonus", 0.15f);
+            Scribe_Values.Look(ref IncubisationDecayPerDay, "IncubisationDecayPerDay", 0f);
+            Scribe_Values.Look(ref IncubusFoodPerEssence, "IncubusFoodPerEssence", 0.5f);
             Scribe_Values.Look(ref VPEPsycastsEnabled, "VPEPsycastsEnabled", true);
 
             // Self-heal an inverted grief-duration range (e.g. a hand-edited config

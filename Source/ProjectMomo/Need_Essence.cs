@@ -26,7 +26,8 @@ namespace ProjectMomo
             }
 
             // ISEKAI: the average of STR and VIT speeds essence recovery.
-            CurLevel += GainPerTick * 150f * IsekaiCompat.EssenceRechargeMultiplier(pawn);
+            // Incubisation: a mana-touched man's essence grows ever richer.
+            CurLevel += GainPerTick * 150f * IsekaiCompat.EssenceRechargeMultiplier(pawn) * Incubisation.EssenceRegenMultiplier(pawn);
         }
     }
 }

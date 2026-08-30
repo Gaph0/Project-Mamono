@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- Granted to a man at the moment his incubisation completes. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_IncubusAwakened</defName>
+        <thoughtClass>Thought_Memory</thoughtClass>
+        <durationDays>10</durationDays>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>unshackled</label>
+                <description>The mana settled into my body and something gave way — like chains I never knew I wore falling off. I feel tireless, ravenous, alive.</description>
+                <baseMoodEffect>12</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+    <!-- What the new incubus remembers of the Momo whose mana remade him. -->
+    <ThoughtDef>
+        <defName>ProjectMomo_IncubusTurned</defName>
+        <thoughtClass>Thought_MemorySocial</thoughtClass>
+        <durationDays>10</durationDays>
+        <stackLimit>2</stackLimit>
+        <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+        <stages>
+            <li>
+                <label>marked me as hers</label>
+                <description>Her mana is in me now, and it sings when she's near. I belong to her — and I wouldn't have it any other way.</description>
+                <baseMoodEffect>6</baseMoodEffect>
+                <baseOpinionOffset>20</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

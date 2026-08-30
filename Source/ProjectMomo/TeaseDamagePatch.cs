@@ -38,7 +38,18 @@ namespace ProjectMomo
                 return true; // Momo-vs-Momo keeps vanilla damage
             }
 
-            // Non-Momo victim: cancel the physical damage; tease is dealt instead (postfix).
+            // Only humanlike victims are teased (and thus have their physical damage
+            // cancelled). Animals, insects, mechanoids and everything else have no
+            // tease physiology, so they keep taking real melee damage. Without this
+            // gate the cancel below made a Momo deal ZERO damage to a wild animal:
+            // the prefix cancelled the hit but the postfix's IsMomoTease (which does
+            // require humanlike) dealt no tease either.
+            if (victim.RaceProps == null || !victim.RaceProps.Humanlike)
+            {
+                return true; // non-human victim — vanilla damage
+            }
+
+            // Non-Momo humanlike victim: cancel the physical damage; tease is dealt instead (postfix).
             __result = new DamageWorker.DamageResult();
             return false;
         }

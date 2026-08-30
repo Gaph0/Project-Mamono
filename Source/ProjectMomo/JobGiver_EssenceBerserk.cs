@@ -22,6 +22,19 @@ namespace ProjectMomo
                 return null;
             }
 
+            // She found her mate: a living tsugai bond exists (her drained victim may
+            // already have been carried off to a bed). The hunt's purpose is fulfilled
+            // — snap out of the berserk state instead of hunting new prey or fleeing
+            // the colony over having "no viable bonding targets". Runs before the
+            // fleeing check so a Momo who bonded while the flee flag was set still
+            // recovers. MentalStateTick does the same one tick later; doing it here
+            // too closes the same-tick race where the flee job would otherwise start.
+            if (TsugaiFormation.HasBondedPartner(pawn))
+            {
+                state.RecoverFromState();
+                return null;
+            }
+
             // Already fleeing: keep heading for the map edge.
             if (state.fleeing)
             {
@@ -37,6 +50,18 @@ namespace ProjectMomo
 
             if (prey != null && pawn.CanReach(prey, PathEndMode.Touch, Danger.Deadly))
             {
+                // Downed and still unbonded (e.g. a rescue hauled him off mid-ceremony
+                // and he was set down again): go finish the bonding instead of
+                // attacking — the chase job refuses downed prey (IsValidPrey), so
+                // chasing him would only churn instantly-failing jobs.
+                if (prey.Downed)
+                {
+                    if (TsugaiFormation.CanBond(pawn, prey))
+                    {
+                        return JobMaker.MakeJob(ProjectMomo_DefOf.ProjectMomo_FormTsugai, prey);
+                    }
+                    return MakeWanderJob(pawn);
+                }
                 return MakeChaseJob(prey);
             }
 
@@ -46,10 +71,38 @@ namespace ProjectMomo
             // lower-priority think node ever takes over an essence-berserk Momo.
             if (prey == null)
             {
+                // A bondable pawn being carried somewhere on the map (her interrupted
+                // victim hauled toward a bed) is only temporarily unavailable —
+                // prowl until he is set down again instead of abandoning the colony.
+                if (AnyBondableBeingCarried(pawn))
+                {
+                    return MakeWanderJob(pawn);
+                }
                 state.fleeing = true;
                 return MakeFleeJob(pawn);
             }
             return MakeWanderJob(pawn);
+        }
+
+        /// <summary>True while any spawned pawn on the Momo's map is carrying a
+        /// bondable pawn (e.g. rescuing her interrupted victim to a bed). A carried
+        /// pawn is despawned, so FindNearbyUnbondedPawn never sees him — without this
+        /// check the Momo would flee the moment her victim is picked up.</summary>
+        private static bool AnyBondableBeingCarried(Pawn momo)
+        {
+            if (momo?.Map == null)
+            {
+                return false;
+            }
+            System.Collections.Generic.IReadOnlyList<Pawn> pawns = momo.Map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (pawns[i]?.carryTracker?.CarriedThing is Pawn carried && TsugaiFormation.IsBondable(carried))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>Live, spawned, on the same map, visible, not downed, and bondable —

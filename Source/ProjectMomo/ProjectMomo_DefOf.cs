@@ -45,6 +45,11 @@ namespace ProjectMomo
         public static InteractionDef ProjectMomo_TransformProposalAccepted;
         public static InteractionDef ProjectMomo_TransformProposalRejected;
 
+        // Incubisation (male human -> incubus gradual transformation).
+        public static HediffDef ProjectMomo_Incubisation;
+        public static ThoughtDef ProjectMomo_IncubusAwakened;
+        public static ThoughtDef ProjectMomo_IncubusTurned;
+
         // ISEKAI: a husband with the Protagonist trait always wins over a bonded Momo.
         [MayRequire("JellyCreative.IsekaiLeveling")]
         public static TraitDef Isekai_Protagonist;

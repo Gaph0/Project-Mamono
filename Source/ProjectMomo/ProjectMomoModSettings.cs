@@ -18,6 +18,7 @@ namespace ProjectMomo
             Experience,
             ManaStarvation,
             Corruption,
+            Incubisation,
             TsugaiBond,
             BondedCouple,
             Animation,
@@ -91,6 +92,7 @@ namespace ProjectMomo
                 new TabRecord("Experience", () => SwitchTab(SettingsTab.Experience), currentTab == SettingsTab.Experience),
                 new TabRecord("Mana", () => SwitchTab(SettingsTab.ManaStarvation), currentTab == SettingsTab.ManaStarvation),
                 new TabRecord("Corruption", () => SwitchTab(SettingsTab.Corruption), currentTab == SettingsTab.Corruption),
+                new TabRecord("Incubisation", () => SwitchTab(SettingsTab.Incubisation), currentTab == SettingsTab.Incubisation),
                 new TabRecord("Tsugai bond", () => SwitchTab(SettingsTab.TsugaiBond), currentTab == SettingsTab.TsugaiBond),
                 new TabRecord("Bonded", () => SwitchTab(SettingsTab.BondedCouple), currentTab == SettingsTab.BondedCouple),
                 new TabRecord("Animation", () => SwitchTab(SettingsTab.Animation), currentTab == SettingsTab.Animation),
@@ -131,6 +133,9 @@ namespace ProjectMomo
                     break;
                 case SettingsTab.Corruption:
                     DrawCorruptionTab(listing);
+                    break;
+                case SettingsTab.Incubisation:
+                    DrawIncubisationTab(listing);
                     break;
                 case SettingsTab.TsugaiBond:
                     DrawTsugaiBondTab(listing);
@@ -301,6 +306,39 @@ namespace ProjectMomo
 
             listing.CheckboxLabeled("Momos infuse downed women", ref Settings.AutonomousCorruptionEnabled,
                 "Let Momos autonomously infuse downed, corruptible women (the forced path), without a right-click order.");
+        }
+
+        private void DrawIncubisationTab(Listing_Standard listing)
+        {
+            listing.Label("<b>Incubisation</b>");
+            listing.Label("<color=#888888>A human man who keeps giving his essence to a Momo — bonded or not — absorbs her mana and slowly changes into an incubus: richer essence, inhuman stamina, freedom from old age, and a lifespan matched to his mate. The change is gradual and permanent. Her mana also marks him: once the mark sets, other unbonded Momos will not feed from him.</color>");
+            listing.GapLine();
+
+            listing.CheckboxLabeled("Enable incubisation", ref Settings.IncubisationEnabled,
+                "Master switch for the male human-to-incubus gradual transformation system.");
+
+            DrawPerPointSlider(listing, "Progress per essence", ref Settings.IncubisationPerEssenceFactor, 0.001f, 0.15f, 0.0075f,
+                "Incubisation progress per full point of essence transferred (0.75% = a full-bar feeding moves him 0.75% of the way).");
+            DrawPerPointSlider(listing, "Bonded dose multiplier", ref Settings.IncubisationBondedMultiplier, 1f, 5f, 2f,
+                "Progress multiplier when the feeding Momo is bonded (tsugai) to the man — wives incubise their husbands fastest.", true);
+            DrawPerPointSlider(listing, "Daily progress cap", ref Settings.IncubisationDailyCap, 0.001f, 0.15f, 0.0075f,
+                "Max incubisation progress one man can gain per day (0.75% = a devoted husband completes the change in about two seasons).");
+            DrawPerPointSlider(listing, "Mark threshold", ref Settings.IncubisationMarkThreshold, 0.1f, 0.75f, 0.25f,
+                "Severity at which the marker Momo's claim sets: other unbonded Momos will no longer feed from him.");
+            DrawPerPointSlider(listing, "Essence regen at full incubus", ref Settings.IncubisationEssenceRegenFull, 1f, 4f, 2f,
+                "Essence regeneration multiplier for a full incubus (marked men get 1.25x, near-incubi halfway to this).", true);
+            DrawPerPointSlider(listing, "Willpower bonus near-complete", ref Settings.IncubisationWillpowerBonus, 0f, 0.5f, 0.15f,
+                "Willpower bonus once incubisation passes the near-incubus stage (75% severity).");
+            DrawPerPointSlider(listing, "Decay per day", ref Settings.IncubisationDecayPerDay, 0f, 0.2f, 0f,
+                "Incubisation progress lost per day (0% = permanent, lore-accurate; a completed incubus never regresses).");
+
+            listing.GapLine();
+            listing.Label("<b>Full incubus</b>");
+            listing.Label("<color=#888888>A completed incubus subsists on his mate's mana in place of ordinary food — the act of feeding her (or being drained) nourishes him.</color>");
+            listing.GapLine();
+
+            DrawPerPointSlider(listing, "Food per essence", ref Settings.IncubusFoodPerEssence, 0f, 2f, 0.5f,
+                "Food a full incubus regains per full point of essence transferred (50% = a full-bar feeding restores half his food bar). 0 = disabled.");
         }
 
         private void DrawTsugaiBondTab(Listing_Standard listing)

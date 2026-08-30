@@ -47,6 +47,23 @@ namespace ProjectMomo
             {
                 pawn.Drawer.renderer.SetAllGraphicsDirty();
             }
+
+            // The Inma's gift rejuvenates: any ailment of old age she already
+            // had silently vanishes the moment the gene takes hold.
+            MomoAgeAilmentPatch.RemoveAgeAilments(pawn);
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            // Backstop for the prevention patch: sweep once per in-game hour in
+            // case an age ailment was forced on by dev tools, a quest script,
+            // or another mod adding hediffs directly instead of through a giver.
+            if (pawn != null && pawn.IsHashIntervalTick(2500))
+            {
+                MomoAgeAilmentPatch.RemoveAgeAilments(pawn);
+            }
         }
 
         private static bool IsFemaleStyle(HairDef hair)

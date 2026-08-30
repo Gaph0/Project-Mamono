@@ -37,6 +37,22 @@ namespace ProjectMomo
             return false;
         }
 
+        public override void MentalStateTick(int delta)
+        {
+            base.MentalStateTick(delta);
+
+            // The hunt exists to win her a mate. The moment a living tsugai bond
+            // exists the state is fulfilled — recover instead of hunting further
+            // prey or, finding no unbonded pawn left on the map, fleeing the colony.
+            // This is what saves a freshly bonded Momo whose drained partner is
+            // immediately carried away: without it the job giver sees no viable
+            // bonding target and sends her off the map.
+            if (TsugaiFormation.HasBondedPartner(pawn))
+            {
+                RecoverFromState();
+            }
+        }
+
         public override void PreStart()
         {
             base.PreStart();

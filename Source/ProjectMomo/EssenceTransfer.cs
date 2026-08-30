@@ -88,7 +88,13 @@ namespace ProjectMomo
                 // She has at least one living bond: only a bonded partner may feed her.
                 return bond == human;
             }
-            // No living bonds: unbonded Momos may feed from anyone valid.
+            // No living bonds: a man marked by another Momo is claimed —
+            // unbonded Momos respect the claim and leave him to her.
+            if (Incubisation.MarkProtects(momo, human))
+            {
+                return false;
+            }
+            // Unmarked: unbonded Momos may feed from anyone valid.
             return true;
         }
 
@@ -154,6 +160,20 @@ namespace ProjectMomo
 
             // The Momo earns Isekai XP scaled by how much she consumed.
             IsekaiCompat.AwardEssenceXP(momo, moved);
+
+            // Her mana seeps into him with every feeding: the slow road to incubisation.
+            Incubisation.ApplyDose(momo, human, moved);
+
+            // A full incubus no longer lives on food alone — his mate's mana,
+            // exchanged in the act, nourishes him directly. He regains a little
+            // Food scaled by the essence moved (works for both Give and Drain,
+            // since both route through here).
+            if (Incubisation.IsFullIncubus(human) && human.needs?.food != null)
+            {
+                float factor = ProjectMomoModSettings.Settings?.IncubusFoodPerEssence ?? 0.5f;
+                Need_Food food = human.needs.food;
+                food.CurLevel = Mathf.Min(food.MaxLevel, food.CurLevel + moved * factor);
+            }
 
             return moved;
         }

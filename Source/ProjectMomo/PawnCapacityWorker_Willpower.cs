@@ -40,6 +40,10 @@ namespace ProjectMomo
                 }
             }
 
+            // A loosening of the shackles: once incubisation passes the
+            // near-incubus stage, the man's resolve hardens with it.
+            level *= Incubisation.WillpowerMultiplier(pawn);
+
             // Losing bonded mates crushes the survivor's willpower. Each grief
             // hediff adds a penalty, but the total is floored so even several
             // broken bonds can't reduce willpower past a set fraction.

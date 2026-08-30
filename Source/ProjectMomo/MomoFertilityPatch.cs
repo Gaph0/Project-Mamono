@@ -69,7 +69,7 @@ namespace ProjectMomo
                 return;
             }
 
-            if (!(req.Thing is Pawn pawn) || !EssenceTransfer.IsMomo(pawn))
+            if (!(req.Thing is Pawn pawn) || (!EssenceTransfer.IsMomo(pawn) && !Incubisation.IsFullIncubus(pawn)))
             {
                 return;
             }

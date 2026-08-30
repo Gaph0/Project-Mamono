@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        Incubisation: a Momo's mana slowly rewriting a MAN into an incubus — the
+        male counterpart to mamono corruption. Severity grows only through
+        intimate essence transfers (EssenceTransfer.Transfer → Incubisation.ApplyDose),
+        daily-capped, faster when the feeding Momo is bonded to him. Unlike the
+        female corruption path there is no xenotype swap and no completion event:
+        he stays human, and each severity stage simply grants more of the
+        incubus' perks. The change is permanent by default (decay is opt-in via
+        settings). The hediff remembers the most recent Momo whose mana infused
+        him — her mark protects him from other Momos' feeding.
+    -->
+    <HediffDef>
+        <defName>ProjectMomo_Incubisation</defName>
+        <label>incubisation</label>
+        <description>Mamono mana is pooling in this man's body, slowly rewriting him into an incubus — an ideal mate for monsters. The change is gradual but permanent: his essence grows richer, his stamina inhuman, and in time the frailties of age will fall away as his lifespan stretches to match his mate's.</description>
+        <hediffClass>ProjectMomo.Hediff_Incubisation</hediffClass>
+        <defaultLabelColor>(0.65, 0.55, 1.0)</defaultLabelColor>
+        <isBad>false</isBad>
+        <initialSeverity>0.05</initialSeverity>
+        <maxSeverity>1</maxSeverity>
+        <stages>
+            <!-- The change hides from the Health tab until it is well advanced
+                 (0.75) — the man (and the colony) only notice once the mana has
+                 clearly taken hold. The mark's protection and the growing perks
+                 still work while unseen. Same mechanism as vanilla's
+                 GeneticDrugNeed (becomeVisible per stage). -->
+            <li>
+                <label>mana-touched</label>
+                <becomeVisible>false</becomeVisible>
+            </li>
+            <li>
+                <minSeverity>0.25</minSeverity>
+                <label>marked</label>
+                <becomeVisible>false</becomeVisible>
+            </li>
+            <li>
+                <minSeverity>0.5</minSeverity>
+                <label>suffused</label>
+                <becomeVisible>false</becomeVisible>
+                <statFactors>
+                    <RestFallRateFactor>0.9</RestFallRateFactor>
+                </statFactors>
+                <hungerRateFactor>0.85</hungerRateFactor>
+            </li>
+            <li>
+                <minSeverity>0.75</minSeverity>
+                <label>near-incubus</label>
+                <becomeVisible>true</becomeVisible>
+                <statFactors>
+                    <RestFallRateFactor>0.85</RestFallRateFactor>
+                </statFactors>
+                <hungerRateFactor>0.8</hungerRateFactor>
+            </li>
+            <li>
+                <minSeverity>1</minSeverity>
+                <label>incubus</label>
+                <statFactors>
+                    <RestFallRateFactor>0.75</RestFallRateFactor>
+                </statFactors>
+                <hungerRateFactor>0.6</hungerRateFactor>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>0.05</offset>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+</Defs>
