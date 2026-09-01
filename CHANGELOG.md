@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-02: feat: autonomous mana feeding - bonded momos seek their mate at low mana
 - 2026-08-30: fix: tease prefix humanlike gate - momos deal damage to animals again
 - 2026-08-30: feat: full incubus regains Food on essence transfer (subsists on mate's mana, IncubusFoodPerEssence)
 - 2026-08-30: feat: incubisation hidden from Health tab until 75% severity (becomeVisible), then surfaces

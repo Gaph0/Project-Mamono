@@ -42,6 +42,19 @@ namespace ProjectMomo
         public float LowManaBreakThreshold = 0.1f;
         // Mental-break mean-time-between (days) while Mana is below the threshold.
         public float LowManaBreakMtbDays = 0.5f;
+        // Let a bonded Momo autonomously seek out her tsugai partner and feed when
+        // Mana runs low — like pawns seeking food, no mental break required.
+        public bool AutonomousFeedingEnabled = true;
+        // Mana level (fraction) at or below which a bonded Momo goes looking for her
+        // mate to feed. Should stay above the low-mana break threshold so seeking
+        // preempts breaking.
+        public float AutonomousFeedThreshold = 0.3f;
+        // Hours before a Momo retries after a feed attempt failed (mate dry, or the
+        // walk/drain interrupted) — keeps failed feeds from spamming every think tick.
+        public float AutonomousFeedRetryCooldownHours = 1f;
+        // Max completed autonomous feeds per Momo per day (0 = uncapped). Past the
+        // cap, low Mana falls back to the feeding/berserk break system.
+        public int AutonomousFeedMaxPerDay = 2;
 
         // Base chance a Momo who bonds to a colonist joins the colony (equal levels).
         public float BondJoinBaseChance = 0.25f;
@@ -190,6 +203,10 @@ namespace ProjectMomo
             ManaFromFoodPerNutrition = 0.15f;
             LowManaBreakThreshold = 0.1f;
             LowManaBreakMtbDays = 0.5f;
+            AutonomousFeedingEnabled = true;
+            AutonomousFeedThreshold = 0.3f;
+            AutonomousFeedRetryCooldownHours = 1f;
+            AutonomousFeedMaxPerDay = 2;
             BondJoinBaseChance = 0.25f;
             BondJoinChancePerLevel = 0.05f;
             BondJoinMaxChance = 0.9f;
@@ -261,6 +278,10 @@ namespace ProjectMomo
             Scribe_Values.Look(ref ManaFromFoodPerNutrition, "ManaFromFoodPerNutrition", 0.15f);
             Scribe_Values.Look(ref LowManaBreakThreshold, "LowManaBreakThreshold", 0.1f);
             Scribe_Values.Look(ref LowManaBreakMtbDays, "LowManaBreakMtbDays", 0.5f);
+            Scribe_Values.Look(ref AutonomousFeedingEnabled, "AutonomousFeedingEnabled", true);
+            Scribe_Values.Look(ref AutonomousFeedThreshold, "AutonomousFeedThreshold", 0.3f);
+            Scribe_Values.Look(ref AutonomousFeedRetryCooldownHours, "AutonomousFeedRetryCooldownHours", 1f);
+            Scribe_Values.Look(ref AutonomousFeedMaxPerDay, "AutonomousFeedMaxPerDay", 2);
             Scribe_Values.Look(ref BondJoinBaseChance, "BondJoinBaseChance", 0.25f);
             Scribe_Values.Look(ref BondJoinChancePerLevel, "BondJoinChancePerLevel", 0.05f);
             Scribe_Values.Look(ref BondJoinMaxChance, "BondJoinMaxChance", 0.9f);

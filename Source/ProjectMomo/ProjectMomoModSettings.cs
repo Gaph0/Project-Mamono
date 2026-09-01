@@ -248,6 +248,21 @@ namespace ProjectMomo
                 "Mana level below which a Momo can randomly suffer a feeding/berserk break.");
             DrawPerPointSlider(listing, "Break MTB (days)", ref Settings.LowManaBreakMtbDays, 0.1f, 5f, 0.5f,
                 "Mean time between random feeding/berserk breaks while Mana is below the threshold (lower = more frequent).", true);
+
+            listing.GapLine();
+            listing.Label("<b>Autonomous feeding</b>");
+            listing.Label("<color=#888888>A bonded Momo whose Mana runs low seeks out her mate and feeds on her own — like pawns seeking food, no mental break required. If she cannot reach him or he is dry, the breaks above remain the fallback.</color>");
+            listing.GapLine();
+
+            listing.CheckboxLabeled("Bonded Momos feed autonomously", ref Settings.AutonomousFeedingEnabled,
+                "Let a bonded Momo autonomously walk to her tsugai partner and drain essence when her Mana runs low.");
+
+            DrawPerPointSlider(listing, "Seek mate threshold", ref Settings.AutonomousFeedThreshold, 0f, 0.6f, 0.3f,
+                "Mana level below which a bonded Momo seeks out her mate to feed. Keep above the low mana break threshold so seeking preempts breaking.");
+            DrawPerPointSlider(listing, "Feed retry cooldown (hours)", ref Settings.AutonomousFeedRetryCooldownHours, 0.25f, 12f, 1f,
+                "Hours a Momo waits before retrying after a feed attempt failed (mate dry, or the walk/drain interrupted).", true);
+            DrawIntField(listing, "Max natural feeds per day", ref Settings.AutonomousFeedMaxPerDay, 0, 10,
+                "Completed autonomous feeds a Momo will seek per day (0 = no limit). Past the cap, low Mana falls back to the feeding/berserk break. Break-driven feeds never count toward the cap.");
         }
 
         private void DrawCorruptionTab(Listing_Standard listing)

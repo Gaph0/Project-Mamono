@@ -8,9 +8,6 @@
         <geneClass>ProjectMomo.Gene_Momo</geneClass>
         <displayCategory>Reproduction</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
-        <statOffsets>
-            <PawnBeauty>0</PawnBeauty>
-        </statOffsets>
         <enablesNeeds>
             <li>ProjectMomo_Mana</li>
         </enablesNeeds>

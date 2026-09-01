@@ -42,6 +42,14 @@ namespace ProjectMomo
                 if (EssenceTransfer.CanTransfer(pawn, Human))
                 {
                     EssenceTransfer.Transfer(pawn, Human, float.MaxValue);
+                    // Only a completed feed counts toward the daily cap, and only
+                    // when she sought him out calmly — break-driven feeds (the
+                    // desperation fallback) are exempt, so the cap can never lock
+                    // a starving Momo out of the berserk/feeding break path.
+                    if (!pawn.InMentalState)
+                    {
+                        ManaFeedingComponent.Get()?.NoteFeed(pawn, Find.TickManager.TicksGame);
+                    }
                 }
             });
 
