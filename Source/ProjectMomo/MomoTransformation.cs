@@ -61,18 +61,6 @@ namespace ProjectMomo
         }
 
         /// <summary>
-        /// Optional mod hook that overrides the xenotype a voluntary
-        /// transformation ceremony applies. The default (null) is the proposer's
-        /// own xenotype via <see cref="XenotypeFor"/>. PMM Reptiles installs this
-        /// so a Malef Dragon's offer remakes her victim by the corruption rules
-        /// (baseline → Dragonewt, normal Dragon → Malef Dragon) rather than a copy
-        /// of the proposer. Signature: (proposer, target) → xenotype, or null to
-        /// fall back to the default. Assigned by a sub-mod's static constructor;
-        /// not scribed.
-        /// </summary>
-        public static System.Func<Pawn, Pawn, XenotypeDef> VoluntaryTransformTargetOverride;
-
-        /// <summary>
         /// Could this pawn ever be transformed? A living, female, non-monster
         /// humanlike of corruptible age. The Momo-gene check doubles as the
         /// re-transformation guard: a completed (or dev-applied) change can

@@ -64,21 +64,8 @@ namespace ProjectMomo
                 if (Target != null && !Target.Dead && !Target.Downed && Target.Spawned
                     && Target.Position.InHorDistOf(pawn.Position, StayWithinCells))
                 {
-                    // The Momo is the actor; her xenotype is what the woman becomes,
-                    // unless a sub-mod overrides the target (e.g. a Malef Dragon
-                    // remaking her victim by the corruption rules).
-                    XenotypeDef outcome = MomoTransformation.VoluntaryTransformTargetOverride?.Invoke(pawn, Target)
-                        ?? MomoTransformation.XenotypeFor(pawn);
-                    if (EssenceTransfer.IsMomo(Target))
-                    {
-                        // A monster target can only be re-stamped (ConvertXenotype);
-                        // ApplyXenotype refuses her as "already a monster".
-                        MomoTransformation.ConvertXenotype(Target, outcome, pawn);
-                    }
-                    else
-                    {
-                        MomoTransformation.ApplyXenotype(Target, outcome, pawn);
-                    }
+                    // The Momo is the actor; her xenotype is what the woman becomes.
+                    MomoTransformation.ApplyXenotype(Target, MomoTransformation.XenotypeFor(pawn), pawn);
                 }
             });
             // Registered after the infusion action so the bar vanishes the moment
