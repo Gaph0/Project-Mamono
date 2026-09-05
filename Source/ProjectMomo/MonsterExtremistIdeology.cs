@@ -61,9 +61,11 @@ namespace ProjectMomo
     }
 
     /// <summary>
-    /// The situational social thought behind both Monster Extremist opinions.
+    /// The situational social thought behind every Monster Extremist opinion.
     /// The opinion offset itself is read from mod settings (per thought def) so
-    /// players can tune how zealously believers judge each other.
+    /// players can tune how zealously believers judge each other. The ascension
+    /// precept varieties scale that baseline: relaxed grants half the ascended
+    /// opinion (and has no baseliner thought at all), strict doubles both.
     /// </summary>
     public class Thought_MonsterExtremistSocial : Thought_SituationalSocial
     {
@@ -78,6 +80,18 @@ namespace ProjectMomo
             if (def == ProjectMomo_DefOf.ProjectMomo_MonsterExtremistAscended)
             {
                 return Settings.MonsterExtremistAscendedOpinion;
+            }
+            if (def == ProjectMomo_DefOf.ProjectMomo_MonsterExtremistAscendedRelaxed)
+            {
+                return Settings.MonsterExtremistAscendedOpinion * 0.5f;
+            }
+            if (def == ProjectMomo_DefOf.ProjectMomo_MonsterExtremistAscendedStrict)
+            {
+                return Settings.MonsterExtremistAscendedOpinion * 2f;
+            }
+            if (def == ProjectMomo_DefOf.ProjectMomo_MonsterExtremistBaselinerStrict)
+            {
+                return Settings.MonsterExtremistBaselinerOpinion * 2f;
             }
             return Settings.MonsterExtremistBaselinerOpinion;
         }

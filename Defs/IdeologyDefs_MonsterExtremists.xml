@@ -7,18 +7,22 @@
         C# workers they reference are never instantiated.
 
         Contents:
-        - Issue + ascension precept with two social opinion thoughts
-          (ascended = any Momo or tsugai-bonded pawn; baseliner = any adult
-          humanlike who is neither — children are ignored).
-        - Two rites of awakening (ritual precept + pattern + behavior + outcome):
-          the colonist rite transforms a willing colonist into the organiser's
-          own monster xenotype; the captive rite transforms a prisoner/slave
-          into a RANDOM monster xenotype and shakes her will, resistance and
-          ideo certainty. A failed rite simply fizzles.
-        - The meme itself, which requires all three precepts.
+        - Issue + three ascension precept varieties, all gated behind the
+          Monster Extremists meme via requiredMemes (like vanilla's Blindsight
+          rites): relaxed (admires the ascended, no judgment of non-momos),
+          exalted (the original: ascended + baseliner social opinion thoughts),
+          and strict (both thoughts at doubled values). Ascended = any Momo or
+          tsugai-bonded pawn; baseliner = any adult humanlike who is neither —
+          children are ignored.
+        - Two rites of awakening (ritual precept + pattern + behavior + outcome),
+          also gated behind the meme: the colonist rite transforms a willing
+          colonist into the organiser's own monster xenotype; the captive rite
+          transforms a prisoner/slave into a RANDOM monster xenotype and shakes
+          her will, resistance and ideo certainty. A failed rite simply fizzles.
+        - The meme itself, which requires one ascension variety plus both rites.
     -->
 
-    <!-- ===================== Issue & ascension precept ===================== -->
+    <!-- ===================== Issue & ascension precepts ===================== -->
 
     <IssueDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_Issue_MonsterAscension</defName>
@@ -26,12 +30,14 @@
         <iconPath>UI/Icons/Issues/Monsterise</iconPath>
     </IssueDef>
 
+    <!-- Relaxed: the ascended are admired, but baseliners are left in peace —
+         no negative opinions or moods toward non-momos at all. -->
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterAscension_Exalted</defName>
+        <defName>ProjectMomo_MonsterAscension_Relaxed</defName>
         <issue>ProjectMomo_Issue_MonsterAscension</issue>
-        <label>exalted</label>
-        <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
-        <impact>Medium</impact>
+        <label>relaxed</label>
+        <description>Monsters and their bonded mates are admired as the vanguard of a beautiful transformation, but those content with baseline flesh are simply left to their own path — no scorn, no pressure.</description>
+        <impact>Low</impact>
         <displayOrderInIssue>0</displayOrderInIssue>
         <displayOrderInImpact>100</displayOrderInImpact>
         <defaultSelectionWeight>1</defaultSelectionWeight>
@@ -42,6 +48,38 @@
         <associatedMemes>
             <li>ProjectMomo_Meme_MonsterExtremists</li>
         </associatedMemes>
+        <requiredMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </requiredMemes>
+        <comps>
+            <li Class="PreceptComp_SituationalThought">
+                <thought>ProjectMomo_MonsterExtremistAscendedRelaxed</thought>
+                <thoughtStageDescriptions>
+                    <li>Monster ascension (ascended)</li>
+                </thoughtStageDescriptions>
+            </li>
+        </comps>
+    </PreceptDef>
+
+    <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterAscension_Exalted</defName>
+        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <label>exalted</label>
+        <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
+        <impact>Medium</impact>
+        <displayOrderInIssue>1</displayOrderInIssue>
+        <displayOrderInImpact>100</displayOrderInImpact>
+        <defaultSelectionWeight>1</defaultSelectionWeight>
+        <conflictingMemes>
+            <li>FleshPurity</li>
+            <li>Transhumanist</li>
+        </conflictingMemes>
+        <associatedMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </associatedMemes>
+        <requiredMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </requiredMemes>
         <comps>
             <li Class="PreceptComp_SituationalThought">
                 <thought>ProjectMomo_MonsterExtremistAscended</thought>
@@ -58,9 +96,59 @@
         </comps>
     </PreceptDef>
 
-    <!-- Opinion offsets come from mod settings (Thought_MonsterExtremistSocial);
-         the stage values below only mirror the defaults for UI readouts that
-         bypass OpinionOffset(). -->
+    <!-- Strict: the same judgment as exalted, but zealous — ascended admired
+         twice as strongly, baseliners scorned twice as harshly. -->
+    <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterAscension_Strict</defName>
+        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <label>strict</label>
+        <description>The baseline human form is a stain to be scrubbed from the world. Women who refuse remaking and men who refuse claiming are worse than ignorant — they are cowards hoarding rotten flesh. Only the ascended — monsters and their bonded mates — deserve honor.</description>
+        <impact>High</impact>
+        <displayOrderInIssue>2</displayOrderInIssue>
+        <displayOrderInImpact>100</displayOrderInImpact>
+        <defaultSelectionWeight>1</defaultSelectionWeight>
+        <conflictingMemes>
+            <li>FleshPurity</li>
+            <li>Transhumanist</li>
+        </conflictingMemes>
+        <associatedMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </associatedMemes>
+        <requiredMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </requiredMemes>
+        <comps>
+            <li Class="PreceptComp_SituationalThought">
+                <thought>ProjectMomo_MonsterExtremistAscendedStrict</thought>
+                <thoughtStageDescriptions>
+                    <li>Monster ascension (ascended)</li>
+                </thoughtStageDescriptions>
+            </li>
+            <li Class="PreceptComp_SituationalThought">
+                <thought>ProjectMomo_MonsterExtremistBaselinerStrict</thought>
+                <thoughtStageDescriptions>
+                    <li>Monster ascension (baseliner)</li>
+                </thoughtStageDescriptions>
+            </li>
+        </comps>
+    </PreceptDef>
+
+    <!-- Opinion offsets come from mod settings (Thought_MonsterExtremistSocial):
+         relaxed grants half the ascended opinion, strict grants double both
+         opinions. The stage values below only mirror the resulting defaults
+         for UI readouts that bypass OpinionOffset(). -->
+    <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterExtremistAscendedRelaxed</defName>
+        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <stages>
+            <li>
+                <label>ascended</label>
+                <baseOpinionOffset>5</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_MonsterExtremistAscended</defName>
         <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
@@ -74,6 +162,18 @@
     </ThoughtDef>
 
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterExtremistAscendedStrict</defName>
+        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <stages>
+            <li>
+                <label>ascended</label>
+                <baseOpinionOffset>20</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_MonsterExtremistBaseliner</defName>
         <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
         <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
@@ -81,6 +181,18 @@
             <li>
                 <label>unascended baseliner</label>
                 <baseOpinionOffset>-15</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterExtremistBaselinerStrict</defName>
+        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
+        <stages>
+            <li>
+                <label>unascended baseliner</label>
+                <baseOpinionOffset>-30</baseOpinionOffset>
             </li>
         </stages>
     </ThoughtDef>
@@ -141,6 +253,9 @@
         <iconPath>UI/Icons/Rituals/FreeMonsterise</iconPath>
         <preceptClass>Precept_Ritual</preceptClass>
         <ritualPatternBase>ProjectMomo_RitualPattern_TransformColonist</ritualPatternBase>
+        <requiredMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </requiredMemes>
         <!-- No allowDuplicates: a single-purpose rite must be granted once, like
              vanilla's Execution/GladiatorDuel. Setting it true (as Scarification
              does) makes the ideo generator add the rite twice. -->
@@ -158,6 +273,9 @@
         <iconPath>UI/Icons/Rituals/ForceMonsterise</iconPath>
         <preceptClass>Precept_Ritual</preceptClass>
         <ritualPatternBase>ProjectMomo_RitualPattern_TransformCaptive</ritualPatternBase>
+        <requiredMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </requiredMemes>
         <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
         <selectionWeight>1.0</selectionWeight>
         <displayOrderInImpact>100</displayOrderInImpact>
@@ -515,7 +633,9 @@
         </exclusionTags>
         <requireOne>
             <li>
+                <li>ProjectMomo_MonsterAscension_Relaxed</li>
                 <li>ProjectMomo_MonsterAscension_Exalted</li>
+                <li>ProjectMomo_MonsterAscension_Strict</li>
             </li>
             <li>
                 <li>ProjectMomo_Ritual_TransformColonist</li>

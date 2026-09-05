@@ -65,6 +65,12 @@ namespace ProjectMomo
         public static ThoughtDef ProjectMomo_MonsterExtremistAscended;
         [MayRequire("Ludeon.RimWorld.Ideology")]
         public static ThoughtDef ProjectMomo_MonsterExtremistBaseliner;
+        [MayRequire("Ludeon.RimWorld.Ideology")]
+        public static ThoughtDef ProjectMomo_MonsterExtremistAscendedRelaxed;
+        [MayRequire("Ludeon.RimWorld.Ideology")]
+        public static ThoughtDef ProjectMomo_MonsterExtremistAscendedStrict;
+        [MayRequire("Ludeon.RimWorld.Ideology")]
+        public static ThoughtDef ProjectMomo_MonsterExtremistBaselinerStrict;
 
         static ProjectMomo_DefOf()
         {

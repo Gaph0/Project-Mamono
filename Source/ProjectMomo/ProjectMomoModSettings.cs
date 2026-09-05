@@ -490,13 +490,13 @@ namespace ProjectMomo
         private void DrawIdeologyTab(Listing_Standard listing)
         {
             listing.Label("<b>Monster Extremists meme (Ideology DLC)</b>");
-            listing.Label("<color=#888888>The Monster Extremists meme (\"All men should be drained, and all women should be transformed!\") grants believers a social opinion of ascended pawns — transformed women (any Momo) and tsugai-bonded men — and a low opinion of untransformed, unbonded baseliner adults. It also unlocks two rites of awakening: one transforms a willing colonist into the organiser's own monster xenotype, the other transforms a prisoner or slave into a random monster. A failed rite simply fizzles.</color>");
+            listing.Label("<color=#888888>The Monster Extremists meme (\"All men should be drained, and all women should be transformed!\") grants believers a social opinion of ascended pawns — transformed women (any Momo) and tsugai-bonded men — and, depending on the monster ascension precept, a low opinion of untransformed, unbonded baseliner adults. The precept comes in three varieties, exclusive to the meme: relaxed (admires the ascended, no judgment of baseliners), exalted (the values below) and strict (doubled values). The meme also unlocks two rites of awakening: one transforms a willing colonist into the organiser's own monster xenotype, the other transforms a prisoner or slave into a random monster. A failed rite simply fizzles.</color>");
             listing.GapLine();
 
             DrawIntField(listing, "Ascended opinion", ref Settings.MonsterExtremistAscendedOpinion, -100, 100,
-                "Believers' social opinion of ascended pawns (any Momo, or any pawn with a living tsugai bond).");
+                "Believers' social opinion of ascended pawns (any Momo, or any pawn with a living tsugai bond). The relaxed precept grants half this, the strict precept double.");
             DrawIntField(listing, "Baseliner opinion", ref Settings.MonsterExtremistBaselinerOpinion, -100, 100,
-                "Believers' social opinion of baseliners: adult humanlikes who are neither transformed nor bonded. Children are ignored.");
+                "Believers' social opinion of baseliners: adult humanlikes who are neither transformed nor bonded. Children are ignored. Only the exalted and strict precepts judge baseliners — the strict precept doubles this, the relaxed precept has no baseliner opinion.");
 
             listing.GapLine();
             listing.Label("<b>Captive rite aftermath</b>");

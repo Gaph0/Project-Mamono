@@ -88,6 +88,7 @@
         <iconPath>UI/Icons/Genes/Gene_FireResistant</iconPath>
         <displayCategory>Temperature</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
+        <biostatMet>-4</biostatMet>
         <statFactors>
             <Flammability>0</Flammability>
         </statFactors>

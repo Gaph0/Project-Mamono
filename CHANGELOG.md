@@ -1,4 +1,9 @@
 # Changelog
+- 2026-09-05: Give the fiery momo gene -4 metabolic efficiency
+- 2026-09-05: feat: monster ascension precept varieties (relaxed: admires the
+  ascended, no judgment of non-momos; exalted: unchanged; strict: doubled
+  opinions) - all ascension precepts and both awakening rites now require the
+  Monster Extremists meme
 - 2026-09-05: Stop colonists from autonomously infusing
 - 2026-09-05: Let raider Momos autonomously infuse; keep wild/visiting Momos feral
 - 2026-09-05: Limit autonomous infusion to colonist Momos; restore unrestricted player orders
