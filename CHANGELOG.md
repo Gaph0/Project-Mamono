@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-05: Add MomoTransformation.ConvertXenotype: re-stamp an already-monster pawn CanEverTransform refuses momos ('already a monster'), so ApplyXenotype could never swap one monster xenotype for another. ConvertXenotype removes the old def-based xenotype's endogenes the new xenotype lacks, then applies the same gene stamp / pregnancy-snapshot refresh / notification as a first corruption. Faction and join outcomes are untouched. Needed by PMM Reptiles' Malef Dragon corruption (Dragon -> Malef Dragon, other momos -> Dragonewt).
 - 2026-09-05: Cap venom-pinned victims' Moving with setMax so buffed vitals can't beat it
 - 2026-09-05: Give the flight gene -2 metabolic efficiency
 - 2026-09-05: Give the fiery momo gene -4 metabolic efficiency

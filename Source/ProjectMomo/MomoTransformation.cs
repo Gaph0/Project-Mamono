@@ -245,6 +245,71 @@ namespace ProjectMomo
         }
 
         /// <summary>
+        /// Re-stamps an ALREADY-monster pawn with a different monster xenotype
+        /// (e.g. a Malef Dragon blackening a normal Dragon into her mirror).
+        /// CanEverTransform deliberately refuses momos ("already a monster"), so
+        /// ApplyXenotype can never re-stamp one — this is the swap path. Genes
+        /// from her old def-based xenotype that the new xenotype lacks are
+        /// removed (endogenes only; xenogenes and non-xenotype genes are left
+        /// alone), then the new xenotype is applied with the same gene-add,
+        /// pregnancy-refresh and notification steps as a first corruption.
+        /// Faction and join outcomes are untouched: a conversion changes what
+        /// she is, not who she serves.
+        /// </summary>
+        public static bool ConvertXenotype(Pawn pawn, XenotypeDef xenotype, Pawn source = null)
+        {
+            if (pawn == null || pawn.Dead || pawn.genes == null || xenotype == null
+                || pawn.genes.Xenotype == xenotype)
+            {
+                return false;
+            }
+
+            // Strip the old xenotype's signature genes the new one doesn't share
+            // (species claws, trait-genes, abilities). Only def-based xenotype
+            // genes are considered, so custom/implanted genes survive the swap.
+            XenotypeDef oldXenotype = pawn.genes.Xenotype;
+            if (oldXenotype?.genes != null)
+            {
+                for (int i = pawn.genes.GenesListForReading.Count - 1; i >= 0; i--)
+                {
+                    Gene existing = pawn.genes.GenesListForReading[i];
+                    if (!pawn.genes.Endogenes.Contains(existing))
+                    {
+                        continue; // xenogene — not part of her germline stamp
+                    }
+                    if (oldXenotype.genes.Contains(existing.def) && !xenotype.genes.Contains(existing.def))
+                    {
+                        pawn.genes.RemoveGene(existing);
+                    }
+                }
+            }
+
+            // The same stamp as a first corruption: add every missing xenotype
+            // gene as an endogene (conflicts cleared first), then the identity.
+            for (int i = 0; i < xenotype.genes.Count; i++)
+            {
+                GeneDef gene = xenotype.genes[i];
+                RemoveConflictingGenes(pawn, gene);
+                if (!pawn.genes.HasActiveGene(gene))
+                {
+                    pawn.genes.AddGene(gene, xenogene: false);
+                }
+            }
+            pawn.genes.SetXenotypeDirect(xenotype);
+
+            // Her unborn baby follows her new genome (see ApplyXenotype).
+            RefreshPregnancySnapshot(pawn);
+
+            if (pawn.Spawned && pawn.Drawer?.renderer != null)
+            {
+                pawn.Drawer.renderer.SetAllGraphicsDirty();
+            }
+
+            NotifyTransformed(pawn, xenotype, source);
+            return true;
+        }
+
+        /// <summary>
         /// Decides whether a non-colonist transformed by one of your colonists
         /// joins the colony, then hands the outcome to the queue component. The
         /// faction swap may not run here, inside the infusion job's toil cleanup —
