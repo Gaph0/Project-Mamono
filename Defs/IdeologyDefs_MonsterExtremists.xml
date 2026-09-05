@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        Monster Extremists ideology meme ("All men should be drained, and all
+        women should be transformed!"). Everything in this file is gated behind
+        MayRequire Ideology: without the DLC none of these defs load, and the
+        C# workers they reference are never instantiated.
+
+        Contents:
+        - Issue + ascension precept with two social opinion thoughts
+          (ascended = any Momo or tsugai-bonded pawn; baseliner = any adult
+          humanlike who is neither — children are ignored).
+        - Two rites of awakening (ritual precept + pattern + behavior + outcome):
+          the colonist rite transforms a willing colonist into the organiser's
+          own monster xenotype; the captive rite transforms a prisoner/slave
+          into a RANDOM monster xenotype and shakes her will, resistance and
+          ideo certainty. A failed rite simply fizzles.
+        - The meme itself, which requires all three precepts.
+    -->
+
+    <!-- ===================== Issue & ascension precept ===================== -->
+
+    <IssueDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Issue_MonsterAscension</defName>
+        <label>monster ascension</label>
+        <iconPath>UI/Icons/Issues/Monsterise</iconPath>
+    </IssueDef>
+
+    <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterAscension_Exalted</defName>
+        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <label>exalted</label>
+        <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
+        <impact>Medium</impact>
+        <displayOrderInIssue>0</displayOrderInIssue>
+        <displayOrderInImpact>100</displayOrderInImpact>
+        <defaultSelectionWeight>1</defaultSelectionWeight>
+        <conflictingMemes>
+            <li>FleshPurity</li>
+            <li>Transhumanist</li>
+        </conflictingMemes>
+        <associatedMemes>
+            <li>ProjectMomo_Meme_MonsterExtremists</li>
+        </associatedMemes>
+        <comps>
+            <li Class="PreceptComp_SituationalThought">
+                <thought>ProjectMomo_MonsterExtremistAscended</thought>
+                <thoughtStageDescriptions>
+                    <li>Monster ascension (ascended)</li>
+                </thoughtStageDescriptions>
+            </li>
+            <li Class="PreceptComp_SituationalThought">
+                <thought>ProjectMomo_MonsterExtremistBaseliner</thought>
+                <thoughtStageDescriptions>
+                    <li>Monster ascension (baseliner)</li>
+                </thoughtStageDescriptions>
+            </li>
+        </comps>
+    </PreceptDef>
+
+    <!-- Opinion offsets come from mod settings (Thought_MonsterExtremistSocial);
+         the stage values below only mirror the defaults for UI readouts that
+         bypass OpinionOffset(). -->
+    <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterExtremistAscended</defName>
+        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <stages>
+            <li>
+                <label>ascended</label>
+                <baseOpinionOffset>10</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_MonsterExtremistBaseliner</defName>
+        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
+        <stages>
+            <li>
+                <label>unascended baseliner</label>
+                <baseOpinionOffset>-15</baseOpinionOffset>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <!-- ===================== Ritual speech interactions ===================== -->
+
+    <InteractionDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Speech_TransformRite</defName>
+        <label>awakening rite speech</label>
+        <workerClass>InteractionWorker</workerClass>
+        <ignoreTimeSinceLastInteraction>True</ignoreTimeSinceLastInteraction>
+        <symbol>Things/Mote/SpeechSymbols/Speech</symbol>
+        <logRulesInitiator>
+            <include><li>SpeechUtility</li></include>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
+                <li>speechtopic->the beauty of the monster form</li>
+                <li>speechtopic->the joy of awakening</li>
+                <li>speechtopic->shedding the weakness of flesh</li>
+                <li>speechtopic->the Mamono Lord's gift</li>
+                <li>speechtopic->sisterhood among monsters</li>
+                <li>speechtopic->the sweetness of mana</li>
+                <li>speechtopic->leaving humanity behind</li>
+                <li>speechtopic->the bliss of transformation</li>
+            </rulesStrings>
+        </logRulesInitiator>
+    </InteractionDef>
+
+    <InteractionDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Speech_TransformCaptiveRite</defName>
+        <label>forced awakening speech</label>
+        <workerClass>InteractionWorker</workerClass>
+        <ignoreTimeSinceLastInteraction>True</ignoreTimeSinceLastInteraction>
+        <symbol>Things/Mote/SpeechSymbols/Speech</symbol>
+        <logRulesInitiator>
+            <include><li>SpeechUtility</li></include>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
+                <li>speechtopic->the gift bestowed on the unwilling</li>
+                <li>speechtopic->resistance melting into bliss</li>
+                <li>speechtopic->the mercy of monstrous rebirth</li>
+                <li>speechtopic->what she will become</li>
+                <li>speechtopic->the futility of clinging to old flesh</li>
+                <li>speechtopic->the monster sleeping within her</li>
+                <li>speechtopic->gratitude she will one day feel</li>
+            </rulesStrings>
+        </logRulesInitiator>
+    </InteractionDef>
+
+    <!-- ===================== Ritual precepts ===================== -->
+
+    <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Ritual_TransformColonist</defName>
+        <label>rite of awakening</label>
+        <description>A sacred rite in which a monster pours her mana into a willing sister, remaking her as a monster like herself. If the rite goes poorly, the mana fails to take hold and nothing happens.</description>
+        <issue>Ritual</issue>
+        <impact>Medium</impact>
+        <iconPath>UI/Icons/Rituals/FreeMonsterise</iconPath>
+        <preceptClass>Precept_Ritual</preceptClass>
+        <ritualPatternBase>ProjectMomo_RitualPattern_TransformColonist</ritualPatternBase>
+        <!-- No allowDuplicates: a single-purpose rite must be granted once, like
+             vanilla's Execution/GladiatorDuel. Setting it true (as Scarification
+             does) makes the ideo generator add the rite twice. -->
+        <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+        <selectionWeight>1.0</selectionWeight>
+        <displayOrderInImpact>100</displayOrderInImpact>
+    </PreceptDef>
+
+    <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Ritual_TransformCaptive</defName>
+        <label>rite of forced awakening</label>
+        <description>A solemn rite in which a monster pours her mana into a prisoner or slave, willing or not, remaking her as a monster. If the rite goes poorly, the mana fails to take hold and nothing happens.</description>
+        <issue>Ritual</issue>
+        <impact>Medium</impact>
+        <iconPath>UI/Icons/Rituals/ForceMonsterise</iconPath>
+        <preceptClass>Precept_Ritual</preceptClass>
+        <ritualPatternBase>ProjectMomo_RitualPattern_TransformCaptive</ritualPatternBase>
+        <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+        <selectionWeight>1.0</selectionWeight>
+        <displayOrderInImpact>100</displayOrderInImpact>
+    </PreceptDef>
+
+    <!-- ===================== Ritual patterns ===================== -->
+
+    <RitualPatternDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualPattern_TransformColonist</defName>
+        <alwaysStartAnytime>true</alwaysStartAnytime>
+        <ritualObligationTargetFilter>RitualSpotIdeogramOrAltar</ritualObligationTargetFilter>
+        <ritualTargetFilter>AltarIdeogramOrRitualSpot</ritualTargetFilter>
+        <ritualBehavior>ProjectMomo_RitualBehavior_TransformColonist</ritualBehavior>
+        <ritualOnlyForIdeoMembers>true</ritualOnlyForIdeoMembers>
+        <ritualOutcomeEffect>ProjectMomo_RitualOutcome_TransformColonist</ritualOutcomeEffect>
+        <tags>
+            <li>ProjectMomo_TransformColonist</li>
+        </tags>
+    </RitualPatternDef>
+
+    <RitualPatternDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualPattern_TransformCaptive</defName>
+        <alwaysStartAnytime>true</alwaysStartAnytime>
+        <ritualObligationTargetFilter>RitualSpotIdeogramOrAltar</ritualObligationTargetFilter>
+        <ritualTargetFilter>AltarIdeogramOrRitualSpot</ritualTargetFilter>
+        <ritualBehavior>ProjectMomo_RitualBehavior_TransformCaptive</ritualBehavior>
+        <ritualOnlyForIdeoMembers>false</ritualOnlyForIdeoMembers>
+        <ritualOutcomeEffect>ProjectMomo_RitualOutcome_TransformCaptive</ritualOutcomeEffect>
+        <tags>
+            <li>ProjectMomo_TransformCaptive</li>
+        </tags>
+    </RitualPatternDef>
+
+    <!-- ===================== Ritual behaviors ===================== -->
+
+    <!-- Colonist rite: the corruptor escorts the willing convert to the ritual
+         spot (scarification-style), then pours her mana in a speech while the
+         convert lies in the ritual circle. -->
+    <RitualBehaviorDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualBehavior_TransformColonist</defName>
+        <durationTicks>2500</durationTicks>
+        <useVisualEffectsFromRoleIdIdeo>corruptor</useVisualEffectsFromRoleIdIdeo>
+        <roles Inherit="False">
+            <li Class="ProjectMomo.RitualRoleMomo">
+                <label>corruptor</label>
+                <id>corruptor</id>
+                <maxCount>1</maxCount>
+                <required>True</required>
+                <missingDesc>a monster to lead the rite</missingDesc>
+                <countsAsParticipant>False</countsAsParticipant>
+                <allowChild>false</allowChild>
+                <mustBeAbleToReachTarget>True</mustBeAbleToReachTarget>
+            </li>
+            <li Class="ProjectMomo.RitualRoleTransformableColonist">
+                <label>convert</label>
+                <id>convert</id>
+                <maxCount>1</maxCount>
+                <required>True</required>
+                <missingDesc>the woman to awaken</missingDesc>
+                <ignoreBleeding>true</ignoreBleeding>
+                <countsAsParticipant>False</countsAsParticipant>
+                <allowChild>false</allowChild>
+            </li>
+        </roles>
+        <stages>
+            <!-- Convert is taken -->
+            <li Class="RitualStage_InteractWithRole">
+                <targets>
+                    <li>
+                        <pawnId>corruptor</pawnId>
+                        <targetId>convert</targetId>
+                    </li>
+                </targets>
+                <defaultDuty>Spectate</defaultDuty>
+                <essential>True</essential>
+                <failTriggers>
+                    <li Class="StageFailTrigger_TargetPawnUnreachable">
+                        <takerId>corruptor</takerId>
+                        <takeeId>convert</takeeId>
+                        <desc>Convert is not reachable.</desc>
+                    </li>
+                    <li Class="StageFailTrigger_PawnAsleep">
+                        <desc>escort asleep</desc>
+                        <pawnId>corruptor</pawnId>
+                    </li>
+                </failTriggers>
+                <endTriggers>
+                    <li Class="StageEndTrigger_RolesArrived">
+                        <roleIds>
+                            <li>corruptor</li>
+                        </roleIds>
+                        <clearTag>true</clearTag>
+                    </li>
+                </endTriggers>
+                <roleBehaviors>
+                    <li>
+                        <roleId>corruptor</roleId>
+                        <dutyDef>DeliverPawnToCell</dutyDef>
+                        <customPositions>
+                            <li Class="RitualPosition_OnInteractionCell">
+                                <offset>(-1,0,0)</offset>
+                                <facing>South</facing>
+                            </li>
+                        </customPositions>
+                    </li>
+                    <li>
+                        <roleId>convert</roleId>
+                        <dutyDef>Idle</dutyDef>
+                    </li>
+                </roleBehaviors>
+            </li>
+            <!-- The pouring of mana -->
+            <li>
+                <defaultDuty>Spectate</defaultDuty>
+                <essential>True</essential>
+                <endTriggers>
+                    <li Class="StageEndTrigger_DurationPercentage">
+                        <percentage>1</percentage>
+                    </li>
+                </endTriggers>
+                <roleBehaviors>
+                    <li>
+                        <roleId>corruptor</roleId>
+                        <dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+                        <speakerInteraction>ProjectMomo_Speech_TransformRite</speakerInteraction>
+                        <customPositions>
+                            <li Class="RitualPosition_Lectern">
+                                <maxDistanceToFocus>5</maxDistanceToFocus>
+                            </li>
+                            <li Class="RitualPosition_OnInteractionCell" />
+                        </customPositions>
+                    </li>
+                    <li>
+                        <roleId>convert</roleId>
+                        <dutyDef>LayDownAwake</dutyDef>
+                    </li>
+                </roleBehaviors>
+            </li>
+        </stages>
+    </RitualBehaviorDef>
+
+    <!-- Captive rite: the corruptor escorts the prisoner/slave to the ritual
+         focus (execution-style), then pours her mana over her. -->
+    <RitualBehaviorDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualBehavior_TransformCaptive</defName>
+        <durationTicks>2500</durationTicks>
+        <useVisualEffectsFromRoleIdIdeo>corruptor</useVisualEffectsFromRoleIdIdeo>
+        <roles Inherit="False">
+            <li Class="ProjectMomo.RitualRoleMomo">
+                <label>corruptor</label>
+                <id>corruptor</id>
+                <maxCount>1</maxCount>
+                <required>True</required>
+                <missingDesc>a monster to lead the rite</missingDesc>
+                <countsAsParticipant>False</countsAsParticipant>
+                <allowChild>false</allowChild>
+                <mustBeAbleToReachTarget>True</mustBeAbleToReachTarget>
+            </li>
+            <li Class="ProjectMomo.RitualRoleTransformableCaptive">
+                <label>captive</label>
+                <id>captive</id>
+                <maxCount>1</maxCount>
+                <required>True</required>
+                <missingDesc>the captive to awaken</missingDesc>
+                <ignoreBleeding>true</ignoreBleeding>
+                <allowDowned>true</allowDowned>
+                <removeFromAssignmentsOnDeath>false</removeFromAssignmentsOnDeath>
+                <countsAsParticipant>False</countsAsParticipant>
+                <allowChild>false</allowChild>
+            </li>
+        </roles>
+        <stages>
+            <!-- Captive is taken -->
+            <li Class="RitualStage_InteractWithPrisoner">
+                <defaultDuty>Spectate</defaultDuty>
+                <endTriggers>
+                    <li Class="StageEndTrigger_PawnDeliveredOrNotValid"/>
+                </endTriggers>
+                <failTriggers>
+                    <li Class="StageFailTrigger_TargetPawnUnreachable">
+                        <takerId>corruptor</takerId>
+                        <takeeId>captive</takeeId>
+                        <desc>Captive is not reachable.</desc>
+                    </li>
+                    <li Class="StageFailTrigger_PawnAsleep">
+                        <desc>escort asleep</desc>
+                        <pawnId>corruptor</pawnId>
+                    </li>
+                </failTriggers>
+                <roleBehaviors>
+                    <li>
+                        <roleId>corruptor</roleId>
+                        <dutyDef>DeliverPawnToAltar</dutyDef>
+                    </li>
+                    <li>
+                        <roleId>captive</roleId>
+                        <dutyDef>Idle</dutyDef>
+                    </li>
+                </roleBehaviors>
+            </li>
+            <!-- The pouring of mana -->
+            <li>
+                <defaultDuty>Spectate</defaultDuty>
+                <endTriggers>
+                    <li Class="StageEndTrigger_DurationPercentage">
+                        <percentage>1</percentage>
+                    </li>
+                </endTriggers>
+                <roleBehaviors>
+                    <li>
+                        <roleId>corruptor</roleId>
+                        <dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+                        <speakerInteraction>ProjectMomo_Speech_TransformCaptiveRite</speakerInteraction>
+                        <customPositions>
+                            <li Class="RitualPosition_OnInteractionCell" />
+                        </customPositions>
+                    </li>
+                    <li>
+                        <roleId>captive</roleId>
+                        <dutyDef>LayDownAwake</dutyDef>
+                    </li>
+                </roleBehaviors>
+            </li>
+        </stages>
+    </RitualBehaviorDef>
+
+    <!-- ===================== Ritual outcomes ===================== -->
+
+    <RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualOutcome_TransformColonist</defName>
+        <description>If the rite goes well, the convert will be transformed into the corruptor's own monster xenotype. If it goes badly, the mana fails to take hold and nothing happens.</description>
+        <workerClass>ProjectMomo.RitualOutcomeEffectWorker_TransformColonist</workerClass>
+        <givesDevelopmentPoints>false</givesDevelopmentPoints>
+        <comps>
+            <li Class="RitualOutcomeComp_RoomStat">
+                <label>room impressiveness</label>
+                <statDef>Impressiveness</statDef>
+                <curve>
+                    <points>
+                        <li>0,  0</li>
+                        <li>50,  0.1</li>
+                        <li>120, 0.2</li>
+                    </points>
+                </curve>
+            </li>
+            <li Class="RitualOutcomeComp_ParticipantCount">
+                <label>participant count</label>
+                <curve>
+                    <points>
+                        <li>(1,  0.0)</li>
+                        <li>(5,  0.3)</li>
+                        <li>(10, 0.4)</li>
+                    </points>
+                </curve>
+            </li>
+        </comps>
+        <outcomeChances>
+            <li>
+                <label>Fumbled</label>
+                <chance>0.05</chance>
+                <description>The {0} was a humiliating muddle: the corruptor stumbled over the rite, the mana scattered like sparks, and the convert was left waiting on the cold floor.</description>
+                <positivityIndex>-2</positivityIndex>
+            </li>
+            <li>
+                <label>Fizzled</label>
+                <chance>0.15</chance>
+                <description>The {0} was weak. The mana flickered and dimmed before it could take root, and the rite quietly fell apart.</description>
+                <positivityIndex>-1</positivityIndex>
+            </li>
+            <li>
+                <label>Beautiful</label>
+                <chance>0.6</chance>
+                <description>The {0} was beautiful. The mana poured in without pause, and the convert's old body melted gracefully into her new, monstrous form.</description>
+                <positivityIndex>1</positivityIndex>
+            </li>
+            <li>
+                <label>Transcendent</label>
+                <chance>0.2</chance>
+                <description>The {0} was transcendent. The mana sang as it remade her, and the convert rose reborn in radiant, monstrous glory.</description>
+                <positivityIndex>2</positivityIndex>
+            </li>
+        </outcomeChances>
+    </RitualOutcomeEffectDef>
+
+    <RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_RitualOutcome_TransformCaptive</defName>
+        <description>If the rite goes well, the captive will be transformed into a random monster xenotype, and her will, resistance and certainty in her old beliefs will be shaken. If it goes badly, the mana fails to take hold and nothing happens.</description>
+        <workerClass>ProjectMomo.RitualOutcomeEffectWorker_TransformCaptive</workerClass>
+        <givesDevelopmentPoints>false</givesDevelopmentPoints>
+        <comps>
+            <li Class="RitualOutcomeComp_RoomStat">
+                <label>room impressiveness</label>
+                <statDef>Impressiveness</statDef>
+                <curve>
+                    <points>
+                        <li>0,  0</li>
+                        <li>50,  0.1</li>
+                        <li>120, 0.2</li>
+                    </points>
+                </curve>
+            </li>
+            <li Class="RitualOutcomeComp_ParticipantCount">
+                <label>participant count</label>
+                <curve>
+                    <points>
+                        <li>(1,  0.0)</li>
+                        <li>(5,  0.3)</li>
+                        <li>(10, 0.4)</li>
+                    </points>
+                </curve>
+            </li>
+        </comps>
+        <outcomeChances>
+            <li>
+                <label>Fumbled</label>
+                <chance>0.05</chance>
+                <description>The {0} was a farce: the captive spat curses, the corruptor lost her focus, and the mana sputtered out before it could begin.</description>
+                <positivityIndex>-2</positivityIndex>
+            </li>
+            <li>
+                <label>Fizzled</label>
+                <chance>0.15</chance>
+                <description>The {0} was ineffective. The captive's body rejected the mana, and the rite guttered out like a dying candle.</description>
+                <positivityIndex>-1</positivityIndex>
+            </li>
+            <li>
+                <label>Overwhelming</label>
+                <chance>0.6</chance>
+                <description>The {0} was overwhelming. The captive's defiance dissolved as the mana remade her, cell by cell, into a monster.</description>
+                <positivityIndex>1</positivityIndex>
+            </li>
+            <li>
+                <label>Unstoppable</label>
+                <chance>0.2</chance>
+                <description>The {0} was unstoppable. The mana flooded through the captive in a single glorious surge, and a new monster opened her eyes.</description>
+                <positivityIndex>2</positivityIndex>
+            </li>
+        </outcomeChances>
+    </RitualOutcomeEffectDef>
+
+    <!-- ===================== The meme ===================== -->
+
+    <MemeDef MayRequire="Ludeon.RimWorld.Ideology">
+        <defName>ProjectMomo_Meme_MonsterExtremists</defName>
+        <label>monster extremists</label>
+        <description>All men should be drained, and all women should be transformed! The baseline human form is a larval state, unworthy of respect: women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
+        <iconPath>UI/Memes/Monsterbucker</iconPath>
+        <groupDef>Misc</groupDef>
+        <impact>2</impact>
+        <!-- Mutually exclusive with FleshPurity and Transhumanist, which both
+             carry this exclusion tag (the ascension precept also lists them as
+             conflicting memes, as defense in depth). -->
+        <exclusionTags>
+            <li>FleshAugmentation</li>
+        </exclusionTags>
+        <requireOne>
+            <li>
+                <li>ProjectMomo_MonsterAscension_Exalted</li>
+            </li>
+            <li>
+                <li>ProjectMomo_Ritual_TransformColonist</li>
+            </li>
+            <li>
+                <li>ProjectMomo_Ritual_TransformCaptive</li>
+            </li>
+        </requireOne>
+        <generalRules>
+            <rulesStrings>
+                <li>memeAdjective->monstrous</li>
+                <li>memeAdjective->demon-touched</li>
+                <li>memeAdjective->ascendant</li>
+                <li>memeCreed->cult</li>
+                <li>memeCreed->sisterhood</li>
+                <li>memeHyphenPrefix->monstro</li>
+                <li>memeHyphenPrefix->demon</li>
+                <li>memeConcept->ascension</li>
+                <li>memeConcept->the inma</li>
+                <li>memeConcept->corruption</li>
+                <li>memeConcept->monstrous rebirth</li>
+                <li>memeLeaderNoun->matriarch</li>
+                <li>memeLeaderNoun->corrupter</li>
+                <li>memeLeaderAdjective->monstrous</li>
+                <li>memeLeaderAdjective->ascendant</li>
+                <li>memeMoralist->tempter</li>
+                <li>memeMoralist->corrupter</li>
+                <li>memeMoralist->recruiter</li>
+            </rulesStrings>
+        </generalRules>
+        <descriptionMaker>
+            <rules>
+                <rulesStrings>
+                    <!-- theist myth -->
+                    <li>creation(tag=meme_MonsterExtremists)        ->[deity0_name] looked upon the first humans and found their bodies wanting, so [deity0_pronoun] remade the most beloved of them into monsters, beautiful and hungry, and bade them claim the rest.</li>
+                    <li>episode(uses=1,tag=meme_MonsterExtremists)  ->Those who clung to their baseline flesh were passed over by [deity0_name]'s blessing, and were forgotten.</li>
+                    <!-- theist founder -->
+                    <li>intro(tag=meme_MonsterExtremists)           ->On the [place_summary] [place_name] there was a [altarName] in [deity0_name]'s [altarRoomLabel], where the [deity0_type] poured mana into the willing and remade them.</li>
+                    <li>conflict(tag=meme_MonsterExtremists)        ->A fearful [foeLeader] sent [foeSoldiers] to burn the monsters and keep everyone trapped in baseline flesh.</li>
+                    <li>founderJoin(tag=meme_MonsterExtremists)     ->A [place_job] named [founderName] answered by offering [founder_possessive] own body to the mana, and rose from the ritual circle as something greater than human.</li>
+                    <li>victory(tag=meme_MonsterExtremists)         ->The [foeLeader] finally sent [foeSoldiers] to destroy the [memberNamePlural], but the monsters' charm unraveled their resolve, and one by one they knelt to be remade.</li>
+                    <!-- ideological founder -->
+                    <li>setup(tag=meme_MonsterExtremists)           ->[founderName] watched a monster drain a man to blissful ruin and remake a woman in her own image, and understood at once what humanity was for.</li>
+                    <li>story(uses=1,tag=meme_MonsterExtremists)    ->[founderName] taught [founder_possessive] followers that the baseline form is only a chrysalis, and that clinging to it is cowardice.</li>
+                    <!-- ideological lesson -->
+                    <li>lessonIntro(tag=meme_MonsterExtremists)     ->The first sister I watched awaken wept with joy at what she had become, and in her tears I finally saw the truth we had all been missing:</li>
+                    <li>lesson(tag=meme_MonsterExtremists)          ->to stay baseline is to refuse to be born</li>
+                    <li>lessonReinforcement(tag=meme_MonsterExtremists) ->It became so clear when my own hunger for essence first stirred, and I felt what I had always been meant to be.</li>
+                    <!-- archist -->
+                    <li>archistBasis(tag=meme_MonsterExtremists)    ->The archotechs themselves reshaped lesser beings to suit their designs; to remake the human form is to walk in their image.</li>
+                    <li>archistFact(tag=meme_MonsterExtremists)     ->A body rewritten by mana is a perfected instrument, closer to the archotechs' flawless workings than any baseline flesh.</li>
+                    <!-- animist -->
+                    <li>animistBasis(tag=meme_MonsterExtremists)    ->Every soul carries a monster spirit sleeping within it; the rite of awakening merely lets the true spirit out.</li>
+                    <li>animistFact(tag=meme_MonsterExtremists)     ->Baseline flesh is a cage, and the spirits rejoice when it is opened.</li>
+                </rulesStrings>
+            </rules>
+        </descriptionMaker>
+        <symbolPacks>
+            <li>
+                <ideoName>Ascension</ideoName>
+                <theme>ascension</theme>
+                <adjective>ascendant</adjective>
+                <member>ascendant</member>
+            </li>
+            <li>
+                <ideoName>Monstrolatry</ideoName>
+                <theme>monsters</theme>
+                <adjective>monstrous</adjective>
+                <member>monster-worshipper</member>
+            </li>
+            <li>
+                <ideoName>Awakening</ideoName>
+                <theme>awakening</theme>
+                <adjective>awakened</adjective>
+                <member>awakened</member>
+            </li>
+        </symbolPacks>
+    </MemeDef>
+</Defs>

@@ -8,7 +8,13 @@ namespace ProjectMomo
     {
         public static PawnCapacityDef ProjectMomo_Willpower;
         public static GeneDef ProjectMomo_Momo;
+        public static GeneDef PMM_Gene_Flight;
+        public static GeneDef ProjectMomo_MomoVenom;
+        public static GeneDef ProjectMomo_MomoFiery;
+        public static GeneDef ProjectMomo_MomoClaws;
         public static HediffDef ProjectMomo_TeaseDamage;
+        public static HediffDef ProjectMomo_VenomBuildup;
+        public static HediffDef ProjectMomo_FieryBondWard;
         public static HediffDef ProjectMomo_WillpowerBreak;
         public static HediffDef ProjectMomo_ManaStarvation;
         public static PawnRelationDef ProjectMomo_Tsugai;
@@ -53,6 +59,12 @@ namespace ProjectMomo
         // ISEKAI: a husband with the Protagonist trait always wins over a bonded Momo.
         [MayRequire("JellyCreative.IsekaiLeveling")]
         public static TraitDef Isekai_Protagonist;
+
+        // Monster Extremists ideology meme: ascended/baseliner social opinions.
+        [MayRequire("Ludeon.RimWorld.Ideology")]
+        public static ThoughtDef ProjectMomo_MonsterExtremistAscended;
+        [MayRequire("Ludeon.RimWorld.Ideology")]
+        public static ThoughtDef ProjectMomo_MonsterExtremistBaseliner;
 
         static ProjectMomo_DefOf()
         {

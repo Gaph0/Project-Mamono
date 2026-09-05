@@ -20,6 +20,22 @@ namespace ProjectMomo
             return pawn?.genes != null && pawn.genes.HasActiveGene(ProjectMomo_DefOf.ProjectMomo_Momo);
         }
 
+        /// <summary>
+        /// True while the pawn is a visitor: a member of another, non-hostile faction
+        /// on the colony map (not a colonist, not a wild man, not a raider). Visitors
+        /// are guests of the colony — hostile pawns (raiders) are not "visiting" even
+        /// though they enter the map, and are excluded here.
+        /// </summary>
+        public static bool IsVisitingGuest(Pawn pawn)
+        {
+            if (pawn == null || pawn.Faction == null || pawn.Faction.IsPlayer || pawn.IsWildMan())
+            {
+                return false;
+            }
+            Faction player = Faction.OfPlayer;
+            return player == null || !pawn.Faction.HostileTo(player);
+        }
+
         /// <summary>The pawn's Essence need, or null.</summary>
         public static Need_Essence Essence(Pawn pawn)
         {

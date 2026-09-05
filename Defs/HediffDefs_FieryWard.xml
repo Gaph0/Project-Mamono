@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        The lesser fire ward a fiery momo's bond spreads to her tsugai partner:
+        +40C max comfortable temperature, 15% less flammable. The 15% flame-
+        damage reduction itself is applied by FireImmunityPatch (any damage in
+        the Heat armour category). Severity stays fixed at 1, marker style like
+        the tsugai bond hediff; FireWardComponent grants and strips it hourly
+        as a living tsugai bond to a fiery-momo carrier appears or ends.
+    -->
+    <HediffDef>
+        <defName>ProjectMomo_FieryBondWard</defName>
+        <label>fire-warded</label>
+        <description>Warmth radiates through the bond with a fiery momo. The partner shrugs off heat that would fell others - though nothing like her own immunity.</description>
+        <hediffClass>HediffWithComps</hediffClass>
+        <defaultLabelColor>(1.0, 0.55, 0.25)</defaultLabelColor>
+        <isBad>false</isBad>
+        <initialSeverity>1</initialSeverity>
+        <maxSeverity>1</maxSeverity>
+        <stages>
+            <li>
+                <label>fire-warded</label>
+                <statOffsets>
+                    <ComfyTemperatureMax>40</ComfyTemperatureMax>
+                </statOffsets>
+                <statFactors>
+                    <Flammability>0.85</Flammability>
+                </statFactors>
+            </li>
+        </stages>
+    </HediffDef>
+</Defs>

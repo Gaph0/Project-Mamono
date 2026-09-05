@@ -6,14 +6,27 @@ using Verse;
 namespace ProjectMomo
 {
     /// <summary>
-    /// Momos don't lose fertility to age. Vanilla models the decline as
-    /// StatPart_FertilityByGenderAge on the Fertility stat (Biotech), which
-    /// multiplies the stat by the female age curve: 1.0 at 20-28, fading to
-    /// 0 by 50. This postfix undoes the curve's multiplier for Momo-carriers,
-    /// restoring fertility to its peak (the curve tops out at 1.0, so dividing
-    /// by it returns the pre-age value). Hediff-based fertility changes
-    /// (StatPart_FertilityByHediffs) are untouched — a sterilized or
-    /// fertility-drained Momo still feels those.
+    /// Momo fertility protection, in three layers (all Biotech-only):
+    ///
+    /// 1. Ageless fertility (MomoFertilityAgeless): Momos don't lose fertility
+    ///    to age. Vanilla models the decline as StatPart_FertilityByGenderAge on
+    ///    the Fertility stat, which multiplies the stat by the female age curve:
+    ///    1.0 at 20-28, fading to 0 by 50. The postfix undoes the curve's
+    ///    multiplier for Momo-carriers, restoring fertility to its peak (the
+    ///    curve tops out at 1.0, so dividing by it returns the pre-age value).
+    ///
+    /// 2. Always fertile (MomoAlwaysFertile): a postfix on StatExtension
+    ///    .GetStatValue floors an adult Momo's Fertility at 1.0, so no source —
+    ///    sterilized, fertility-drained or removed ovaries (StatPart_
+    ///    FertilityByHediffs), gene/trait offsets, or age — can push her below
+    ///    100%. Boosts above 100% are untouched.
+    ///
+    /// 3. Sterility gate (MomoAlwaysFertile): Pawn.Sterile() also blocks
+    ///    reproduction when a hediff has preventsPregnancy (Core's Sterilized —
+    ///    and pregnancy itself) or a gene has sterilize (Biotech's Sterile).
+    ///    A postfix reports adult Momo-carriers as not-sterile — except while
+    ///    pregnant, so an active pregnancy still suppresses re-conception the
+    ///    way vanilla expects. Children keep vanilla sterility in every layer.
     ///
     /// Patched by name (not typeof) so the patch target only resolves when
     /// Biotech is loaded; ProjectMomoMod applies it alongside the other
@@ -48,12 +61,101 @@ namespace ProjectMomo
             if (target == null)
             {
                 Log.Warning("[Project Momo] Could not find StatPart_FertilityByGenderAge.TransformValue — Momo age-fertility immunity disabled.");
+            }
+            else
+            {
+                var postfix = new HarmonyMethod(typeof(MomoFertilityPatch), nameof(Postfix));
+                harmony.Patch(target, postfix: postfix);
+            }
+
+            // Layer 3: the Sterile() gate. Sterile() is plain Verse (it self-gates
+            // on ModsConfig.BiotechActive), so this target always resolves.
+            var sterileTarget = AccessTools.Method(typeof(Pawn), nameof(Pawn.Sterile));
+            if (sterileTarget == null)
+            {
+                Log.Warning("[Project Momo] Could not find Pawn.Sterile — Momo sterility immunity disabled.");
+            }
+            else
+            {
+                harmony.Patch(sterileTarget, postfix: new HarmonyMethod(typeof(MomoFertilityPatch), nameof(SterilePostfix)));
+            }
+
+            // Layer 2: the stat floor. StatExtension.GetStatValue is one method
+            // with optional parameters, so pin the full signature explicitly.
+            var getStatTarget = AccessTools.Method(typeof(StatExtension), nameof(StatExtension.GetStatValue),
+                new[] { typeof(Thing), typeof(StatDef), typeof(bool), typeof(int) });
+            if (getStatTarget == null)
+            {
+                Log.Warning("[Project Momo] Could not find StatExtension.GetStatValue — Momo fertility floor disabled.");
                 return;
             }
 
-            var postfix = new HarmonyMethod(typeof(MomoFertilityPatch), nameof(Postfix));
-            harmony.Patch(target, postfix: postfix);
-            Log.Message("[Project Momo] Biotech detected — Momos are immune to fertility age decline.");
+            harmony.Patch(getStatTarget, postfix: new HarmonyMethod(typeof(MomoFertilityPatch), nameof(GetStatValuePostfix)));
+            Log.Message("[Project Momo] Biotech detected — Momos are immune to fertility age decline and sterility.");
+        }
+
+        /// <summary>
+        /// Layer 3: adult Momo-carriers are never sterile. Only the sterility
+        /// sources are overridden — vanilla's lifestage and humanlike gates
+        /// stand (children stay sterile), and an active pregnancy still
+        /// suppresses re-conception so the pregnancy system can't be retriggered
+        /// mid-term.
+        /// </summary>
+        public static void SterilePostfix(Pawn __instance, ref bool __result)
+        {
+            if (!__result || !ProjectMomoModSettings.Settings.MomoAlwaysFertile)
+            {
+                return;
+            }
+
+            if (__instance == null || (!EssenceTransfer.IsMomo(__instance) && !Incubisation.IsFullIncubus(__instance)))
+            {
+                return;
+            }
+
+            if (__instance.ageTracker?.CurLifeStage?.reproductive != true
+                || __instance.RaceProps == null || !__instance.RaceProps.Humanlike)
+            {
+                return;
+            }
+
+            if (PregnancyUtility.GetPregnancyHediff(__instance) != null)
+            {
+                return;
+            }
+
+            __result = false;
+        }
+
+        /// <summary>
+        /// Layer 2: an adult Momo's Fertility never reads below 100%, whatever
+        /// reduced it (hediffs, genes, traits, age). Children keep their natural
+        /// zero. Runs on every stat read, so the stat-def reference compare
+        /// comes first — it rejects virtually every call.
+        /// </summary>
+        public static void GetStatValuePostfix(Thing thing, StatDef stat, ref float __result)
+        {
+            if (BiotechFertilityStat == null || stat != BiotechFertilityStat || __result >= 1f)
+            {
+                return;
+            }
+
+            if (!ProjectMomoModSettings.Settings.MomoAlwaysFertile)
+            {
+                return;
+            }
+
+            if (!(thing is Pawn pawn) || (!EssenceTransfer.IsMomo(pawn) && !Incubisation.IsFullIncubus(pawn)))
+            {
+                return;
+            }
+
+            if (pawn.ageTracker?.CurLifeStage?.reproductive != true)
+            {
+                return;
+            }
+
+            __result = 1f;
         }
 
         /// <summary>

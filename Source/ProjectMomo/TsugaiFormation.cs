@@ -26,6 +26,14 @@ namespace ProjectMomo
                 return;
             }
 
+            // A visiting Momo never takes a husband by force on her hosts' map — she is a
+            // guest, and bonding a colonist (then kidnapping him) is exactly what the visit
+            // should never produce. Wild Momo (factionless) and hostile raiders still can.
+            if (EssenceTransfer.IsVisitingGuest(momo))
+            {
+                return;
+            }
+
             if (!CanBond(momo, man) || momo.jobs == null || momo.Downed || !momo.Spawned)
             {
                 return;

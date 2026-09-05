@@ -10,9 +10,11 @@ namespace ProjectMomo
     /// per-pawn attempt cooldowns (so a Momo whose mate is dry — or whose feed
     /// was interrupted — doesn't re-issue the job every think tick), and a
     /// per-day cap on natural feeds so a hungry Momo doesn't empty her mate
-    /// over and over. Follows the same auto-added GameComponent pattern as
-    /// TransformProposalComponent. Expired entries are purged once a day so
-    /// long games don't accumulate dead pawn ids.
+    /// over and over. Also holds a transient per-pawn lovin'-drive cache so
+    /// the giver can scale the feeding cadence by the pair's lovin' MTB
+    /// without paying for GetLovinMtbHours every think cycle. Follows the same
+    /// auto-added GameComponent pattern as TransformProposalComponent. Expired
+    /// entries are purged once a day so long games don't accumulate dead pawn ids.
     /// </summary>
     public class ManaFeedingComponent : GameComponent
     {
@@ -21,6 +23,14 @@ namespace ProjectMomo
         private Dictionary<int, int> feedCount = new Dictionary<int, int>();
         private Dictionary<int, int> feedDay = new Dictionary<int, int>();
         private int lastPurgeTick;
+
+        // How long a lovin'-drive reading stays fresh (one in-game hour).
+        private const int DriveCacheTtlTicks = 2500;
+        // Transient per-pawn lovin'-drive cache — deliberately NOT scribed:
+        // it is recomputed lazily within an hour of loading, so persisting it
+        // would only bloat the save.
+        private Dictionary<int, float> driveFactor = new Dictionary<int, float>();
+        private Dictionary<int, int> driveCacheExpiry = new Dictionary<int, int>();
 
         public ManaFeedingComponent(Game game)
         {
@@ -58,6 +68,26 @@ namespace ProjectMomo
             {
                 nextAttemptTick[pawn.thingIDNumber] = nextTick;
             }
+        }
+
+        /// <summary>True when a fresh cached lovin'-drive factor exists for the pawn (out value is 1 when stale/missing).</summary>
+        public bool TryGetCachedDrive(Pawn pawn, int now, out float drive)
+        {
+            drive = 1f;
+            return pawn != null
+                && driveCacheExpiry.TryGetValue(pawn.thingIDNumber, out int expiry) && now < expiry
+                && driveFactor.TryGetValue(pawn.thingIDNumber, out drive);
+        }
+
+        /// <summary>Caches the pawn's lovin'-drive factor for the TTL.</summary>
+        public void NoteDrive(Pawn pawn, int now, float drive)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+            driveFactor[pawn.thingIDNumber] = drive;
+            driveCacheExpiry[pawn.thingIDNumber] = now + DriveCacheTtlTicks;
         }
 
         /// <summary>True while the pawn has feeds left before hitting the per-day cap (0 = uncapped).</summary>
@@ -105,6 +135,24 @@ namespace ProjectMomo
 
             PurgeExpired(nextScanTick, now);
             PurgeExpired(nextAttemptTick, now);
+
+            // The drive cache is transient: drop factors whose expiry has passed.
+            PurgeExpired(driveCacheExpiry, now);
+            if (driveFactor.Count > driveCacheExpiry.Count)
+            {
+                purgeBuffer.Clear();
+                foreach (KeyValuePair<int, float> kv in driveFactor)
+                {
+                    if (!driveCacheExpiry.ContainsKey(kv.Key))
+                    {
+                        purgeBuffer.Add(kv.Key);
+                    }
+                }
+                for (int i = 0; i < purgeBuffer.Count; i++)
+                {
+                    driveFactor.Remove(purgeBuffer[i]);
+                }
+            }
 
             // Feed counts from days gone by are dead weight: drop them.
             int today = now / GenDate.TicksPerDay;

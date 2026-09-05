@@ -29,6 +29,18 @@ namespace ProjectMomo
         // XP per full point of essence consumed by a Momo (give/drain).
         public float XPPerEssence = 50f;
 
+        // Momo venom gene: venom severity injected per melee hit (0.05 = 20
+        // hits to fully pin a victim; 100% wears off in 4 hours).
+        public float VenomSeverityPerHit = 0.05f;
+        // Fiery momo gene: flame-damage multiplier for a pawn warded through a
+        // tsugai bond to a fiery momo (0.85 = 15% less flame damage). The
+        // carrier herself is always fully immune.
+        public float FieryWardFlameFactor = 0.85f;
+        // Momo claws gene: tease-damage multiplier for clawed carriers.
+        public float ClawsTeaseMultiplier = 1.5f;
+        // Momo claws gene: manipulation capacity penalty for clawed carriers.
+        public float ClawsManipulationPenalty = 0.15f;
+
         // Mana starvation: days for the decline to fully escalate while Mana is empty.
         public float StarvationDaysToMax = 1.5f;
         // Mana restored per point of food nutrition a Momo eats (0.15 = a 0.9-nutrition
@@ -38,6 +50,10 @@ namespace ProjectMomo
         // Mana drain multiplier for WILD Momo (wild men): below 1 drains slower than tamed/colonist
         // Momo, so a wild Momo roaming the map doesn't starve as fast. 1 = same as tamed.
         public float WildManaDrainFactor = 0.25f;
+        // Mana drain multiplier for visiting Momo (guests of another, non-hostile faction):
+        // below 1 drains slower than colonist Momo, so a visitor doesn't starve toward a
+        // berserk break during an ordinary visit. 1 = same as colonists.
+        public float GuestManaDrainFactor = 0.25f;
         // Mana level (fraction) below which a Momo can randomly suffer a feeding break.
         public float LowManaBreakThreshold = 0.1f;
         // Mental-break mean-time-between (days) while Mana is below the threshold.
@@ -55,6 +71,13 @@ namespace ProjectMomo
         // Max completed autonomous feeds per Momo per day (0 = uncapped). Past the
         // cap, low Mana falls back to the feeding/berserk break system.
         public int AutonomousFeedMaxPerDay = 2;
+        // Tie autonomous feeding cadence to the pair's lovin' MTB: a Momo whose
+        // bonded lovin' MTB is short (high drive) seeks earlier, retries sooner
+        // and may feed more per day; a long MTB (low drive) seeks less.
+        public bool AutonomousFeedLovinDriven = true;
+        // Cap on how far lovin' drive may speed up (or slow down) autonomous
+        // feeding (3 = up to 3x more often, or a third as often, at the extremes).
+        public float AutonomousFeedLovinDriveMaxEffect = 3f;
 
         // Base chance a Momo who bonds to a colonist joins the colony (equal levels).
         public float BondJoinBaseChance = 0.25f;
@@ -117,6 +140,12 @@ namespace ProjectMomo
         // Momos don't lose fertility to age (Biotech's fertility age curve is
         // cancelled for Momo-carriers).
         public bool MomoFertilityAgeless = true;
+
+        // Momos are always fertile: an adult carrier's Fertility stat never
+        // drops below 100%, and sterility from hediffs (sterilized, fertility-
+        // drained, removed ovaries) or sterilize-genes is ignored. An active
+        // pregnancy still suppresses re-conception; children are unaffected.
+        public bool MomoAlwaysFertile = true;
 
         // Hidden debug tab enabler.
         public bool DebugTabEnabled = false;
@@ -187,6 +216,17 @@ namespace ProjectMomo
         // VPE integration: allow Momo xenotypes to spawn with VPE psycasts.
         public bool VPEPsycastsEnabled = true;
 
+        // Monster Extremists ideology meme: social opinion of "ascended" pawns
+        // (transformed women / tsugai-bonded men) and of untransformed, unbonded
+        // "baseliner" adults.
+        public int MonsterExtremistAscendedOpinion = 10;
+        public int MonsterExtremistBaselinerOpinion = -15;
+        // Captive rite of awakening: fraction of the transformed prisoner/slave's
+        // will, resistance and ideo certainty that REMAINS afterwards (0.5 = halved).
+        public float MonsterExtremistCaptiveWillFactor = 0.5f;
+        public float MonsterExtremistCaptiveResistanceFactor = 0.5f;
+        public float MonsterExtremistCaptiveCertaintyFactor = 0.5f;
+
         public void ResetToDefaults()
         {
             VitWillpowerPerPoint = 0.02f;
@@ -199,14 +239,22 @@ namespace ProjectMomo
             KnockoutXP = 25;
             XPPerTeaseSeverity = 40f;
             XPPerEssence = 50f;
+            VenomSeverityPerHit = 0.05f;
+            FieryWardFlameFactor = 0.85f;
+            ClawsTeaseMultiplier = 1.5f;
+            ClawsManipulationPenalty = 0.15f;
             StarvationDaysToMax = 1.5f;
             ManaFromFoodPerNutrition = 0.15f;
+            WildManaDrainFactor = 0.25f;
+            GuestManaDrainFactor = 0.25f;
             LowManaBreakThreshold = 0.1f;
             LowManaBreakMtbDays = 0.5f;
             AutonomousFeedingEnabled = true;
             AutonomousFeedThreshold = 0.3f;
             AutonomousFeedRetryCooldownHours = 1f;
             AutonomousFeedMaxPerDay = 2;
+            AutonomousFeedLovinDriven = true;
+            AutonomousFeedLovinDriveMaxEffect = 3f;
             BondJoinBaseChance = 0.25f;
             BondJoinChancePerLevel = 0.05f;
             BondJoinMaxChance = 0.9f;
@@ -232,6 +280,7 @@ namespace ProjectMomo
             IntimacyFeeding = true;
             IntimacyAnimation = true;
             MomoFertilityAgeless = true;
+            MomoAlwaysFertile = true;
             DebugTabEnabled = false;
             DisableIncestPrevention = false;
             CorruptionEnabled = true;
@@ -259,6 +308,11 @@ namespace ProjectMomo
             IncubisationDecayPerDay = 0f;
             IncubusFoodPerEssence = 0.5f;
             VPEPsycastsEnabled = true;
+            MonsterExtremistAscendedOpinion = 10;
+            MonsterExtremistBaselinerOpinion = -15;
+            MonsterExtremistCaptiveWillFactor = 0.5f;
+            MonsterExtremistCaptiveResistanceFactor = 0.5f;
+            MonsterExtremistCaptiveCertaintyFactor = 0.5f;
         }
 
         public override void ExposeData()
@@ -274,14 +328,22 @@ namespace ProjectMomo
             Scribe_Values.Look(ref KnockoutXP, "KnockoutXP", 25);
             Scribe_Values.Look(ref XPPerTeaseSeverity, "XPPerTeaseSeverity", 40f);
             Scribe_Values.Look(ref XPPerEssence, "XPPerEssence", 50f);
+            Scribe_Values.Look(ref VenomSeverityPerHit, "VenomSeverityPerHit", 0.05f);
+            Scribe_Values.Look(ref FieryWardFlameFactor, "FieryWardFlameFactor", 0.85f);
+            Scribe_Values.Look(ref ClawsTeaseMultiplier, "ClawsTeaseMultiplier", 1.5f);
+            Scribe_Values.Look(ref ClawsManipulationPenalty, "ClawsManipulationPenalty", 0.15f);
             Scribe_Values.Look(ref StarvationDaysToMax, "StarvationDaysToMax", 1.5f);
             Scribe_Values.Look(ref ManaFromFoodPerNutrition, "ManaFromFoodPerNutrition", 0.15f);
+            Scribe_Values.Look(ref WildManaDrainFactor, "WildManaDrainFactor", 0.25f);
+            Scribe_Values.Look(ref GuestManaDrainFactor, "GuestManaDrainFactor", 0.25f);
             Scribe_Values.Look(ref LowManaBreakThreshold, "LowManaBreakThreshold", 0.1f);
             Scribe_Values.Look(ref LowManaBreakMtbDays, "LowManaBreakMtbDays", 0.5f);
             Scribe_Values.Look(ref AutonomousFeedingEnabled, "AutonomousFeedingEnabled", true);
             Scribe_Values.Look(ref AutonomousFeedThreshold, "AutonomousFeedThreshold", 0.3f);
             Scribe_Values.Look(ref AutonomousFeedRetryCooldownHours, "AutonomousFeedRetryCooldownHours", 1f);
             Scribe_Values.Look(ref AutonomousFeedMaxPerDay, "AutonomousFeedMaxPerDay", 2);
+            Scribe_Values.Look(ref AutonomousFeedLovinDriven, "AutonomousFeedLovinDriven", true);
+            Scribe_Values.Look(ref AutonomousFeedLovinDriveMaxEffect, "AutonomousFeedLovinDriveMaxEffect", 3f);
             Scribe_Values.Look(ref BondJoinBaseChance, "BondJoinBaseChance", 0.25f);
             Scribe_Values.Look(ref BondJoinChancePerLevel, "BondJoinChancePerLevel", 0.05f);
             Scribe_Values.Look(ref BondJoinMaxChance, "BondJoinMaxChance", 0.9f);
@@ -307,6 +369,7 @@ namespace ProjectMomo
             Scribe_Values.Look(ref IntimacyFeeding, "IntimacyFeeding", true);
             Scribe_Values.Look(ref IntimacyAnimation, "IntimacyAnimation", true);
             Scribe_Values.Look(ref MomoFertilityAgeless, "MomoFertilityAgeless", true);
+            Scribe_Values.Look(ref MomoAlwaysFertile, "MomoAlwaysFertile", true);
             Scribe_Values.Look(ref DebugTabEnabled, "DebugTabEnabled", false);
             Scribe_Values.Look(ref DisableIncestPrevention, "DisableIncestPrevention", false);
             Scribe_Values.Look(ref CorruptionEnabled, "CorruptionEnabled", true);
@@ -334,6 +397,11 @@ namespace ProjectMomo
             Scribe_Values.Look(ref IncubisationDecayPerDay, "IncubisationDecayPerDay", 0f);
             Scribe_Values.Look(ref IncubusFoodPerEssence, "IncubusFoodPerEssence", 0.5f);
             Scribe_Values.Look(ref VPEPsycastsEnabled, "VPEPsycastsEnabled", true);
+            Scribe_Values.Look(ref MonsterExtremistAscendedOpinion, "MonsterExtremistAscendedOpinion", 10);
+            Scribe_Values.Look(ref MonsterExtremistBaselinerOpinion, "MonsterExtremistBaselinerOpinion", -15);
+            Scribe_Values.Look(ref MonsterExtremistCaptiveWillFactor, "MonsterExtremistCaptiveWillFactor", 0.5f);
+            Scribe_Values.Look(ref MonsterExtremistCaptiveResistanceFactor, "MonsterExtremistCaptiveResistanceFactor", 0.5f);
+            Scribe_Values.Look(ref MonsterExtremistCaptiveCertaintyFactor, "MonsterExtremistCaptiveCertaintyFactor", 0.5f);
 
             // Self-heal an inverted grief-duration range (e.g. a hand-edited config
             // file): min must never exceed max.

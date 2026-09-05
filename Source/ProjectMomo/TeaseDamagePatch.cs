@@ -76,11 +76,13 @@ namespace ProjectMomo
             }
 
             // ISEKAI: CHA (attacker) boosts tease dealt, WIS (victim) resists it.
-            // The attacker's beauty further amplifies the tease.
+            // The attacker's beauty further amplifies the tease, and the momo
+            // claws gene multiplies the whole package.
             float severity = SeverityPerHit
                 * IsekaiCompat.TeaseDealtMultiplier(attacker)
                 * IsekaiCompat.TeaseResistMultiplier(victim)
-                * IsekaiCompat.TeaseBeautyMultiplier(attacker);
+                * IsekaiCompat.TeaseBeautyMultiplier(attacker)
+                * MomoClaws.TeaseDealtMultiplier(attacker);
             if (float.IsNaN(severity) || float.IsInfinity(severity))
             {
                 return;

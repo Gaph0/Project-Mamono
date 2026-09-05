@@ -17,6 +17,7 @@ Hard dependencies (must load before this mod):
 
 Optional integrations (detected at runtime):
 
+- Ideology (DLC) — the Monster Extremists meme: opinions + transformation rites
 - yayo's Animation (continued) — bonding/feeding/sex animations
 - Intimacy – Friends n' Lovers — sex feeds the Momo
 - Vanilla Psycasts Expanded — monster xenotypes can spawn as psycasters
@@ -239,6 +240,37 @@ stays human; each stage simply grants more of the incubus' perks.
 - Completion grants +12 "unshackled" (10 days) and a fond memory (+6, +20
   opinion) of the Momo who marked him.
 
+## Monster Extremists meme (Ideology)
+
+"All men should be drained, and all women should be transformed!" The
+**monster extremists** meme (`ProjectMomo_Meme_MonsterExtremists`, Misc
+group) carries one opinion precept and two ritual precepts — all defs are
+`MayRequire` Ideology, so without the DLC none of this loads.
+
+- **Monster ascension (exalted):** believers hold an "ascended" opinion
+  (+10 default) of any Momo and of any pawn with a living tsugai bond, and
+  an "unascended baseliner" opinion (−15 default) of adult humanlikes who
+  are neither transformed nor bonded. Children are ignored, and "drained"
+  is flavour only — no essence/incubisation check. Offsets are tunable.
+  Conflicts with FleshPurity and Transhumanist.
+- **Rite of awakening (colonist):** a monster (the corruptor) escorts a
+  willing, transformable colonist to the ritual focus and pours her mana
+  in. On a positive outcome the convert becomes the corruptor's own monster
+  xenotype — the same instant path as voluntary transformation, with the
+  usual awakening memories. Room impressiveness and participant count set
+  ritual quality; a poor rite simply fizzles.
+- **Rite of forced awakening (captive):** the corruptor escorts a prisoner
+  or slave to the ritual focus instead. On a positive outcome the captive
+  becomes a RANDOM monster xenotype (any loaded def carrying the Momo gene —
+  submod xenotypes like the Slime Faction's join the pool automatically),
+  and the shock halves (tunable) her will, resistance and certainty in her
+  old ideoligion. She stays a prisoner — no join roll, no warm memory.
+
+Both rites are anytime rituals (no cooldown), started from the ideo ritual
+gizmo at a ritual spot, ideogram or altar. Transformation runs through the
+mod's single choke point (`MomoTransformation.ApplyXenotype`), so it is
+idempotent and pregnancy-snapshot-safe like every other path.
+
 ## Low-mana mental breaks
 
 When a starving Momo breaks (`LowManaBreak` — random below 10% mana,
@@ -302,6 +334,7 @@ transformation, join chances, autonomous infusion) · **Incubisation**
 (accrual, cap, mark, perks, decay) · **Tsugai bond** (voluntary bonding,
 costs, cooldowns, join chances) · **Bonded** (opinion/romance floors,
 willpower bonus, stack cap, grief) · **Animation** · **Intimacy** ·
+**Ideology** (meme opinion offsets, captive rite aftermath) ·
 **Debug** (hidden). A "Restore defaults" button resets all values.
 
 Dev-mode debug actions (Project Momo category) cover incubisation: add

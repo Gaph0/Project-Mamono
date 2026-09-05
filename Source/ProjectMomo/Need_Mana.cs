@@ -47,6 +47,13 @@ namespace ProjectMomo
             {
                 drainMultiplier *= ProjectMomoModSettings.Settings.WildManaDrainFactor;
             }
+            // Visiting Momo (guests of a non-hostile faction) drain far slower too: a visit
+            // is short, and a starving guest going berserk on her hosts' sleeping colonists
+            // is the exact scenario this avoids. Raiders (hostile factions) drain normally.
+            else if (EssenceTransfer.IsVisitingGuest(pawn))
+            {
+                drainMultiplier *= ProjectMomoModSettings.Settings.GuestManaDrainFactor;
+            }
 
             CurLevel -= FallPerTick * 150f * drainMultiplier;
 

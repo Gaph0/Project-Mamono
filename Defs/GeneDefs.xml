@@ -21,4 +21,101 @@
             <li>The ailments of old age never touch her; ones she already has silently melt away.</li>
         </customEffectDescriptions>
     </GeneDef>
+
+    <!--
+        Flight: grants a leap-style "Fly" ability gizmo and makes the pawn count
+        as a flying mount in caravans. The CaravanRidingSpeedFactor offset (base
+        1.0 + 2.5 = 3.5x) is read by FlightCaravanSpeedPatch, which counts every
+        flyer twice: once for herself and once for a passenger riding on her back.
+    -->
+    <GeneDef>
+        <defName>PMM_Gene_Flight</defName>
+        <label>flight</label>
+        <description>This woman's body bears powerful wings. She can soar across the battlefield at will, and on the world map she flies - strong enough to carry a passenger on her back.</description>
+        <iconPath>UI/Icons/Genes/Gene_LongJumpLegs</iconPath>
+        <displayCategory>Movement</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <abilities>
+            <li>PMM_Ability_FlightLeap</li>
+        </abilities>
+        <statOffsets>
+            <CaravanRidingSpeedFactor>2.5</CaravanRidingSpeedFactor>
+        </statOffsets>
+        <customEffectDescriptions>
+            <li>Grants the "Fly" ability: leap through the air to a distant location, soaring over obstacles.</li>
+            <li>In a caravan she flies instead of walking, and can airlift one passenger on her back: each flyer counts as two caravan members moving at 350% speed.</li>
+        </customEffectDescriptions>
+        <descriptionHyperlinks>
+            <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
+        </descriptionHyperlinks>
+    </GeneDef>
+
+    <!--
+        Momo venom: melee strikes inject a slowing toxin into ANY living victim
+        (humans, animals and other momos alike). VenomDamagePatch applies the
+        build-up (ProjectMomo_VenomBuildup); the hediff only suppresses the
+        Moving capacity, so it pins victims down without ever killing them, and
+        a full dose wears off in 4 hours. Balance in the Genes settings tab.
+    -->
+    <GeneDef>
+        <defName>ProjectMomo_MomoVenom</defName>
+        <label>momo venom</label>
+        <description>This momo's body produces a slowing venom that her strikes pass into her victims. As it builds, limbs grow heavy until the victim can no longer stand - helpless, unharmed, and fully conscious. The venom is never lethal and wears off completely within hours.</description>
+        <iconPath>UI/Icons/Genes/Gene_PartialToxicityResistance</iconPath>
+        <displayCategory>Violence</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <customEffectDescriptions>
+            <li>Melee strikes inject venom into any living victim - humans, animals and other momos alike.</li>
+            <li>The venom slows the victim as it builds (about 20 strikes to fully pin), then wears off completely within 4 hours.</li>
+            <li>Non-lethal: a fully envenomed victim simply collapses, conscious and alive.</li>
+        </customEffectDescriptions>
+    </GeneDef>
+
+    <!--
+        Fiery momo: total immunity to fire, heat and lava. Flammability x0
+        means vanilla fire-attach always refuses (she can never ignite);
+        FireImmunityPatch nullifies every Heat armour-category damage; the
+        +1000C comfy-temperature ceiling means no environment can overheat
+        her. Men bonded (tsugai) to her gain the lesser ProjectMomo_FieryBondWard
+        hediff via FireWardComponent: +40C comfy ceiling, x0.85 flammability,
+        x0.85 flame damage.
+    -->
+    <GeneDef>
+        <defName>ProjectMomo_MomoFiery</defName>
+        <label>fiery momo</label>
+        <description>These momo are unaffected by heat, fire or lava, being infused with an excess of the Fire Element. Typically these momo can control the Fire Element in other ways too.</description>
+        <iconPath>UI/Icons/Genes/Gene_FireResistant</iconPath>
+        <displayCategory>Temperature</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <statFactors>
+            <Flammability>0</Flammability>
+        </statFactors>
+        <statOffsets>
+            <ComfyTemperatureMax>1000</ComfyTemperatureMax>
+        </statOffsets>
+        <customEffectDescriptions>
+            <li>Immune to fire, heat and lava: she cannot be set aflame, takes no flame damage, and no heat can discomfort her.</li>
+            <li>A man bonded to her shares a lesser ward: +40C max comfortable temperature, 15% less flammable, 15% less flame damage.</li>
+        </customEffectDescriptions>
+    </GeneDef>
+
+    <!--
+        Momo claws: +50% tease damage (MomoClaws.TeaseDealtMultiplier, folded
+        into both tease paths), paid for with -15% manipulation
+        (ClawsManipulationPatch). The cutting/inflaming flavour is lore only:
+        on humanlikes the tease system already replaces wounds entirely.
+        Balance in the Genes settings tab.
+    -->
+    <GeneDef>
+        <defName>ProjectMomo_MomoClaws</defName>
+        <label>momo claws</label>
+        <description>These sharp claws, meant for vicious killing during the time of the last Mamono Lord, now serve a different, more lustful purpose. Momo claws cut the skin, causing a great heat to radiate into the victim's body, inflaming their lusts. These claws however do interfere with the dexterity of the momo.</description>
+        <iconPath>UI/Icons/Genes/Gene_StrongMeleeDamage</iconPath>
+        <displayCategory>Violence</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <customEffectDescriptions>
+            <li>Tease damage dealt +50%.</li>
+            <li>Manipulation -15%.</li>
+        </customEffectDescriptions>
+    </GeneDef>
 </Defs>

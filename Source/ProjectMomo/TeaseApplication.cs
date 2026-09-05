@@ -26,6 +26,11 @@ namespace ProjectMomo
             {
                 return 0f;
             }
+
+            // The momo claws gene scales tease from every source, not just melee.
+            // Null attacker simply yields the neutral 1x factor.
+            severity *= MomoClaws.TeaseDealtMultiplier(attacker);
+
             if (float.IsNaN(severity) || float.IsInfinity(severity) || severity <= 0f)
             {
                 return 0f;

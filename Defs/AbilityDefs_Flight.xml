@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!--
+        Flight leap: cloned from vanilla Biotech "Longjump" (Verb_CastAbilityJump
+        + CastJump job), but with no hemogen cost, a longer range, and no line-of
+        -sight requirement so a flyer can clear walls and obstacles.
+    -->
+    <AbilityDef>
+        <defName>PMM_Ability_FlightLeap</defName>
+        <label>fly</label>
+        <description>Take wing and fly to a distant location, soaring over anything in between.</description>
+        <iconPath>UI/Abilities/Longjump</iconPath>
+        <cooldownTicksRange>60</cooldownTicksRange>
+        <hostile>false</hostile>
+        <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+        <verbProperties>
+            <verbClass>Verb_CastAbilityJump</verbClass>
+            <label>fly</label>
+            <violent>false</violent>
+            <forceNormalTimeSpeed>false</forceNormalTimeSpeed>
+            <warmupTime>0.5</warmupTime>
+            <range>29.9</range>
+            <requireLineOfSight>false</requireLineOfSight>
+            <soundCast>Longjump_Jump</soundCast>
+            <soundLanding>Longjump_Land</soundLanding>
+            <targetParams>
+                <canTargetLocations>true</canTargetLocations>
+                <canTargetPawns>false</canTargetPawns>
+                <canTargetBuildings>false</canTargetBuildings>
+            </targetParams>
+        </verbProperties>
+        <jobDef>CastJump</jobDef>
+    </AbilityDef>
+</Defs>

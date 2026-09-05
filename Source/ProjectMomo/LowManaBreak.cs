@@ -66,6 +66,14 @@ namespace ProjectMomo
                     pawn.jobs.StartJob(feed, JobCondition.InterruptForced);
                 }
             }
+            else if (EssenceTransfer.IsVisitingGuest(pawn))
+            {
+                // An unbonded visiting Momo never goes essence-berserk on the colony map:
+                // the berserk hunt exists to win her a mate, and a guest taking (then
+                // kidnapping) a colonist is exactly what a visit must not produce. Her
+                // slowed guest mana drain keeps her from starving this far during a normal
+                // visit; if she does run dry she simply stays hungry until she leaves.
+            }
             else
             {
                 // Unbonded: essence berserk — hunt the nearest unbonded pawn. The

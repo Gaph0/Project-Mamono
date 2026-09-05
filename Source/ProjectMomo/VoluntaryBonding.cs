@@ -187,6 +187,18 @@ namespace ProjectMomo
                 return false;
             }
 
+            // No visitor/colonist bonds: a visiting Momo who bonded a colonist could only
+            // leave (kidnapping him) or defect, neither of which a visit should produce, so
+            // the consensual path is closed to guests of the colony in both directions.
+            bool momoIsGuest = EssenceTransfer.IsVisitingGuest(momo);
+            bool manIsColonist = man.Faction != null && man.Faction.IsPlayer;
+            if ((momoIsGuest && manIsColonist)
+                || (EssenceTransfer.IsVisitingGuest(man) && momo.Faction != null && momo.Faction.IsPlayer))
+            {
+                reason = "a visitor cannot bond a colonist";
+                return false;
+            }
+
             Need_Essence essence = EssenceTransfer.Essence(man);
             if (essence == null || essence.CurLevel < Settings.VoluntaryBondEssenceCost)
             {
@@ -487,8 +499,9 @@ namespace ProjectMomo
             {
                 return;
             }
+            string pronoun = initiator.gender == Gender.Male ? "he" : "she";
             Messages.Message(
-                $"{initiator.LabelShortCap} offered {target.LabelShort} a bond, but was turned down.",
+                $"{initiator.LabelShortCap} tried to seduce {target.LabelShort}, {pronoun} was turned down.",
                 new LookTargets(initiator, target),
                 MessageTypeDefOf.NeutralEvent,
                 historical: false);
