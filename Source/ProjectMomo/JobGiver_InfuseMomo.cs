@@ -50,10 +50,10 @@ namespace ProjectMomo
         }
 
         /// <summary>
-        /// Cheap gates before any scan runs: a calm, upright, mana-fed Momo who
-        /// belongs to the colony or a hostile faction. Colony Momos act freely;
-        /// raider Momos prey on their enemies. Wild (factionless) and visiting
-        /// (non-hostile guest) Momos never infuse on their own.
+        /// Cheap gates before any scan runs: a calm, upright, mana-fed raider
+        /// Momo. Only Momos of a faction hostile to the player infuse on their
+        /// own — colonists never do (the player orders infusions by hand), and
+        /// wild (factionless) or visiting (non-hostile guest) Momos stay feral.
         /// </summary>
         private static bool CanAct(Pawn pawn)
         {
@@ -61,16 +61,12 @@ namespace ProjectMomo
             {
                 return false;
             }
-            // Only colony Momos and hostile raiders act on their own. Wild Momos
-            // (no faction) and visiting Momos (a faction not hostile to the
-            // player) stay feral and leave the map's pawns alone.
-            if (!pawn.IsColonist)
+            // Only hostile raiders act on their own. Colonists, wild Momos (no
+            // faction) and visiting Momos never autonomously infuse.
+            Faction faction = pawn.Faction;
+            if (faction == null || !faction.HostileTo(Faction.OfPlayer))
             {
-                Faction faction = pawn.Faction;
-                if (faction == null || !faction.HostileTo(Faction.OfPlayer))
-                {
-                    return false;
-                }
+                return false;
             }
             if (!pawn.Awake() || pawn.Drafted || pawn.InMentalState)
             {

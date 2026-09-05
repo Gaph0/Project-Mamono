@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-05: Stop colonists from autonomously infusing
 - 2026-09-05: Let raider Momos autonomously infuse; keep wild/visiting Momos feral
 - 2026-09-05: Limit autonomous infusion to colonist Momos; restore unrestricted player orders
 - 2026-09-05: Restrict corruption infusions to targets the Momo is hostile to
