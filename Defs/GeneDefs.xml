@@ -36,6 +36,7 @@
         <iconPath>UI/Icons/Genes/Gene_LongJumpLegs</iconPath>
         <displayCategory>Movement</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
+        <biostatMet>-2</biostatMet>
         <abilities>
             <li>PMM_Ability_FlightLeap</li>
         </abilities>
