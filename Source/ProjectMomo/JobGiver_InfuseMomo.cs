@@ -49,10 +49,19 @@ namespace ProjectMomo
             return JobMaker.MakeJob(ProjectMomo_DefOf.ProjectMomo_InfuseMomo, target);
         }
 
-        /// <summary>Cheap gates before any scan runs: a calm, upright, mana-fed Momo.</summary>
+        /// <summary>
+        /// Cheap gates before any scan runs: a calm, upright, mana-fed colony
+        /// Momo. Restricted to player colonists so wild, visiting and raider
+        /// Momos never autonomously infuse downed pawns on the map.
+        /// </summary>
         private static bool CanAct(Pawn pawn)
         {
             if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed)
+            {
+                return false;
+            }
+            // Only your own Momos act on their own — wild Momos stay feral.
+            if (!pawn.IsColonist)
             {
                 return false;
             }
@@ -77,7 +86,7 @@ namespace ProjectMomo
             return true;
         }
 
-        /// <summary>The nearest downed woman she is hostile to and can reach and infuse.</summary>
+        /// <summary>The nearest downed woman she can reach and infuse.</summary>
         private static Pawn FindTarget(Pawn momo)
         {
             Pawn best = null;

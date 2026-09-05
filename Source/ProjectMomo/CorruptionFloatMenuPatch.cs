@@ -82,9 +82,7 @@ namespace ProjectMomo
         /// <summary>
         /// All requirements for one infusion: a corruptible woman (female,
         /// humanlike, of age, not already a monster) who is currently downed, and
-        /// a Momo with enough mana to pay for the dose. The forced path is also
-        /// limited to women the Momo is hostile toward, so wild Momos prey on
-        /// raiders and enemies instead of the colony's guests.
+        /// a Momo with enough mana to pay for the dose.
         /// </summary>
         public static bool CanInfuse(Pawn momo, Pawn target, out string reason)
         {
@@ -98,14 +96,6 @@ namespace ProjectMomo
             if (!target.Downed)
             {
                 reason = "not downed";
-                return false;
-            }
-
-            // Only prey she is hostile to: a wild Momo leaves visitors, traders
-            // and other non-enemies alone.
-            if (!momo.HostileTo(target))
-            {
-                reason = "not hostile";
                 return false;
             }
 
