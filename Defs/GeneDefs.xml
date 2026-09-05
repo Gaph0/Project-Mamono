@@ -8,6 +8,7 @@
         <geneClass>ProjectMomo.Gene_Momo</geneClass>
         <displayCategory>Reproduction</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
+        <biostatMet>3</biostatMet>
         <enablesNeeds>
             <li>ProjectMomo_Mana</li>
         </enablesNeeds>

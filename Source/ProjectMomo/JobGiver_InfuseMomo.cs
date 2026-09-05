@@ -77,7 +77,7 @@ namespace ProjectMomo
             return true;
         }
 
-        /// <summary>The nearest downed woman she can reach and infuse.</summary>
+        /// <summary>The nearest downed woman she is hostile to and can reach and infuse.</summary>
         private static Pawn FindTarget(Pawn momo)
         {
             Pawn best = null;

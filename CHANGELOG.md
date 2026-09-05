@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-05: Restrict corruption infusions to targets the Momo is hostile to
 - 2026-09-05: balance: momo claws tease multiplier 1.5 -> 1.15
 - 2026-09-05: feat: momo venom, fiery momo and momo claws genes
 - 2026-09-05: feat: three bloodline genes - momo venom (melee injects a
