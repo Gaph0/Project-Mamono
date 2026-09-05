@@ -37,7 +37,7 @@ namespace ProjectMomo
         // carrier herself is always fully immune.
         public float FieryWardFlameFactor = 0.85f;
         // Momo claws gene: tease-damage multiplier for clawed carriers.
-        public float ClawsTeaseMultiplier = 1.5f;
+        public float ClawsTeaseMultiplier = 1.15f;
         // Momo claws gene: manipulation capacity penalty for clawed carriers.
         public float ClawsManipulationPenalty = 0.15f;
 
@@ -241,7 +241,7 @@ namespace ProjectMomo
             XPPerEssence = 50f;
             VenomSeverityPerHit = 0.05f;
             FieryWardFlameFactor = 0.85f;
-            ClawsTeaseMultiplier = 1.5f;
+            ClawsTeaseMultiplier = 1.15f;
             ClawsManipulationPenalty = 0.15f;
             StarvationDaysToMax = 1.5f;
             ManaFromFoodPerNutrition = 0.15f;
@@ -330,7 +330,7 @@ namespace ProjectMomo
             Scribe_Values.Look(ref XPPerEssence, "XPPerEssence", 50f);
             Scribe_Values.Look(ref VenomSeverityPerHit, "VenomSeverityPerHit", 0.05f);
             Scribe_Values.Look(ref FieryWardFlameFactor, "FieryWardFlameFactor", 0.85f);
-            Scribe_Values.Look(ref ClawsTeaseMultiplier, "ClawsTeaseMultiplier", 1.5f);
+            Scribe_Values.Look(ref ClawsTeaseMultiplier, "ClawsTeaseMultiplier", 1.15f);
             Scribe_Values.Look(ref ClawsManipulationPenalty, "ClawsManipulationPenalty", 0.15f);
             Scribe_Values.Look(ref StarvationDaysToMax, "StarvationDaysToMax", 1.5f);
             Scribe_Values.Look(ref ManaFromFoodPerNutrition, "ManaFromFoodPerNutrition", 0.15f);

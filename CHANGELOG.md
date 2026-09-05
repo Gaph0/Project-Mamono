@@ -1,10 +1,11 @@
 # Changelog
+- 2026-09-05: balance: momo claws tease multiplier 1.5 -> 1.15
 - 2026-09-05: feat: momo venom, fiery momo and momo claws genes
 - 2026-09-05: feat: three bloodline genes - momo venom (melee injects a
   non-lethal slowing toxin into any living victim, pins at full dose, wears off
   in 4 hours), fiery momo (immune to fire/heat/lava; tsugai partners gain a
   lesser ward: +40C comfy ceiling, 15% less flammable, 15% less flame damage),
-  momo claws (+50% tease damage, -15% manipulation). New Genes settings tab
+  momo claws (+15% tease damage, -15% manipulation). New Genes settings tab
 - 2026-09-03: feat: Monster Extremists ideology meme - ascended/baseliner opinions, rite of awakening (colonist -> corruptor's xenotype), rite of forced awakening (prisoner/slave -> random monster xenotype, will/resistance/certainty shaken), Ideology settings tab
 - 2026-09-02: chore: drop bundled MGE wiki copies and incubisation plan doc
 - 2026-09-02: feat: autonomous mana feeding - bonded momos seek their mate at low mana

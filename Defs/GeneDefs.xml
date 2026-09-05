@@ -114,7 +114,7 @@
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <customEffectDescriptions>
-            <li>Tease damage dealt +50%.</li>
+            <li>Tease damage dealt +15%.</li>
             <li>Manipulation -15%.</li>
         </customEffectDescriptions>
     </GeneDef>

@@ -533,8 +533,8 @@ namespace ProjectMomo
             listing.Label("<color=#888888>A clawed momo's strikes inflame her victims: more tease damage with every hit, paid for with clumsier hands.</color>");
             listing.GapLine();
 
-            DrawPerPointSlider(listing, "Claws tease damage", ref Settings.ClawsTeaseMultiplier, 1f, 3f, 1.5f,
-                "Tease-damage multiplier for a clawed momo (150% = half again as much tease per strike).");
+            DrawPerPointSlider(listing, "Claws tease damage", ref Settings.ClawsTeaseMultiplier, 1f, 3f, 1.15f,
+                "Tease-damage multiplier for a clawed momo (115% = a little more tease per strike).");
             DrawPerPointSlider(listing, "Claws manipulation penalty", ref Settings.ClawsManipulationPenalty, 0f, 0.5f, 0.15f,
                 "Manipulation capacity penalty for a clawed momo (15% = clumsier hands).");
         }
