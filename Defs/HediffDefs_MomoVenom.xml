@@ -67,6 +67,16 @@
                     <li>
                         <capacity>Moving</capacity>
                         <offset>-0.90</offset>
+                        <!--
+                            Hard cap below the 0.15 capability floor. The flat
+                            -0.90 offset alone loses to victims whose Moving is
+                            propped up by boosted Breathing / BloodPumping
+                            (bionic lungs and heart, genes): 1.4 base - 0.9
+                            still clears the floor. setMax clamps the FINAL
+                            capacity, so no amount of respiratory or circulatory
+                            buffing keeps a fully envenomed victim standing.
+                        -->
+                        <setMax>0.10</setMax>
                     </li>
                 </capMods>
             </li>

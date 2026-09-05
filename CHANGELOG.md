@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-05: Cap venom-pinned victims' Moving with setMax so buffed vitals can't beat it
 - 2026-09-05: Give the flight gene -2 metabolic efficiency
 - 2026-09-05: Give the fiery momo gene -4 metabolic efficiency
 - 2026-09-05: feat: monster ascension precept varieties (relaxed: admires the
