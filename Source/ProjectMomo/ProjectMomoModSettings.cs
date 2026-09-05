@@ -397,6 +397,8 @@ namespace ProjectMomo
                 "Let Momos autonomously propose a bond to men they want.");
             listing.CheckboxLabeled("Men propose", ref Settings.VoluntaryBondManProposals,
                 "Let men autonomously propose a bond to Momos they want.");
+            listing.CheckboxLabeled("Colonists propose autonomously", ref Settings.VoluntaryBondColonistProposals,
+                "Let YOUR colonists (Momos and men) wander off to propose bonds on their own. Off = colonists only bond via the right-click order. Visitors and raiders proposing to your colonists are unaffected.");
 
             DrawPerPointSlider(listing, "Voluntary bond essence cost", ref Settings.VoluntaryBondEssenceCost, 0.1f, 1f, 0.5f,
                 "Essence a voluntary bond costs the man, and the minimum he must have to offer one (1.0 = full bar).", true);

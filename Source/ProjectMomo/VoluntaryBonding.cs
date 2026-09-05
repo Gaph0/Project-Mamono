@@ -346,6 +346,14 @@ namespace ProjectMomo
             {
                 return false;
             }
+            // Colonists only bond autonomously when the player allows it; the
+            // right-click order and autonomous proposals by visitors/raiders are
+            // unaffected. (This gate is the autonomous path only — TryPlayerOrderedProposal
+            // never reaches CanInitiate.)
+            if (!Settings.VoluntaryBondColonistProposals && pawn.IsColonistPlayerControlled)
+            {
+                return false;
+            }
             // A would-be initiator is either a Momo or a bondable man; anyone else
             // (women, children, animals) never proposes.
             if (!EssenceTransfer.IsMomo(pawn) && !TsugaiFormation.IsBondable(pawn))

@@ -9,7 +9,8 @@ namespace ProjectMomo
     /// Drives the low-mana mental break. While a Momo's mana is below the threshold
     /// (default 10%), she can randomly break. If she has a living tsugai bond she
     /// seeks out that partner and initiates essence feeding; if unbonded she goes
-    /// berserk and attacks a nearby unbonded pawn.
+    /// berserk and attacks a nearby unbonded pawn. Wild Momos never berserk —
+    /// a starving wild Momo simply leaves the map to hunt elsewhere.
     /// </summary>
     public static class LowManaBreak
     {
@@ -74,6 +75,18 @@ namespace ProjectMomo
                 // slowed guest mana drain keeps her from starving this far during a normal
                 // visit; if she does run dry she simply stays hungry until she leaves.
             }
+            else if (pawn.IsWildMan())
+            {
+                // A starving wild Momo never goes berserk on the colony map: she has
+                // no stake in this place, so she slips away to hunt elsewhere. A plain
+                // flee job (no mental state) keeps the wild-man think tree running, so
+                // she still wanders off naturally even if the flee somehow fails.
+                Job flee = MakeLeaveMapJob(pawn);
+                if (flee != null && pawn.jobs != null)
+                {
+                    pawn.jobs.StartJob(flee, JobCondition.InterruptForced);
+                }
+            }
             else
             {
                 // Unbonded: essence berserk — hunt the nearest unbonded pawn. The
@@ -88,6 +101,39 @@ namespace ProjectMomo
                     causedByMood: false,
                     otherPawn: victim);
             }
+        }
+
+        /// <summary>
+        /// Builds the walk-to-the-map-edge job a starving wild Momo uses to slip away.
+        /// exitMapOnArrival is required: JobDriver_Flee only calls ExitMap when the flag
+        /// is set and she stands on an exit cell — without it she would idle at the edge.
+        /// </summary>
+        private static Job MakeLeaveMapJob(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            IntVec3 exitCell = pawn.Position;
+            if (!RCellFinder.TryFindBestExitSpot(pawn, out exitCell, TraverseMode.ByPawn))
+            {
+                // Fallback: project the pawn's position onto the nearest map edge.
+                Rot4 edge = CellRect.WholeMap(pawn.Map).GetClosestEdge(pawn.Position);
+                if (edge == Rot4.North) exitCell.z = pawn.Map.Size.z - 2;
+                else if (edge == Rot4.South) exitCell.z = 1;
+                else if (edge == Rot4.East) exitCell.x = pawn.Map.Size.x - 2;
+                else exitCell.x = 1;
+                if (!exitCell.Standable(pawn.Map))
+                {
+                    exitCell = CellFinder.RandomClosewalkCellNear(exitCell, pawn.Map, 10);
+                }
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.Flee, exitCell);
+            job.locomotionUrgency = LocomotionUrgency.Sprint;
+            job.exitMapOnArrival = true;
+            return job;
         }
 
         /// <summary>The Momo's living, reachable tsugai partner, or null if she is unbonded or her bond is inaccessible.</summary>
