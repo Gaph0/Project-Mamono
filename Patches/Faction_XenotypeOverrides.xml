@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Faction xenotype overrides: replaces the vanilla xenotype mixes of the
+    shattered Empire (Royalty) and the orbital traders guild (Odyssey) with
+    Project Momo monster xenotypes.
+
+      Shattered Empire -> dragons, genies, apsaras
+      Traders Guild    -> apsaras, genies
+
+    The whole <xenotypeChances> node is replaced, wiping the vanilla
+    Neanderthal/Hussar/Genie/Starjack entries. Each faction's chances sum to
+    0.9 - the unlisted 10% remainder defaults to baseliners, so both factions
+    keep a small human minority among the monster girls.
+
+    No pawn kind in either faction forces a xenotype (verified against 1.6
+    game data), so the faction xenotypeSet governs every spawn: raids,
+    settlements, caravans, traders, leaders and royalty.
+
+    Guards: PatchOperationFindMod ensures each block only runs when the submod
+    providing its xenotypes is loaded, and PatchOperationConditional silently
+    skips when the DLC faction def is absent (no Royalty/Odyssey -> no red
+    errors). Empire needs both submods (dragon comes from Reptiles); the
+    traders guild only needs Elementals.
+  -->
+
+  <!-- ===== Shattered Empire (Royalty): dragons + genies + apsaras ===== -->
+  <Operation Class="PatchOperationFindMod">
+    <mods><li>Project Momo Reptiles</li></mods>
+    <match Class="PatchOperationFindMod">
+      <mods><li>Project Momo Elementals</li></mods>
+      <match Class="PatchOperationConditional">
+        <xpath>Defs/FactionDef[defName="Empire"]/xenotypeSet/xenotypeChances</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>Defs/FactionDef[defName="Empire"]/xenotypeSet/xenotypeChances</xpath>
+          <value>
+            <xenotypeChances>
+              <PMM_Dragon>0.36</PMM_Dragon>
+              <PMM_ElementalGenie>0.27</PMM_ElementalGenie>
+              <PMM_ElementalApsara>0.27</PMM_ElementalApsara>
+            </xenotypeChances>
+          </value>
+        </match>
+      </match>
+    </match>
+  </Operation>
+
+  <!-- ===== Traders Guild (Odyssey): apsaras + genies ===== -->
+  <Operation Class="PatchOperationFindMod">
+    <mods><li>Project Momo Elementals</li></mods>
+    <match Class="PatchOperationConditional">
+      <xpath>Defs/FactionDef[defName="TradersGuild"]/xenotypeSet/xenotypeChances</xpath>
+      <match Class="PatchOperationReplace">
+        <xpath>Defs/FactionDef[defName="TradersGuild"]/xenotypeSet/xenotypeChances</xpath>
+        <value>
+          <xenotypeChances>
+            <PMM_ElementalApsara>0.45</PMM_ElementalApsara>
+            <PMM_ElementalGenie>0.45</PMM_ElementalGenie>
+          </xenotypeChances>
+        </value>
+      </match>
+    </match>
+  </Operation>
+
+</Patch>

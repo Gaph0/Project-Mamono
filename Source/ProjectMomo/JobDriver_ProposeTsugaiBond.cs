@@ -32,6 +32,21 @@ namespace ProjectMomo
             // Walk to the willing partner and stand next to them.
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
 
+            // Face to face at last: reveal the answer rolled when the job was created
+            // (carried on job.playerForced). A rejection applies its effects here —
+            // beside the target — so nobody is ever "remotely seduced" from across
+            // the map, and the job ends immediately without the ceremony.
+            Toil resolve = new Toil();
+            resolve.initAction = () =>
+            {
+                if (!pawn.CurJob.playerForced)
+                {
+                    VoluntaryBonding.ApplyFaceToFaceRejection(pawn, Target);
+                    EndJobWith(JobCondition.Succeeded);
+                }
+            };
+            yield return resolve;
+
             // Perform the bonding ceremony (~10s), reusing the pink progress bar.
             // The finish action forms the bond.
             Toil bond = Toils_General.WaitWith(TargetIndex.A, ProposeDurationTicks, false, false, false, TargetIndex.A, PathEndMode.Touch);

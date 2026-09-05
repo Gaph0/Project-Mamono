@@ -4,13 +4,16 @@
     Only official factions that are normally selectable at world creation are
     targeted. Their configurable limits remain untouched, so the player can
     still add them from the dropdown. Modded and hidden factions are unchanged.
+    The Empire and the Traders Guild are deliberately NOT targeted: they spawn
+    at world creation as usual so their monster-girl xenotypes
+    (Faction_XenotypeOverrides.xml) show up in every game.
   -->
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
       <li Class="PatchOperationReplace">
         <success>Always</success>
-        <xpath>Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="Empire" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate" or defName="TradersGuild"]/requiredCountAtGameStart</xpath>
+        <xpath>Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate"]/requiredCountAtGameStart</xpath>
         <value>
           <requiredCountAtGameStart>0</requiredCountAtGameStart>
         </value>
@@ -18,7 +21,7 @@
 
       <li Class="PatchOperationAdd">
         <success>Always</success>
-        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="Empire" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate" or defName="TradersGuild") and not(requiredCountAtGameStart)]</xpath>
+        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate") and not(requiredCountAtGameStart)]</xpath>
         <value>
           <requiredCountAtGameStart>0</requiredCountAtGameStart>
         </value>
@@ -26,7 +29,7 @@
 
       <li Class="PatchOperationReplace">
         <success>Always</success>
-        <xpath>Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="Empire" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate" or defName="TradersGuild"]/startingCountAtWorldCreation</xpath>
+        <xpath>Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate"]/startingCountAtWorldCreation</xpath>
         <value>
           <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
         </value>
@@ -34,7 +37,7 @@
 
       <li Class="PatchOperationAdd">
         <success>Always</success>
-        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="Empire" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate" or defName="TradersGuild") and not(startingCountAtWorldCreation)]</xpath>
+        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough" or defName="TribeCivil" or defName="TribeRough" or defName="TribeSavage" or defName="Pirate" or defName="TribeRoughNeanderthal" or defName="PirateYttakin" or defName="TribeSavageImpid" or defName="OutlanderRoughPig" or defName="PirateWaster" or defName="TribeCannibal" or defName="NudistTribe" or defName="CannibalPirate") and not(startingCountAtWorldCreation)]</xpath>
         <value>
           <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
         </value>

@@ -292,10 +292,11 @@ namespace ProjectMomo
         }
 
         /// <summary>
-        /// Rolls acceptance from the target's desire. On success: cooldowns,
-        /// reservation, and the proposal job (returned for the giver, or ordered
-        /// directly for the float menu). On failure: rejection thought, pair
-        /// cooldown, and a message when the player cares about either pawn.
+        /// Rolls acceptance from the target's desire. Either way the initiator gets
+        /// the proposal job and walks to the target — acceptance is only revealed
+        /// face-to-face, when the ceremony starts. On success the job is marked
+        /// pre-accepted so the driver bonds on completion; on failure the driver
+        /// applies the rejection (thought, pair cooldown, message) at the target.
         /// </summary>
         private static Job RollAndBegin(Pawn initiator, Pawn target, bool momoInitiator, VoluntaryBondComponent comp, int now, bool ordered)
         {
@@ -309,26 +310,36 @@ namespace ProjectMomo
                 acceptChance = Mathf.InverseLerp(AcceptanceFloor, AcceptanceCertain, acceptorDesire);
             }
 
-            if (!Rand.Chance(acceptChance))
-            {
-                int cooldownTicks = Mathf.RoundToInt(Settings.VoluntaryBondRejectionCooldownHours * GenDate.TicksPerHour);
-                comp?.NoteRejection(initiator, target, now + cooldownTicks);
-                GrantRejectionThought(initiator, target);
-                NotifyRejected(initiator, target);
-                LogProposal(initiator, target, accepted: false);
-                return null;
-            }
+            bool accepted = Rand.Chance(acceptChance);
 
             int attemptTicks = Mathf.RoundToInt(Settings.VoluntaryBondAttemptCooldownHours * GenDate.TicksPerHour);
             comp?.NoteAttempt(initiator, now + attemptTicks);
             comp?.ReserveTarget(target, now + ReservationTicks);
 
             Job job = JobMaker.MakeJob(ProjectMomo_DefOf.ProjectMomo_ProposeTsugaiBond, target);
+            // Carry the verdict to the driver: rejection effects must only fire once
+            // the initiator actually stands before the target — never remotely.
+            job.playerForced = accepted;
             if (ordered)
             {
                 initiator.jobs?.TryTakeOrderedJob(job, JobTag.Misc);
             }
             return job;
+        }
+
+        /// <summary>
+        /// Applies a face-to-face rejection: pair cooldown, the rejected mood thought,
+        /// a message when the player cares, and the rejected log entry. Called by the
+        /// proposal driver once the initiator has reached the target.
+        /// </summary>
+        public static void ApplyFaceToFaceRejection(Pawn initiator, Pawn target)
+        {
+            int now = Find.TickManager.TicksGame;
+            int cooldownTicks = Mathf.RoundToInt(Settings.VoluntaryBondRejectionCooldownHours * GenDate.TicksPerHour);
+            VoluntaryBondComponent.Get()?.NoteRejection(initiator, target, now + cooldownTicks);
+            GrantRejectionThought(initiator, target);
+            NotifyRejected(initiator, target);
+            LogProposal(initiator, target, accepted: false);
         }
 
         /// <summary>Cheap gates every autonomous initiator must pass before any scan runs.</summary>
