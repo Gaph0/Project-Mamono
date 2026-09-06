@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-06: Default colonist autonomous bonding proposals to off
 - 2026-09-06: Patch Empire and Traders Guild xenotypes with monster girls; let both factions spawn normally
 - 2026-09-05: Add setting to disable autonomous voluntary bonding by colonists New VoluntaryBondColonistProposals toggle (default on) on the Tsugai bond tab. When off, VoluntaryBonding.CanInitiate refuses colonists (IsColonistPlayerControlled), so your own Momos/men never wander off to propose on their own. The right-click 'Propose tsugai bond' order still works (it goes through TryPlayerOrderedProposal, not CanInitiate), and autonomous proposals by visitors/raiders are unaffected — this gates only WHO proposes, not who's proposed to.
 - 2026-09-05: Revert voluntary-transform override hook; driver back to plain proposer-xenotype path The Malef colony offer that used VoluntaryTransformTargetOverride was scrapped in favour of an ingestible item, so the hook is removed and JobDriver_TransformProposal once again always applies the proposer's xenotype. ConvertXenotype STAYS: the new Dark Dragon's Blood item uses it to re-stamp a normal Dragon into a Malef.

@@ -116,7 +116,8 @@ namespace ProjectMomo
         // Let COLONISTS autonomously propose bonds. Off = your own Momos/men never
         // wander off to propose on their own; the right-click order and autonomous
         // proposals by visitors/raiders (non-player pawns) are unaffected.
-        public bool VoluntaryBondColonistProposals = true;
+        // Default OFF (user ruling 2026-09-06): bonding is opt-in by order, not autonomous.
+        public bool VoluntaryBondColonistProposals = false;
         // Essence a voluntary bond costs the man — he must have at least this much
         // to offer a bond. Essence is the bonding budget: it keeps one man from
         // collecting Momos faster than he can regenerate.
@@ -275,7 +276,7 @@ namespace ProjectMomo
             VoluntaryBondingEnabled = true;
             VoluntaryBondMomoProposals = true;
             VoluntaryBondManProposals = true;
-            VoluntaryBondColonistProposals = true;
+            VoluntaryBondColonistProposals = false;
             VoluntaryBondEssenceCost = 0.5f;
             VoluntaryBondDesireThreshold = 0.6f;
             VoluntaryBondJoinBonus = 0.25f;
@@ -365,7 +366,7 @@ namespace ProjectMomo
             Scribe_Values.Look(ref VoluntaryBondingEnabled, "VoluntaryBondingEnabled", true);
             Scribe_Values.Look(ref VoluntaryBondMomoProposals, "VoluntaryBondMomoProposals", true);
             Scribe_Values.Look(ref VoluntaryBondManProposals, "VoluntaryBondManProposals", true);
-            Scribe_Values.Look(ref VoluntaryBondColonistProposals, "VoluntaryBondColonistProposals", true);
+            Scribe_Values.Look(ref VoluntaryBondColonistProposals, "VoluntaryBondColonistProposals", false);
             Scribe_Values.Look(ref VoluntaryBondEssenceCost, "VoluntaryBondEssenceCost", 0.5f);
             Scribe_Values.Look(ref VoluntaryBondDesireThreshold, "VoluntaryBondDesireThreshold", 0.6f);
             Scribe_Values.Look(ref VoluntaryBondJoinBonus, "VoluntaryBondJoinBonus", 0.25f);
