@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-19: Unify build: solution file, shared props, one-command build
 - 2026-09-19: XSD schema annotations, Auto Mod Config preset note, sensible-factions settings
 - 2026-09-06: Default colonist autonomous bonding proposals to off
 - 2026-09-06: Patch Empire and Traders Guild xenotypes with monster girls; let both factions spawn normally
