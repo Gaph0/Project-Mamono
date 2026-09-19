@@ -3,6 +3,11 @@
 set -e
 cd "$(dirname "$0")"
 
+# Changelog gate. A malformed changelog stops the build here. Unlogged changes
+# only warn, because the changelog is usually written after the code. Pass
+# --strict (or CHANGELOG_STRICT=1) to make unlogged changes fatal as well.
+./changelog-check.sh "$@"
+
 dotnet build ProjectMomo.sln
 
 # The Zlepper SDK overwrites About/About.xml with a generated minimal version

@@ -17,6 +17,7 @@ rsync -a --delete \
   --exclude='/*_Plan.md' \
   --exclude='/release.sh' \
   --exclude='/sync.sh' \
+  --exclude='/changelog-check.sh' \
   ./ "$DEST/"
 
 echo "Synced to: $DEST"

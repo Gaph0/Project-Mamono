@@ -1,48 +1,54 @@
 # Changelog
-- 2026-09-19: Unify build: solution file, shared props, one-command build
-- 2026-09-19: XSD schema annotations, Auto Mod Config preset note, sensible-factions settings
-- 2026-09-06: Default colonist autonomous bonding proposals to off
-- 2026-09-06: Patch Empire and Traders Guild xenotypes with monster girls; let both factions spawn normally
-- 2026-09-05: Add setting to disable autonomous voluntary bonding by colonists New VoluntaryBondColonistProposals toggle (default on) on the Tsugai bond tab. When off, VoluntaryBonding.CanInitiate refuses colonists (IsColonistPlayerControlled), so your own Momos/men never wander off to propose on their own. The right-click 'Propose tsugai bond' order still works (it goes through TryPlayerOrderedProposal, not CanInitiate), and autonomous proposals by visitors/raiders are unaffected — this gates only WHO proposes, not who's proposed to.
-- 2026-09-05: Revert voluntary-transform override hook; driver back to plain proposer-xenotype path The Malef colony offer that used VoluntaryTransformTargetOverride was scrapped in favour of an ingestible item, so the hook is removed and JobDriver_TransformProposal once again always applies the proposer's xenotype. ConvertXenotype STAYS: the new Dark Dragon's Blood item uses it to re-stamp a normal Dragon into a Malef.
-- 2026-09-05: Voluntary transformation: target-xenotype override hook + momo-target conversion JobDriver_TransformProposal always applied the proposer's own xenotype and ApplyXenotype refused momo targets ('already a monster'), so a sub-mod could never make a voluntary offer remake a victim differently. Adds MomoTransformation.VoluntaryTransformTargetOverride (proposer, target) -> xenotype, consulted at the ceremony's end; a monster target now goes through ConvertXenotype instead of being silently refused. Default behaviour unchanged (null override = proposer's xenotype; baseline targets unchanged). Needed by PMM Reptiles' Malef Dragon colony offer (1a: Dragon -> Malef via momo-momo offer).
-- 2026-09-05: Add MomoTransformation.ConvertXenotype: re-stamp an already-monster pawn CanEverTransform refuses momos ('already a monster'), so ApplyXenotype could never swap one monster xenotype for another. ConvertXenotype removes the old def-based xenotype's endogenes the new xenotype lacks, then applies the same gene stamp / pregnancy-snapshot refresh / notification as a first corruption. Faction and join outcomes are untouched. Needed by PMM Reptiles' Malef Dragon corruption (Dragon -> Malef Dragon, other momos -> Dragonewt).
-- 2026-09-05: Cap venom-pinned victims' Moving with setMax so buffed vitals can't beat it
-- 2026-09-05: Give the flight gene -2 metabolic efficiency
-- 2026-09-05: Give the fiery momo gene -4 metabolic efficiency
-- 2026-09-05: feat: monster ascension precept varieties (relaxed: admires the
-  ascended, no judgment of non-momos; exalted: unchanged; strict: doubled
-  opinions) - all ascension precepts and both awakening rites now require the
-  Monster Extremists meme
-- 2026-09-05: Stop colonists from autonomously infusing
-- 2026-09-05: Let raider Momos autonomously infuse; keep wild/visiting Momos feral
-- 2026-09-05: Limit autonomous infusion to colonist Momos; restore unrestricted player orders
-- 2026-09-05: Restrict corruption infusions to targets the Momo is hostile to
-- 2026-09-05: balance: momo claws tease multiplier 1.5 -> 1.15
-- 2026-09-05: feat: momo venom, fiery momo and momo claws genes
-- 2026-09-05: feat: three bloodline genes - momo venom (melee injects a
-  non-lethal slowing toxin into any living victim, pins at full dose, wears off
-  in 4 hours), fiery momo (immune to fire/heat/lava; tsugai partners gain a
-  lesser ward: +40C comfy ceiling, 15% less flammable, 15% less flame damage),
-  momo claws (+15% tease damage, -15% manipulation). New Genes settings tab
-- 2026-09-03: feat: Monster Extremists ideology meme - ascended/baseliner opinions, rite of awakening (colonist -> corruptor's xenotype), rite of forced awakening (prisoner/slave -> random monster xenotype, will/resistance/certainty shaken), Ideology settings tab
-- 2026-09-02: chore: drop bundled MGE wiki copies and incubisation plan doc
-- 2026-09-02: feat: autonomous mana feeding - bonded momos seek their mate at low mana
-- 2026-08-30: fix: tease prefix humanlike gate - momos deal damage to animals again
-- 2026-08-30: feat: full incubus regains Food on essence transfer (subsists on mate's mana, IncubusFoodPerEssence)
-- 2026-08-30: feat: incubisation hidden from Health tab until 75% severity (becomeVisible), then surfaces
-- 2026-08-30: dev: incubisation debug actions (progress, mark, complete, clear, status, mark-protection test, reset daily cap)
-- 2026-08-30: balance: incubisation accrual slowed 20x (full incubus: ~133 days bonded, ~267 unbonded)
-- 2026-08-30: feat: incubisation — men gradually change into incubi through intimate essence transfer (staged hediff, marking, age/rest/hunger/essence perks, settings tab)
-- 2026-08-29: feat: Momo gene silently cures and prevents age-related ailments
-- 2026-08-29: ci: remove workshop upload integration
-- 2026-08-29: ci: add steamcmd workshop upload script
-- 2026-08-29: ci: skip fresh builds and auto-tag in release.sh
-- 2026-08-29: ci: add release.sh for GitHub releases
-- 2026-08-29: build: add build.sh (Roslyn csc), pre-push builds before pushing
-- 2026-08-29: fix: CS1738 named args, add missing VPEPsycastsEnabled setting
-- 2026-08-29: fix: changelog hook sed address (1a)
-- 2026-08-30: fix: momos dealt zero melee damage to wild animals - the tease prefix
-  cancelled physical damage for ANY non-momo victim but only dealt tease to humanlikes,
-  so animals got their hits cancelled with no tease. Added the humanlike gate to the
-  prefix: non-human victims (animals/insects/mechs) keep vanilla damage
+
+## Player-facing
+
+- 2026-09-19: Added wings to dragons, wyverns and malef dragons. They fly on the Big & Small winged body.
+- 2026-09-19: Changed Big & Small body parts, such as wings, to be tougher than the rest of the body.
+- 2026-09-19: Added Big and Small - Framework as a required mod.
+- 2026-09-06: Changed autonomous bonding so your own colonists no longer propose a tsugai bond on their own by default.
+- 2026-09-06: Changed the Empire and Traders Guild xenotypes to include monster girls, and let both factions spawn normally.
+- 2026-09-05: Added a setting that stops your own colonists from proposing a tsugai bond on their own. The right-click proposal still works.
+- 2026-09-05: Fixed venom-pinned victims escaping when their movement was buffed.
+- 2026-09-05: Rebalanced the flight gene: it now costs 2 metabolic efficiency.
+- 2026-09-05: Rebalanced the fiery momo gene: it now costs 4 metabolic efficiency.
+- 2026-09-05: Added three monster ascension precept varieties: relaxed, exalted and strict. All ascension precepts and awakening rites now need the Monster Extremists meme.
+- 2026-09-05: Changed autonomous infusion: your own colonists stop doing it on their own.
+- 2026-09-05: Changed raider momos to infuse on their own. Wild and visiting momos stay feral.
+- 2026-09-05: Changed infusion orders you give yourself to work without restriction.
+- 2026-09-05: Changed corruption infusion to work only on targets the momo is hostile to.
+- 2026-09-05: Rebalanced momo claws: the tease multiplier is lowered from 1.5 to 1.15.
+- 2026-09-05: Added three bloodline genes: momo venom, fiery momo and momo claws.
+- 2026-09-05: Added a Genes tab in mod settings.
+- 2026-09-03: Added the Monster Extremists ideology meme, with opinions that admire ascended momos, and two awakening rites. A prisoner or slave can be forcibly awakened as a random monster.
+- 2026-09-03: Added an Ideology tab in mod settings.
+- 2026-09-02: Added autonomous mana feeding. A bonded momo seeks her mate when her mana runs low.
+- 2026-08-30: Fixed momos dealing no melee damage to wild animals.
+- 2026-08-30: Changed a full incubus to regain food from essence transfer, so he lives off his mate's mana.
+- 2026-08-30: Changed incubisation to stay hidden in the Health tab until it passes 75%, then appear.
+- 2026-08-30: Rebalanced incubisation to build up 20 times slower. A full incubus takes about 133 days bonded and 267 days unbonded.
+- 2026-08-30: Added incubisation. Men slowly become incubi through intimate essence transfer, and gain age, rest, hunger and essence perks.
+- 2026-08-29: Changed the momo gene to cure and prevent old-age ailments without a message.
+
+## Internal
+
+- 2026-09-20: Added `changelog-check.sh`, and the build now runs it before compiling.
+- 2026-09-20: Added the missing Big and Small - Framework dependency to `About.xml`.
+- 2026-09-20: Changed the README, and the stale comments in the defs and code, to match what the code does.
+- 2026-09-19: Changed the build to one solution, one shared props file and one command.
+- 2026-09-19: Added XSD schema links to the def roots, so def edits validate in the editor.
+- 2026-09-19: Changed the Auto Mod Config preset to document the version-bump convention.
+- 2026-09-19: Added an Auto Mod Config preset for Sensible Factions that weights Momo family factions.
+- 2026-09-19: Added the Big & Small assembly reference and XSD types for its defs.
+- 2026-09-19: Added colour tags for the Big & Small custom race UI.
+- 2026-09-19: Added a GlobalSettings def that turns every Big & Small feature off.
+- 2026-09-05: Removed the voluntary-transform override hook. The transform driver applies the proposer's xenotype again.
+- 2026-09-05: Added MomoTransformation.ConvertXenotype, so one monster xenotype can be swapped for another.
+- 2026-09-02: Removed the bundled MGE wiki copies and the incubisation plan doc.
+- 2026-08-30: Added incubisation debug actions.
+- 2026-08-29: Removed the Workshop upload step from the release script.
+- 2026-08-29: Added a SteamCMD Workshop upload script.
+- 2026-08-29: Changed release.sh to skip a fresh build and tag the release.
+- 2026-08-29: Added release.sh for GitHub releases.
+- 2026-08-29: Added build.sh and a pre-push build.
+- 2026-08-29: Fixed a compile error and added the missing VPEPsycastsEnabled setting.
+- 2026-08-29: Fixed the changelog hook's sed address.
