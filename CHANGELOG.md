@@ -31,6 +31,7 @@
 
 ## Internal
 
+- 2026-09-20: Removed the post-commit changelog hook, which wrote entries in the old format.
 - 2026-09-20: Added `changelog-check.sh`, and the build now runs it before compiling.
 - 2026-09-20: Added the missing Big and Small - Framework dependency to `About.xml`.
 - 2026-09-20: Changed the README, and the stale comments in the defs and code, to match what the code does.
