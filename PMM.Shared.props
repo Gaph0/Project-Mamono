@@ -13,6 +13,8 @@
     <RimWorldPath>/home/gapho/.steam/debian-installation/steamapps/common/RimWorld</RimWorldPath>
     <RimWorldManagedPath>$(RimWorldPath)/RimWorldLinux_Data/Managed</RimWorldManagedPath>
     <SteamModContentFolder>/home/gapho/.steam/debian-installation/steamapps/workshop/content/294100</SteamModContentFolder>
+    <!-- Big and Small Framework, installed locally (not the workshop copy). -->
+    <BigSmallPath>$(RimWorldPath)/Mods/Big and Small - Framework</BigSmallPath>
   </PropertyGroup>
 
   <!-- References shared by every Project Momo mod. Private=false: never
@@ -40,6 +42,14 @@
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>$(SteamModContentFolder)/2009463077/Current/Assemblies/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BigAndSmall">
+      <HintPath>$(BigSmallPath)/1.6/Base/Assemblies/BigAndSmall.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BSXeno">
+      <HintPath>$(BigSmallPath)/1.6/Base/Assemblies/BSXeno.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

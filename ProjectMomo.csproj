@@ -22,6 +22,21 @@
     </RimWorldSteamModDependency>
   </ItemGroup>
 
+  <!-- Big and Small Framework lives in the game Mods folder here, not the
+       workshop, so RimWorldSteamModDependency cannot find it. A direct
+       reference with a versioned hint path works for both compiling and
+       XSD generation (the XSD task reflects over @(Reference)). -->
+  <ItemGroup>
+    <Reference Include="BigAndSmall">
+      <HintPath>$(RimWorldPath)/Mods/Big and Small - Framework/1.6/Base/Assemblies/BigAndSmall.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BSXeno">
+      <HintPath>$(RimWorldPath)/Mods/Big and Small - Framework/1.6/Base/Assemblies/BSXeno.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
   <Import Project="Sdk.targets" Sdk="Zlepper.RimWorld.ModSdk" />
 
   <!-- @(RimWorldCompilationResult) is normally defined inside the SDK's CopyMod

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds Assemblies/ProjectMomo.dll with mcs against RimWorld + workshop mod references.
+# Builds Assemblies/ProjectMomo.dll with csc against RimWorld + workshop mod references.
 # Exits non-zero if compilation fails (also used by the pre-push hook chain).
 set -e
 cd "$(dirname "$0")"

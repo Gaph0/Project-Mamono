@@ -1,0 +1,21 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
+
+    <!-- Big & Small feature switches for Project Momo.
+
+         Nothing is enabled yet. Phase 5 (Insects) decides if SapientAnimals
+         turns on, and nothing else needs these switches for now. Keeping the
+         def here means one obvious place to flip the switch later, and RimWorld
+         proves the wiring works by loading this def without errors.
+
+         To enable a feature later, add it to enabledFeatures:
+           <enabledFeatures>
+             <li>SapientAnimals</li>
+           </enabledFeatures>
+         Valid values: SapientAnimals, SapientMechanoids. -->
+
+    <BigAndSmall.GlobalSettings>
+        <defName>PMM_GlobalSettings</defName>
+    </BigAndSmall.GlobalSettings>
+
+</Defs>

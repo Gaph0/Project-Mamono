@@ -3,8 +3,8 @@
     <!--
         Mamono corruption: a Momo's mana slowly rewriting a woman into a monster.
         Severity only grows through completed mana infusions (JobDriver_InfuseMomo);
-        while the victim's willpower is above the tease-knockout threshold she
-        fights it off and the corruption decays, so partial corruption is
+        while the victim is on her feet she fights it off and the corruption
+        decays (the gate is being downed, not willpower), so partial corruption is
         reversible. At full severity the transformation fires and this hediff is
         removed. The hediff remembers the most recent infuser's xenotype — the
         last Momo to corrupt her decides what she becomes.
@@ -12,7 +12,7 @@
     <HediffDef>
         <defName>ProjectMomo_MomoCorruption</defName>
         <label>mamono corruption</label>
-        <description>A Momo's mana is slowly rewriting this woman's body and mind. If the corruption runs its course, she will awaken as a monster herself. While her willpower holds she can fight it off; once her will is broken, each infusion brings her closer to the change.</description>
+        <description>A Momo's mana is slowly rewriting this woman's body and mind. If the corruption runs its course, she will awaken as a monster herself. It fades while she is on her feet; each infusion while she is helpless brings her closer to the change.</description>
         <hediffClass>ProjectMomo.Hediff_MomoCorruption</hediffClass>
         <defaultLabelColor>(1.0, 0.6, 0.8)</defaultLabelColor>
         <isBad>true</isBad>

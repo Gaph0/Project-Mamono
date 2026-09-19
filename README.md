@@ -12,6 +12,7 @@ Hard dependencies (must load before this mod):
 
 - Harmony
 - Biotech
+- Big and Small - Framework — race bodies, size scaling, wings and serpent tails
 - ISEKAI RPG Leveling — stats, levels and XP drive most formulas below
 - Modlist Configurator
 
@@ -91,7 +92,7 @@ Corruption master switch).
 ## Willpower and tease damage
 
 `ProjectMomo_Willpower` is a pawn capacity on the Health tab (hidden for
-Momo-carriers themselves, via `PawnCapacityWorker_Willpower`):
+Momo-carriers themselves, via `WillpowerVisibilityPatch`):
 
 ```
 Willpower = 1
@@ -162,7 +163,9 @@ Effects while the bond lives:
 - Momos and men autonomously propose to partners they desire. The desire
   score weighs opinion, romance chance, an existing lover/fiancé/spouse
   relation, his essence, her mana hunger, and grief; it must reach 0.6 to
-  act (6h attempt cooldown per pawn, 24h rejection cooldown per pair).
+  act (6h attempt cooldown per pawn, 24h rejection cooldown per pair). Your own colonists are
+  exempt by default (`VoluntaryBondColonistProposals`, on the Tsugai bond tab), so only
+  outsiders propose on their own and your pawns bond only when you order it.
 - A bond costs the man half his essence bar — he must hold at least 0.5 to
   offer or be offered one.
 - Acceptance: desire floor 0.25, scaling to near-certain at 0.95; a man's
@@ -191,7 +194,8 @@ monster (stages: mana-touched → infused → blooming → on the verge).
 
 - A calm Momo with ≥ 20% mana infuses a **downed** corruptible woman
   (female, 16+, not already a carrier; pregnancy does not protect).
-  Momos do this autonomously (toggleable) or on player order (right-click).
+  Only hostile Momos — raiders — infuse on their own; your colonists never do, and wild or
+  visiting Momos stay feral. A player order (right-click) works on any eligible target.
 - Each completed infusion (~20s) costs 20% mana and adds 25% severity —
   four infusions to transform. While the victim is upright and fighting,
   corruption decays 20%/day, so partial corruption is reversible.
@@ -244,9 +248,12 @@ stays human; each stage simply grants more of the incubus' perks.
 
 "All men should be drained, and all women should be transformed!" The
 **monster extremists** meme (`ProjectMomo_Meme_MonsterExtremists`, Misc
-group) carries one opinion precept and two ritual precepts — all defs are
+  group) carries one opinion precept in three varieties and two ritual precepts — all defs are
 `MayRequire` Ideology, so without the DLC none of this loads.
 
+- **Monster ascension:** the meme needs one of three varieties. **Relaxed** holds the ascended
+  opinion at half strength and has no baseliner opinion at all. **Exalted** is described below.
+  **Strict** doubles both opinions.
 - **Monster ascension (exalted):** believers hold an "ascended" opinion
   (+10 default) of any Momo and of any pawn with a living tsugai bond, and
   an "unascended baseliner" opinion (−15 default) of adult humanlikes who
@@ -324,6 +331,44 @@ essence give/drain jobs, and Intimacy sex acts.
 After each completed Intimacy sex act involving exactly one Momo, she
 drains exactly enough essence from her partner to fill her mana bar.
 
+## The flight gene and wings
+
+`PMM_Gene_Flight` is what gives dragons, wyverns and malef dragons their wings.
+
+- It swaps the pawn's body for the Big & Small winged body, so she grows real wing parts
+  and renders feathered wings. A hidden hediff (`PMM_Hediff_PartToughness`) keeps those
+  swapped-in parts as tough as the rest of her.
+- It grants `PMM_Ability_FlightLeap`: a long leap, range 29.9, no line of sight needed,
+  60-tick cooldown.
+- It also raises caravan riding speed by 2.5x. `FlightCaravanSpeedPatch` counts each flyer
+  twice, so a caravan of flyers carries extra riders.
+
+## Bloodline genes
+
+Three genes sit beside the Momo gene. All of them are tunable on the Genes settings tab.
+
+- **Momo venom** (`ProjectMomo_MomoVenom`) — melee strikes inject a non-lethal slowing
+  venom. It wears off after 4 hours.
+- **Fiery momo** (`ProjectMomo_MomoFiery`) — immunity to fire, heat and lava. Her tsugai
+  partner gains a weaker ward: +40 °C comfort ceiling, 15% less flammable, 15% less flame
+  damage.
+- **Momo claws** (`ProjectMomo_MomoClaws`) — +15% tease damage, −15% manipulation.
+
+## Autonomous mana feeding
+
+A bonded Momo whose mana drops below 30% walks to her mate and feeds, with no low-mana
+mental break. Retries are rate-limited, the daily amount is capped, and the pace follows
+the lovin' MTB.
+
+## Factions and world creation
+
+- The Empire and Traders Guild xenotype pools now include monster girls, and both factions
+  spawn normally.
+- `Patches/DisableVisibleFactions.xml` zeroes the starting counts of the vanilla selectable
+  factions, so a new world is not flooded with them.
+- `Settings/Mod_Sensible Factions_FactionFilter.xml` is an Auto Mod Config preset that
+  weights the Momo family factions for the Sensible Factions mod.
+
 ## Settings
 
 Everything above is tunable under Options → Mod Settings → Project Momo,
@@ -334,8 +379,10 @@ transformation, join chances, autonomous infusion) · **Incubisation**
 (accrual, cap, mark, perks, decay) · **Tsugai bond** (voluntary bonding,
 costs, cooldowns, join chances) · **Bonded** (opinion/romance floors,
 willpower bonus, stack cap, grief) · **Animation** · **Intimacy** ·
-**Ideology** (meme opinion offsets, captive rite aftermath) ·
-**Debug** (hidden). A "Restore defaults" button resets all values.
+**Ideology** (meme opinion offsets, captive rite aftermath) · **Genes** (the three bloodline
+genes) ·
+**Debug**. Only **Debug** is hidden; every other tab is visible. A "Restore defaults" button
+resets all values.
 
 Dev-mode debug actions (Project Momo category) cover incubisation: add
 progress, mark by a Momo, complete, clear, log status, test mark

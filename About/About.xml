@@ -15,7 +15,7 @@ A will-broken man can be claimed as a tsugai mate - a lifelong bond that steels 
 
 Everything is tunable in the mod settings. Optional integrations: Vanilla Psycasts Expanded (monster xenotypes can spawn as psycasters), yayo's Animation, and Intimacy - Friends n' Lovers.
 
-Requires Harmony, Biotech, ISEKAI RPG LEVELING and Modlist Configurator.
+Requires Harmony, Biotech, Big and Small - Framework, ISEKAI RPG LEVELING and Modlist Configurator.
 	</description>
 	<modDependencies>
 		<li>
@@ -40,8 +40,14 @@ Requires Harmony, Biotech, ISEKAI RPG LEVELING and Modlist Configurator.
 			<downloadUrl>https://github.com/JellyCreative/IsekaiLeveling</downloadUrl>
 			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3657580708</steamWorkshopUrl>
 		</li>
+		<li>
+			<packageId>RedMattis.BetterPrerequisites</packageId>
+			<displayName>Big and Small - Framework</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2925432336</steamWorkshopUrl>
+		</li>
 	</modDependencies>
 	<loadAfter>
+		<li>RedMattis.BetterPrerequisites</li>
 		<li>brrainz.harmony</li>
 		<li>Ludeon.RimWorld</li>
 		<li>Ludeon.RimWorld.Royalty</li>

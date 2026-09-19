@@ -1,0 +1,70 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
+
+    <!-- Shared color tags for all Project Momo races.
+
+         How it works: a race, gene, or hediff carries a
+         BigAndSmall.HasCustomizableGraphics modExtension with a tag. The
+         graphic set of the race then points its color channels at the same
+         tag. This lets one race recolor through the custom race UI without
+         new code.
+
+         Each FlagStringData below gives one tag a clean label. Sub-mods use
+         the tags in their own GraphicSetDefs. Add new tags here, not in
+         sub-mods, so names never clash. -->
+
+    <!-- Main body tint. Used for slime jelly, elemental skin, chitin, scales. -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_BodyGraphics</defName>
+        <label>body</label>
+        <flags>
+            <PMM_BodyGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+    <!-- Secondary tint: hair, ears, antennae. -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_HairGraphics</defName>
+        <label>hair</label>
+        <flags>
+            <PMM_HairGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+    <!-- Tail or abdomen overlay, where a race has one. -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_TailGraphics</defName>
+        <label>tail</label>
+        <flags>
+            <PMM_TailGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+    <!-- Wings, where a race has them. -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_WingGraphics</defName>
+        <label>wings</label>
+        <flags>
+            <PMM_WingGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+    <!-- Elemental glow layer (ember cracks, water sheen, wind wisps). -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_GlowGraphics</defName>
+        <label>glow</label>
+        <flags>
+            <PMM_GlowGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+    <!-- Chitin plates and shell for insect momos. -->
+    <BigAndSmall.FlagStringData>
+        <defName>PMM_ChitinGraphics</defName>
+        <label>chitin</label>
+        <flags>
+            <PMM_ChitinGraphics />
+        </flags>
+    </BigAndSmall.FlagStringData>
+
+</Defs>

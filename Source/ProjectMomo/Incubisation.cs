@@ -94,7 +94,7 @@ namespace ProjectMomo
 
         /// <summary>
         /// Essence regeneration multiplier from incubisation progress: marked men
-        /// produce richer essence (×1.25), near-incubi ×1.5, and a full incubus
+        /// produce richer essence (×1.25), near-incubi ×1.75, and a full incubus
         /// the configured amount. 1.0 below the mark threshold.
         /// </summary>
         public static float EssenceRegenMultiplier(Pawn pawn)

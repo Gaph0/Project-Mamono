@@ -50,6 +50,55 @@
         <descriptionHyperlinks>
             <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
         </descriptionHyperlinks>
+        <!-- Big & Small: draw the wings. Two pieces, both needed:
+             1. thingDefSwap -> BS_HumanoidWithWings gives the pawn the winged BODY
+                (real BS_Wing parts) and applies B&S's BS_HumanoidWithWings_Race
+                tracker hediff. The tracker is the ONLY wing renderer we use.
+             2. The Flagger un-blanks that tracker: it hides its wing graphics on
+                pawns carrying a gene tagged Wing/Wings (it expects the separate
+                BigSmall_Genes mod to draw them). Raising ShowBaseWingsRight/Left
+                tells the tracker to keep drawing its own feathered wings - the
+                same trick PMM_Gene_LamiaTail uses with ShowBaseAbdomen.
+             We deliberately ship NO custom render hediff: the tracker alone draws
+             the wings (confirmed in-game), and a second renderer would just draw
+             the same textures twice.
+             exclusionTags keep it from stacking with other wing swaps. -->
+        <exclusionTags>
+            <li>Wings</li>
+        </exclusionTags>
+        <modExtensions>
+            <li Class="BigAndSmall.PawnExtension">
+                <!-- forceThingDefSwap: the cautious (non-forced) swap silently
+                     refused on dragons - no BS_Wing parts, no tracker, no wings.
+                     The lamia tail gets away with cautious because lamias start
+                     plain. Dragons need the forced path. -->
+                <forceThingDefSwap>true</forceThingDefSwap>
+                <!-- renderCacheOff: same as the lamia tail. Wings reach past the
+                     body render atlas; without this they get cropped. -->
+                <renderCacheOff>true</renderCacheOff>
+                <thingDefSwap>BS_HumanoidWithWings</thingDefSwap>
+                <!-- Toughen the swapped-in wing parts through the shared hidden
+                     hediff (Defs/HediffDefs_BSDurability.xml): wings use the
+                     pawn's own HealthScale, which for small races is low - this
+                     keeps BS-added parts on the same plumbing as insect chitin. -->
+                <applyPartHediff>
+                    <li>
+                        <hediff>PMM_Hediff_PartToughness</hediff>
+                        <bodyparts>
+                            <li>BS_Wing</li>
+                        </bodyparts>
+                    </li>
+                </applyPartHediff>
+            </li>
+            <!-- Keep the B&S race tracker from hiding its wing graphics on the
+                 gene path. Same pattern as the lamia tail's ShowBaseAbdomen. -->
+            <li Class="BigAndSmall.Flagger">
+                <flags>
+                    <ShowBaseWingsRight />
+                    <ShowBaseWingsLeft />
+                </flags>
+            </li>
+        </modExtensions>
     </GeneDef>
 
     <!--
@@ -103,7 +152,7 @@
     </GeneDef>
 
     <!--
-        Momo claws: +50% tease damage (MomoClaws.TeaseDealtMultiplier, folded
+        Momo claws: +15% tease damage (MomoClaws.TeaseDealtMultiplier, folded
         into both tease paths), paid for with -15% manipulation
         (ClawsManipulationPatch). The cutting/inflaming flavour is lore only:
         on humanlikes the tease system already replaces wounds entirely.
