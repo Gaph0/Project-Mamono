@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Granted to a man at the moment his incubisation completes. -->
     <ThoughtDef>
         <defName>ProjectMomo_IncubusAwakened</defName>

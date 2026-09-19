@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Tsugai: the lifelong bond between a Momo and the man she has claimed as her
         husband. Shown on the Social tab. Reflexive so it appears on both pawns.

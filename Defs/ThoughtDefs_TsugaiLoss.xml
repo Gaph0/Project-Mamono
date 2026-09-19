@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Mood penalty for losing a tsugai bond — stronger than a spouse's death. -->
     <ThoughtDef>
         <defName>ProjectMomo_TsugaiLossThought</defName>

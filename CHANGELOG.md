@@ -1,4 +1,5 @@
 # Changelog
+- 2026-09-19: XSD schema annotations, Auto Mod Config preset note, sensible-factions settings
 - 2026-09-06: Default colonist autonomous bonding proposals to off
 - 2026-09-06: Patch Empire and Traders Guild xenotypes with monster girls; let both factions spawn normally
 - 2026-09-05: Add setting to disable autonomous voluntary bonding by colonists New VoluntaryBondColonistProposals toggle (default on) on the Tsugai bond tab. When off, VoluntaryBonding.CanInitiate refuses colonists (IsColonistPlayerControlled), so your own Momos/men never wander off to propose on their own. The right-click 'Propose tsugai bond' order still works (it goes through TryPlayerOrderedProposal, not CanInitiate), and autonomous proposals by visitors/raiders are unaffected — this gates only WHO proposes, not who's proposed to.

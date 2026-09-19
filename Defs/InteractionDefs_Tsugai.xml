@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Log-only interaction defs: these exist so voluntary tsugai proposals are
         recorded in each pawn's character log, exactly the way vanilla marriage
@@ -13,14 +13,14 @@
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>
             <rulesStrings>
-                <li>r_logentry->[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to form a tsugai bond. [RECIPIENT_pronoun] said yes.</li>
-                <li>r_logentry->[INITIATOR_nameDef] offered [RECIPIENT_nameDef] a tsugai bond, and was accepted.</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to form a tsugai bond. [RECIPIENT_pronoun] said yes.</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] offered [RECIPIENT_nameDef] a tsugai bond, and was accepted.</li>
             </rulesStrings>
         </logRulesInitiator>
         <logRulesRecipient>
             <rulesStrings>
-                <li>r_logentry->[RECIPIENT_nameDef] accepted [INITIATOR_nameDef]'s offer of a tsugai bond.</li>
-                <li>r_logentry->[RECIPIENT_nameDef] was asked by [INITIATOR_nameDef] to form a bond, and said yes.</li>
+                <li>r_logentry-&gt;[RECIPIENT_nameDef] accepted [INITIATOR_nameDef]'s offer of a tsugai bond.</li>
+                <li>r_logentry-&gt;[RECIPIENT_nameDef] was asked by [INITIATOR_nameDef] to form a bond, and said yes.</li>
             </rulesStrings>
         </logRulesRecipient>
     </InteractionDef>
@@ -31,14 +31,14 @@
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>
             <rulesStrings>
-                <li>r_logentry->[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to form a tsugai bond, but was turned down.</li>
-                <li>r_logentry->[INITIATOR_nameDef] offered [RECIPIENT_nameDef] a tsugai bond. [RECIPIENT_pronoun] refused.</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] asked [RECIPIENT_nameDef] to form a tsugai bond, but was turned down.</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] offered [RECIPIENT_nameDef] a tsugai bond. [RECIPIENT_pronoun] refused.</li>
             </rulesStrings>
         </logRulesInitiator>
         <logRulesRecipient>
             <rulesStrings>
-                <li>r_logentry->[RECIPIENT_nameDef] turned down [INITIATOR_nameDef]'s offer of a tsugai bond.</li>
-                <li>r_logentry->[RECIPIENT_nameDef] was asked by [INITIATOR_nameDef] to form a bond, and refused.</li>
+                <li>r_logentry-&gt;[RECIPIENT_nameDef] turned down [INITIATOR_nameDef]'s offer of a tsugai bond.</li>
+                <li>r_logentry-&gt;[RECIPIENT_nameDef] was asked by [INITIATOR_nameDef] to form a bond, and refused.</li>
             </rulesStrings>
         </logRulesRecipient>
     </InteractionDef>

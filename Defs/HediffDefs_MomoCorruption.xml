@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Mamono corruption: a Momo's mana slowly rewriting a woman into a monster.
         Severity only grows through completed mana infusions (JobDriver_InfuseMomo);

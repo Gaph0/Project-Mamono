@@ -1,7 +1,9 @@
-<Defs>
+﻿<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
+    <!-- Auto Mod Config (Continued) preset. Bump <version> whenever files in
+         Settings/ change so existing installs auto-update (safe merge). -->
     <ModlistConfigurator.ModlistPresetDef>
         <defName>ProjectMomo</defName>
         <presetLabel>Project Momo</presetLabel>
-        <version>1.0</version>
+        <version>1.1</version>
     </ModlistConfigurator.ModlistPresetDef>
 </Defs>

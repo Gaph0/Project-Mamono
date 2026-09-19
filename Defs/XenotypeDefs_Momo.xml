@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         The base Momo xenotype. A woman corrupted by a Momo who has no def-based
         monster xenotype of her own (e.g. a custom-xenotype Momo) becomes this.

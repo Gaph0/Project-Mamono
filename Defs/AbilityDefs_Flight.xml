@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Flight leap: cloned from vanilla Biotech "Longjump" (Verb_CastAbilityJump
         + CastJump job), but with no hemogen cost, a longer range, and no line-of

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         The lesser fire ward a fiery momo's bond spreads to her tsugai partner:
         +40C max comfortable temperature, 15% less flammable. The 15% flame-

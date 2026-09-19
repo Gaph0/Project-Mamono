@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Auto Mod Config (Continued) preset for Sensible Factions (Boots.SensibleFactions),
+	shipped by Project Momo (Defs/Preset.xml). The file name must match the settings
+	file RimWorld writes for Sensible Factions (identifier = its mod display name).
+
+	What this tunes: only the Reptiles mod defines real FactionDefs, so it is the
+	only Momo family Sensible Factions can weight. Both factions are mountain realms
+	(settlement placement is hard-locked to Mountainous tiles in C#), so their biome
+	weights are biased toward rugged, temperate-to-cold high country and away from
+	flat, frozen, or scorched lowlands - their existing spawn restrictions.
+
+	  Dragonia (neutral):  TemperateForest 8, BorealForest 6, TemperateSwamp 5,
+	    AridShrubland 4, TropicalRainforest 3, Tundra 3, Desert 2, TropicalSwamp 2,
+	    Wasteland 1, ExtremeDesert / IceSheet / SeaIce / Odyssey_LavaField 0.
+	  Scalebound Broods (hostile raiders): harsher spread - Tundra 5, BorealForest 6,
+	    TemperateForest 6, AridShrubland 5, Wasteland 4, TemperateSwamp 3,
+	    Desert 3, TropicalRainforest 2, TropicalSwamp 1,
+	    ExtremeDesert / IceSheet / SeaIce / Odyssey_LavaField 0.
+
+	allowedFactionDefNames mirrors the live selection (the two reptile factions plus
+	Empire, which Project Momo deliberately leaves enabled at world creation).
+-->
+<SettingsBlock>
+	<ModSettings Class="Boots_SensibleFactions.SensibleFactions_Settings">
+		<allowedFactionDefNames>
+			<li>PMM_ScaleboundBroodsFaction</li>
+			<li>PMM_DragoniaFaction</li>
+			<li>Empire</li>
+		</allowedFactionDefNames>
+		<factionBiomeWeights>
+			<!-- Dragonia: neutral mountain realm, broad but rugged-temperate spread. -->
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>TemperateForest</biomeDefName><weight>8</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>BorealForest</biomeDefName><weight>6</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>TemperateSwamp</biomeDefName><weight>5</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>AridShrubland</biomeDefName><weight>4</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>TropicalRainforest</biomeDefName><weight>3</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>Tundra</biomeDefName><weight>3</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>Desert</biomeDefName><weight>2</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>TropicalSwamp</biomeDefName><weight>2</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>Wasteland</biomeDefName><weight>1</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>ExtremeDesert</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>IceSheet</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>SeaIce</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_DragoniaFaction</factionDefName><biomeDefName>Odyssey_LavaField</biomeDefName><weight>0</weight></li>
+			<!-- Scalebound Broods: hostile raiders of the high peaks - harsher, colder spread. -->
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>BorealForest</biomeDefName><weight>6</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>TemperateForest</biomeDefName><weight>6</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>Tundra</biomeDefName><weight>5</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>AridShrubland</biomeDefName><weight>5</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>Wasteland</biomeDefName><weight>4</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>TemperateSwamp</biomeDefName><weight>3</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>Desert</biomeDefName><weight>3</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>TropicalRainforest</biomeDefName><weight>2</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>TropicalSwamp</biomeDefName><weight>1</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>ExtremeDesert</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>IceSheet</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>SeaIce</biomeDefName><weight>0</weight></li>
+			<li><factionDefName>PMM_ScaleboundBroodsFaction</factionDefName><biomeDefName>Odyssey_LavaField</biomeDefName><weight>0</weight></li>
+		</factionBiomeWeights>
+	</ModSettings>
+</SettingsBlock>

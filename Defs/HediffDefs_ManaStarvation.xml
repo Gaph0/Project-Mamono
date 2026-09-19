@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Mana starvation: the chemical-dependency-style escalating decline for a Momo
         whose Mana need is empty. Severity is driven by Need_Mana (0 while fed, grows

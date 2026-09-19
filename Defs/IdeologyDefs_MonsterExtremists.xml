@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
         Monster Extremists ideology meme ("All men should be drained, and all
         women should be transformed!"). Everything in this file is gated behind
@@ -208,15 +208,15 @@
         <logRulesInitiator>
             <include><li>SpeechUtility</li></include>
             <rulesStrings>
-                <li>r_logentry->[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
-                <li>speechtopic->the beauty of the monster form</li>
-                <li>speechtopic->the joy of awakening</li>
-                <li>speechtopic->shedding the weakness of flesh</li>
-                <li>speechtopic->the Mamono Lord's gift</li>
-                <li>speechtopic->sisterhood among monsters</li>
-                <li>speechtopic->the sweetness of mana</li>
-                <li>speechtopic->leaving humanity behind</li>
-                <li>speechtopic->the bliss of transformation</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
+                <li>speechtopic-&gt;the beauty of the monster form</li>
+                <li>speechtopic-&gt;the joy of awakening</li>
+                <li>speechtopic-&gt;shedding the weakness of flesh</li>
+                <li>speechtopic-&gt;the Mamono Lord's gift</li>
+                <li>speechtopic-&gt;sisterhood among monsters</li>
+                <li>speechtopic-&gt;the sweetness of mana</li>
+                <li>speechtopic-&gt;leaving humanity behind</li>
+                <li>speechtopic-&gt;the bliss of transformation</li>
             </rulesStrings>
         </logRulesInitiator>
     </InteractionDef>
@@ -230,14 +230,14 @@
         <logRulesInitiator>
             <include><li>SpeechUtility</li></include>
             <rulesStrings>
-                <li>r_logentry->[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
-                <li>speechtopic->the gift bestowed on the unwilling</li>
-                <li>speechtopic->resistance melting into bliss</li>
-                <li>speechtopic->the mercy of monstrous rebirth</li>
-                <li>speechtopic->what she will become</li>
-                <li>speechtopic->the futility of clinging to old flesh</li>
-                <li>speechtopic->the monster sleeping within her</li>
-                <li>speechtopic->gratitude she will one day feel</li>
+                <li>r_logentry-&gt;[INITIATOR_nameDef] [spokeof] [speechtopic].</li>
+                <li>speechtopic-&gt;the gift bestowed on the unwilling</li>
+                <li>speechtopic-&gt;resistance melting into bliss</li>
+                <li>speechtopic-&gt;the mercy of monstrous rebirth</li>
+                <li>speechtopic-&gt;what she will become</li>
+                <li>speechtopic-&gt;the futility of clinging to old flesh</li>
+                <li>speechtopic-&gt;the monster sleeping within her</li>
+                <li>speechtopic-&gt;gratitude she will one day feel</li>
             </rulesStrings>
         </logRulesInitiator>
     </InteractionDef>
@@ -452,7 +452,7 @@
             <li Class="RitualStage_InteractWithPrisoner">
                 <defaultDuty>Spectate</defaultDuty>
                 <endTriggers>
-                    <li Class="StageEndTrigger_PawnDeliveredOrNotValid"/>
+                    <li Class="StageEndTrigger_PawnDeliveredOrNotValid" />
                 </endTriggers>
                 <failTriggers>
                     <li Class="StageFailTrigger_TargetPawnUnreachable">
@@ -646,50 +646,50 @@
         </requireOne>
         <generalRules>
             <rulesStrings>
-                <li>memeAdjective->monstrous</li>
-                <li>memeAdjective->demon-touched</li>
-                <li>memeAdjective->ascendant</li>
-                <li>memeCreed->cult</li>
-                <li>memeCreed->sisterhood</li>
-                <li>memeHyphenPrefix->monstro</li>
-                <li>memeHyphenPrefix->demon</li>
-                <li>memeConcept->ascension</li>
-                <li>memeConcept->the inma</li>
-                <li>memeConcept->corruption</li>
-                <li>memeConcept->monstrous rebirth</li>
-                <li>memeLeaderNoun->matriarch</li>
-                <li>memeLeaderNoun->corrupter</li>
-                <li>memeLeaderAdjective->monstrous</li>
-                <li>memeLeaderAdjective->ascendant</li>
-                <li>memeMoralist->tempter</li>
-                <li>memeMoralist->corrupter</li>
-                <li>memeMoralist->recruiter</li>
+                <li>memeAdjective-&gt;monstrous</li>
+                <li>memeAdjective-&gt;demon-touched</li>
+                <li>memeAdjective-&gt;ascendant</li>
+                <li>memeCreed-&gt;cult</li>
+                <li>memeCreed-&gt;sisterhood</li>
+                <li>memeHyphenPrefix-&gt;monstro</li>
+                <li>memeHyphenPrefix-&gt;demon</li>
+                <li>memeConcept-&gt;ascension</li>
+                <li>memeConcept-&gt;the inma</li>
+                <li>memeConcept-&gt;corruption</li>
+                <li>memeConcept-&gt;monstrous rebirth</li>
+                <li>memeLeaderNoun-&gt;matriarch</li>
+                <li>memeLeaderNoun-&gt;corrupter</li>
+                <li>memeLeaderAdjective-&gt;monstrous</li>
+                <li>memeLeaderAdjective-&gt;ascendant</li>
+                <li>memeMoralist-&gt;tempter</li>
+                <li>memeMoralist-&gt;corrupter</li>
+                <li>memeMoralist-&gt;recruiter</li>
             </rulesStrings>
         </generalRules>
         <descriptionMaker>
             <rules>
                 <rulesStrings>
                     <!-- theist myth -->
-                    <li>creation(tag=meme_MonsterExtremists)        ->[deity0_name] looked upon the first humans and found their bodies wanting, so [deity0_pronoun] remade the most beloved of them into monsters, beautiful and hungry, and bade them claim the rest.</li>
-                    <li>episode(uses=1,tag=meme_MonsterExtremists)  ->Those who clung to their baseline flesh were passed over by [deity0_name]'s blessing, and were forgotten.</li>
+                    <li>creation(tag=meme_MonsterExtremists)        -&gt;[deity0_name] looked upon the first humans and found their bodies wanting, so [deity0_pronoun] remade the most beloved of them into monsters, beautiful and hungry, and bade them claim the rest.</li>
+                    <li>episode(uses=1,tag=meme_MonsterExtremists)  -&gt;Those who clung to their baseline flesh were passed over by [deity0_name]'s blessing, and were forgotten.</li>
                     <!-- theist founder -->
-                    <li>intro(tag=meme_MonsterExtremists)           ->On the [place_summary] [place_name] there was a [altarName] in [deity0_name]'s [altarRoomLabel], where the [deity0_type] poured mana into the willing and remade them.</li>
-                    <li>conflict(tag=meme_MonsterExtremists)        ->A fearful [foeLeader] sent [foeSoldiers] to burn the monsters and keep everyone trapped in baseline flesh.</li>
-                    <li>founderJoin(tag=meme_MonsterExtremists)     ->A [place_job] named [founderName] answered by offering [founder_possessive] own body to the mana, and rose from the ritual circle as something greater than human.</li>
-                    <li>victory(tag=meme_MonsterExtremists)         ->The [foeLeader] finally sent [foeSoldiers] to destroy the [memberNamePlural], but the monsters' charm unraveled their resolve, and one by one they knelt to be remade.</li>
+                    <li>intro(tag=meme_MonsterExtremists)           -&gt;On the [place_summary] [place_name] there was a [altarName] in [deity0_name]'s [altarRoomLabel], where the [deity0_type] poured mana into the willing and remade them.</li>
+                    <li>conflict(tag=meme_MonsterExtremists)        -&gt;A fearful [foeLeader] sent [foeSoldiers] to burn the monsters and keep everyone trapped in baseline flesh.</li>
+                    <li>founderJoin(tag=meme_MonsterExtremists)     -&gt;A [place_job] named [founderName] answered by offering [founder_possessive] own body to the mana, and rose from the ritual circle as something greater than human.</li>
+                    <li>victory(tag=meme_MonsterExtremists)         -&gt;The [foeLeader] finally sent [foeSoldiers] to destroy the [memberNamePlural], but the monsters' charm unraveled their resolve, and one by one they knelt to be remade.</li>
                     <!-- ideological founder -->
-                    <li>setup(tag=meme_MonsterExtremists)           ->[founderName] watched a monster drain a man to blissful ruin and remake a woman in her own image, and understood at once what humanity was for.</li>
-                    <li>story(uses=1,tag=meme_MonsterExtremists)    ->[founderName] taught [founder_possessive] followers that the baseline form is only a chrysalis, and that clinging to it is cowardice.</li>
+                    <li>setup(tag=meme_MonsterExtremists)           -&gt;[founderName] watched a monster drain a man to blissful ruin and remake a woman in her own image, and understood at once what humanity was for.</li>
+                    <li>story(uses=1,tag=meme_MonsterExtremists)    -&gt;[founderName] taught [founder_possessive] followers that the baseline form is only a chrysalis, and that clinging to it is cowardice.</li>
                     <!-- ideological lesson -->
-                    <li>lessonIntro(tag=meme_MonsterExtremists)     ->The first sister I watched awaken wept with joy at what she had become, and in her tears I finally saw the truth we had all been missing:</li>
-                    <li>lesson(tag=meme_MonsterExtremists)          ->to stay baseline is to refuse to be born</li>
-                    <li>lessonReinforcement(tag=meme_MonsterExtremists) ->It became so clear when my own hunger for essence first stirred, and I felt what I had always been meant to be.</li>
+                    <li>lessonIntro(tag=meme_MonsterExtremists)     -&gt;The first sister I watched awaken wept with joy at what she had become, and in her tears I finally saw the truth we had all been missing:</li>
+                    <li>lesson(tag=meme_MonsterExtremists)          -&gt;to stay baseline is to refuse to be born</li>
+                    <li>lessonReinforcement(tag=meme_MonsterExtremists) -&gt;It became so clear when my own hunger for essence first stirred, and I felt what I had always been meant to be.</li>
                     <!-- archist -->
-                    <li>archistBasis(tag=meme_MonsterExtremists)    ->The archotechs themselves reshaped lesser beings to suit their designs; to remake the human form is to walk in their image.</li>
-                    <li>archistFact(tag=meme_MonsterExtremists)     ->A body rewritten by mana is a perfected instrument, closer to the archotechs' flawless workings than any baseline flesh.</li>
+                    <li>archistBasis(tag=meme_MonsterExtremists)    -&gt;The archotechs themselves reshaped lesser beings to suit their designs; to remake the human form is to walk in their image.</li>
+                    <li>archistFact(tag=meme_MonsterExtremists)     -&gt;A body rewritten by mana is a perfected instrument, closer to the archotechs' flawless workings than any baseline flesh.</li>
                     <!-- animist -->
-                    <li>animistBasis(tag=meme_MonsterExtremists)    ->Every soul carries a monster spirit sleeping within it; the rite of awakening merely lets the true spirit out.</li>
-                    <li>animistFact(tag=meme_MonsterExtremists)     ->Baseline flesh is a cage, and the spirits rejoice when it is opened.</li>
+                    <li>animistBasis(tag=meme_MonsterExtremists)    -&gt;Every soul carries a monster spirit sleeping within it; the rite of awakening merely lets the true spirit out.</li>
+                    <li>animistFact(tag=meme_MonsterExtremists)     -&gt;Baseline flesh is a cage, and the spirits rejoice when it is opened.</li>
                 </rulesStrings>
             </rules>
         </descriptionMaker>
