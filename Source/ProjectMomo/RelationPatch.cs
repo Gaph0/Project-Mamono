@@ -54,6 +54,13 @@ namespace ProjectMomo
             {
                 VPECompat.Apply(harmony);
             }
+
+            // Optional: a mute pawn (Progression: Education's speech track) cannot
+            // propose or accept a tsugai bond or a transformation. Nothing here
+            // references that mod's assembly - the mute trait is resolved by
+            // defName, so this is a no-op when the mod is absent (soft dependency).
+            bool educationActive = EducationCompat.Active;
+            Log.Message($"[Project Momo] Startup: Progression: Education active = {educationActive}, mute trait found = {EducationCompat.MuteTrait != null}.");
         }
     }
 

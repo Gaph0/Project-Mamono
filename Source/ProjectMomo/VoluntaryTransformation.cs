@@ -148,6 +148,18 @@ namespace ProjectMomo
             {
                 return false;
             }
+            // Progression: Education - a mute pawn cannot offer a transformation, and
+            // cannot understand one either. Either side being mute refuses the offer.
+            if (EducationCompat.IsMute(momo))
+            {
+                reason = EducationCompat.MuteReason(momo);
+                return false;
+            }
+            if (EducationCompat.IsMute(woman))
+            {
+                reason = EducationCompat.MuteReason(woman);
+                return false;
+            }
             if (!MomoTransformation.CanEverTransform(woman, out reason))
             {
                 return false;
@@ -281,6 +293,12 @@ namespace ProjectMomo
             {
                 return false;
             }
+            // Progression: Education - a mute Momo never offers on her own. The
+            // right-click order is gated separately, in CanProposeTo.
+            if (EducationCompat.IsMute(pawn))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -334,6 +352,12 @@ namespace ProjectMomo
                 return false;
             }
             if (target.RaceProps == null || !target.RaceProps.Humanlike)
+            {
+                return false;
+            }
+            // Progression: Education - a mute pawn cannot consent, so nobody ever
+            // walks up to one on their own.
+            if (EducationCompat.IsMute(target))
             {
                 return false;
             }

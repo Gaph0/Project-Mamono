@@ -171,6 +171,21 @@ namespace ProjectMomo
                 return false;
             }
 
+            // Progression: Education - a mute pawn cannot ask for a bond, and cannot
+            // understand one either. Either side being mute refuses the proposal, so
+            // the reason names whichever of the two is mute.
+            Pawn acceptor = initiator == momo ? man : momo;
+            if (EducationCompat.IsMute(initiator))
+            {
+                reason = EducationCompat.MuteReason(initiator);
+                return false;
+            }
+            if (EducationCompat.IsMute(acceptor))
+            {
+                reason = EducationCompat.MuteReason(acceptor);
+                return false;
+            }
+
             if (TsugaiFormation.HasBondedPartner(momo))
             {
                 reason = "she already has a husband";
@@ -221,6 +236,17 @@ namespace ProjectMomo
                 return false;
             }
 
+            // There has to be a path. The proposal job's first toil waits for arrival
+            // (ToilCompleteMode.PatherArrival) and a pawn who cannot path simply stands
+            // where he is, so ordering a proposal to someone he cannot walk to would
+            // freeze him until the player noticed. The autonomous scan already refuses
+            // these candidates in EligibleTarget.
+            if (!initiator.CanReach(target, PathEndMode.Touch, Danger.Deadly))
+            {
+                reason = "cannot reach them";
+                return false;
+            }
+
             return true;
         }
 
@@ -268,7 +294,7 @@ namespace ProjectMomo
                 return null;
             }
 
-            return RollAndBegin(pawn, best, momoInitiator, comp, now, ordered: false);
+            return BeginProposal(pawn, best, comp, now, ordered: false);
         }
 
         /// <summary>
@@ -285,46 +311,65 @@ namespace ProjectMomo
 
             int now = Find.TickManager.TicksGame;
             VoluntaryBondComponent comp = VoluntaryBondComponent.Get();
-            bool momoInitiator = EssenceTransfer.IsMomo(initiator);
 
-            Job job = RollAndBegin(initiator, target, momoInitiator, comp, now, ordered: true);
+            Job job = BeginProposal(initiator, target, comp, now, ordered: true);
             return job != null;
         }
 
         /// <summary>
-        /// Rolls acceptance from the target's desire. Either way the initiator gets
-        /// the proposal job and walks to the target — acceptance is only revealed
-        /// face-to-face, when the ceremony starts. On success the job is marked
-        /// pre-accepted so the driver bonds on completion; on failure the driver
-        /// applies the rejection (thought, pair cooldown, message) at the target.
+        /// Starts the proposal: notes the attempt and the reservation, then either hands the
+        /// job to an ordered pawn or returns it to the think tree. The answer is deliberately
+        /// not rolled here, and not carried on the job — see <see cref="AcceptsProposal"/>.
         /// </summary>
-        private static Job RollAndBegin(Pawn initiator, Pawn target, bool momoInitiator, VoluntaryBondComponent comp, int now, bool ordered)
+        private static Job BeginProposal(Pawn initiator, Pawn target, VoluntaryBondComponent comp, int now, bool ordered)
         {
-            // A man who offers his bond always gets it — a Momo never turns down a
-            // willing husband. A Momo's proposal is still rolled against the man's
-            // desire below.
-            float acceptChance = 1f;
-            if (momoInitiator)
-            {
-                float acceptorDesire = ManDesire(target, initiator);
-                acceptChance = Mathf.InverseLerp(AcceptanceFloor, AcceptanceCertain, acceptorDesire);
-            }
-
-            bool accepted = Rand.Chance(acceptChance);
-
             int attemptTicks = Mathf.RoundToInt(Settings.VoluntaryBondAttemptCooldownHours * GenDate.TicksPerHour);
             comp?.NoteAttempt(initiator, now + attemptTicks);
             comp?.ReserveTarget(target, now + ReservationTicks);
 
             Job job = JobMaker.MakeJob(ProjectMomo_DefOf.ProjectMomo_ProposeTsugaiBond, target);
-            // Carry the verdict to the driver: rejection effects must only fire once
-            // the initiator actually stands before the target — never remotely.
-            job.playerForced = accepted;
             if (ordered)
             {
                 initiator.jobs?.TryTakeOrderedJob(job, JobTag.Misc);
             }
             return job;
+        }
+
+        /// <summary>
+        /// Rolls the target's answer, called by the proposal driver once the initiator is
+        /// standing before the target — never earlier, because a rejection's effects (mood
+        /// thought, pair cooldown, message) belong face to face. A man who offers his bond
+        /// always gets it; a Momo's proposal is rolled against the man's desire on the same
+        /// curve the pre-walk gate uses, so below AcceptanceFloor the answer is always no and
+        /// at AcceptanceCertain always yes. An autonomous proposal has already cleared
+        /// AcceptanceFloor to be attempted at all, so this is the roll that decides it.
+        ///
+        /// The verdict is not carried on the job: vanilla overwrites Job.playerForced when a
+        /// job is player-ordered (Pawn_JobTracker.TryTakeOrderedJob sets it to true), which
+        /// made every ordered proposal succeed no matter how the roll went.
+        /// </summary>
+        public static bool AcceptsProposal(Pawn initiator, Pawn target)
+        {
+            if (initiator == null || target == null)
+            {
+                return false;
+            }
+            // Progression: Education - a mute pawn cannot consent, so the roll always
+            // fails and the driver applies the ordinary face-to-face rejection. This
+            // has to sit above the man-initiates shortcut below, which accepts without
+            // a roll, and it is the last line of defence: the gates above normally stop
+            // the walk from happening at all.
+            if (EducationCompat.IsMute(target))
+            {
+                return false;
+            }
+            if (!EssenceTransfer.IsMomo(initiator))
+            {
+                return true;
+            }
+
+            float acceptorDesire = ManDesire(target, initiator);
+            return Rand.Chance(Mathf.InverseLerp(AcceptanceFloor, AcceptanceCertain, acceptorDesire));
         }
 
         /// <summary>
@@ -368,6 +413,12 @@ namespace ProjectMomo
             // A would-be initiator is either a Momo or a bondable man; anyone else
             // (women, children, animals) never proposes.
             if (!EssenceTransfer.IsMomo(pawn) && !TsugaiFormation.IsBondable(pawn))
+            {
+                return false;
+            }
+            // Progression: Education - a mute pawn never proposes on her own. The
+            // right-click order is gated separately, in CanProposeTo.
+            if (EducationCompat.IsMute(pawn))
             {
                 return false;
             }
@@ -445,6 +496,12 @@ namespace ProjectMomo
                 return false;
             }
             if (target.RaceProps == null || !target.RaceProps.Humanlike)
+            {
+                return false;
+            }
+            // Progression: Education - a mute pawn cannot consent, so nobody ever
+            // walks up to one on their own.
+            if (EducationCompat.IsMute(target))
             {
                 return false;
             }
