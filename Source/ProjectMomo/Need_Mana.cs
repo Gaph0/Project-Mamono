@@ -38,6 +38,38 @@ namespace ProjectMomo
                 return;
             }
 
+            float fall = FallPerTick * 150f * DrainMultiplier(pawn);
+
+            // A visiting guest never starves: her passive drain stops at the guest floor (a fifth
+            // of a bar by default) instead of running to empty. Her stay is the visiting mod's
+            // decision and she cannot leave it early, so a visit longer than one bar lasts - eight
+            // days at the default drain - would otherwise leave her starving. Only the drain is
+            // floored: nothing is added back, so a guest who spends mana still spends it, and a
+            // guest already below the floor simply stops draining.
+            if (EssenceTransfer.IsVisitingGuest(pawn))
+            {
+                fall = UnityEngine.Mathf.Min(fall, UnityEngine.Mathf.Max(0f, CurLevel - ProjectMomoModSettings.Settings.GuestManaFloor));
+            }
+
+            CurLevel -= fall;
+
+            UpdateStarvation();
+            LowManaBreak.CheckBreak(pawn, CurLevel);
+        }
+
+        /// <summary>
+        /// This pawn's mana drain as a fraction of the normal rate: wild Momo and visiting guests
+        /// both drain slower than a colonist, and the Isekai mod's WIS/INT conservation applies on
+        /// top. Split out of NeedInterval so anything that reasons about a pawn's drain uses the
+        /// same number the need does.
+        /// </summary>
+        public static float DrainMultiplier(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return 1f;
+            }
+
             // ISEKAI: the average of WIS and INT slows mana drain.
             float drainMultiplier = IsekaiCompat.ManaConservationMultiplier(pawn);
 
@@ -55,11 +87,9 @@ namespace ProjectMomo
                 drainMultiplier *= ProjectMomoModSettings.Settings.GuestManaDrainFactor;
             }
 
-            CurLevel -= FallPerTick * 150f * drainMultiplier;
-
-            UpdateStarvation();
-            LowManaBreak.CheckBreak(pawn, CurLevel);
+            return drainMultiplier;
         }
+
 
         private void UpdateStarvation()
         {

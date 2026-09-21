@@ -115,11 +115,70 @@ namespace ProjectMomo
         }
 
         /// <summary>
+        /// True if a captive <paramref name="momo"/> may feed from <paramref name="candidate"/>:
+        /// a fellow prisoner on her map that she can reach and that the ordinary rules
+        /// (<see cref="CanTransfer"/>: non-Momo humanlike with essence left, plus the bond rule)
+        /// accept. A prisoner cannot leave, cannot hunt and is shut out of the break system, so
+        /// fellow captives are her only meal — see JobGiver_SeekManaFeeding.
+        /// </summary>
+        public static bool IsFellowPrisonerFeedTarget(Pawn momo, Pawn candidate)
+        {
+            if (momo == null || candidate == null || candidate == momo || momo.Map == null)
+            {
+                return false;
+            }
+            if (!candidate.IsPrisoner || candidate.Dead || !candidate.Spawned || candidate.Map != momo.Map)
+            {
+                return false;
+            }
+            if (!momo.CanReach(candidate, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return false;
+            }
+            return CanTransfer(momo, candidate);
+        }
+
+        /// <summary>The nearest fellow prisoner <paramref name="momo"/> may drain, or null.</summary>
+        public static Pawn FindFellowPrisonerToDrain(Pawn momo)
+        {
+            if (momo?.Map == null)
+            {
+                return null;
+            }
+
+            Pawn best = null;
+            float bestDistSq = float.MaxValue;
+            System.Collections.Generic.IReadOnlyList<Pawn> pawns = momo.Map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn candidate = pawns[i];
+                // Cheap filter first: the reachability test inside is the expensive part.
+                if (candidate == null || !candidate.IsPrisoner)
+                {
+                    continue;
+                }
+                if (!IsFellowPrisonerFeedTarget(momo, candidate))
+                {
+                    continue;
+                }
+
+                float dSq = candidate.Position.DistanceToSquared(momo.Position);
+                if (dSq < bestDistSq)
+                {
+                    bestDistSq = dSq;
+                    best = candidate;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>
         /// Moves up to <paramref name="amount"/> essence from the human to the Momo's
         /// mana. Returns the amount actually transferred. When
         /// <paramref name="intimateSideEffects"/> is false, the lovin' memory and the
-        /// follow-up lovin' job are skipped — used when an external system (the
-        /// Intimacy mod) has already handled the act itself.
+        /// follow-up lovin' job are skipped. Two callers use that: an external system
+        /// (the Intimacy mod) that has already handled the act itself, and a captive
+        /// Momo draining a fellow prisoner, which is not an intimate act at all.
         /// </summary>
         public static float Transfer(Pawn momo, Pawn human, float amount, bool intimateSideEffects = true)
         {

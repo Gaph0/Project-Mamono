@@ -16,6 +16,15 @@ namespace ProjectMomo
 
         private Pawn Human => job?.targetA.Thing as Pawn;
 
+        /// <summary>
+        /// False for the dry variant (ProjectMomo_DrainEssenceDry), which a captive Momo
+        /// uses on a fellow prisoner: feeding on a fellow captive is not an intimate act,
+        /// so the lovin' memory and the follow-up lovin' job are skipped. Mana, the shared
+        /// mood buff, the catharsis and the incubisation dose all still happen — see
+        /// EssenceTransfer.Transfer. Unknown or missing defs stay intimate, the old behaviour.
+        /// </summary>
+        private bool IntimateSideEffects => job?.def != ProjectMomo_DefOf.ProjectMomo_DrainEssenceDry;
+
         /// <summary>True while the drain action is actively being performed (drives the Yayo lovin' animation).</summary>
         public bool FeedInProgress { get; private set; }
 
@@ -41,7 +50,7 @@ namespace ProjectMomo
                 FeedInProgress = false;
                 if (EssenceTransfer.CanTransfer(pawn, Human))
                 {
-                    EssenceTransfer.Transfer(pawn, Human, float.MaxValue);
+                    EssenceTransfer.Transfer(pawn, Human, float.MaxValue, IntimateSideEffects);
                     // Only a completed feed counts toward the daily cap, and only
                     // when she sought him out calmly — break-driven feeds (the
                     // desperation fallback) are exempt, so the cap can never lock

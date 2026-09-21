@@ -54,6 +54,11 @@ namespace ProjectMomo
         // below 1 drains slower than colonist Momo, so a visitor doesn't starve toward a
         // berserk break during an ordinary visit. 1 = same as colonists.
         public float GuestManaDrainFactor = 0.25f;
+        // Mana floor (fraction) for visiting Momo: their passive drain stops here instead of
+        // running to empty, so a visit longer than one bar lasts still leaves them fed. Only the
+        // passive drain is floored — nothing is added back, so a guest who spends mana still
+        // spends it. 0 = no floor (a guest can starve like anyone else).
+        public float GuestManaFloor = 0.2f;
         // Mana level (fraction) below which a Momo can randomly suffer a feeding break.
         public float LowManaBreakThreshold = 0.1f;
         // Mental-break mean-time-between (days) while Mana is below the threshold.
@@ -252,6 +257,7 @@ namespace ProjectMomo
             ManaFromFoodPerNutrition = 0.15f;
             WildManaDrainFactor = 0.25f;
             GuestManaDrainFactor = 0.25f;
+            GuestManaFloor = 0.2f;
             LowManaBreakThreshold = 0.1f;
             LowManaBreakMtbDays = 0.5f;
             AutonomousFeedingEnabled = true;
@@ -342,6 +348,7 @@ namespace ProjectMomo
             Scribe_Values.Look(ref ManaFromFoodPerNutrition, "ManaFromFoodPerNutrition", 0.15f);
             Scribe_Values.Look(ref WildManaDrainFactor, "WildManaDrainFactor", 0.25f);
             Scribe_Values.Look(ref GuestManaDrainFactor, "GuestManaDrainFactor", 0.25f);
+            Scribe_Values.Look(ref GuestManaFloor, "GuestManaFloor", 0.2f);
             Scribe_Values.Look(ref LowManaBreakThreshold, "LowManaBreakThreshold", 0.1f);
             Scribe_Values.Look(ref LowManaBreakMtbDays, "LowManaBreakMtbDays", 0.5f);
             Scribe_Values.Look(ref AutonomousFeedingEnabled, "AutonomousFeedingEnabled", true);

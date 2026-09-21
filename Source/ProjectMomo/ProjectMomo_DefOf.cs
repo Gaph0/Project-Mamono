@@ -9,6 +9,8 @@ namespace ProjectMomo
         public static PawnCapacityDef ProjectMomo_Willpower;
         public static GeneDef ProjectMomo_Momo;
         public static GeneDef PMM_Gene_Flight;
+        public static GeneDef PMM_Gene_FlightWeak;
+        public static GeneDef PMM_Gene_LargeFrame;
         public static GeneDef ProjectMomo_MomoVenom;
         public static GeneDef ProjectMomo_MomoFiery;
         public static GeneDef ProjectMomo_MomoClaws;
@@ -35,6 +37,7 @@ namespace ProjectMomo
         public static NeedDef ProjectMomo_Mana;
         public static JobDef ProjectMomo_GiveEssence;
         public static JobDef ProjectMomo_DrainEssence;
+        public static JobDef ProjectMomo_DrainEssenceDry;
         public static JobDef ProjectMomo_EssenceBerserkAttack;
         public static JobDef ProjectMomo_LeaveColony;
         public static MentalStateDef ProjectMomo_ManaFeedingState;

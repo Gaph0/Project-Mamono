@@ -9,9 +9,12 @@ namespace ProjectMomo
     /// Lets a bonded Momo autonomously seek out her tsugai partner and feed when
     /// her Mana runs low — the mana equivalent of vanilla's JobGiver_GetFood.
     /// No mental break, no letter: she simply walks to her mate and drains
-    /// essence, then goes back to her day. Only fires for a Momo at or below the
-    /// configured seek threshold; if her mate is off-map, unreachable, or dry,
-    /// it stays silent and the low-mana break system remains the fallback.
+    /// essence, then goes back to her day. A captive Momo is shut out of the break
+    /// system and cannot leave, so when no bonded mate is available she feeds on a
+    /// fellow prisoner instead — the same act, without the intimate side effects.
+    /// Only fires for a Momo at or below the configured seek threshold; if no one
+    /// suitable is around, the low-mana break system remains the fallback for the
+    /// free Momos it still covers.
     /// Inserted into the Humanlike think tree by ThinkTreeInjection, below
     /// mental states and emergencies but above LordDuty, so a visiting Momo
     /// bonded to a colonist can still break off to feed.
@@ -87,8 +90,15 @@ namespace ProjectMomo
             }
 
             // Her living, reachable tsugai partner. Unbonded Momos keep their
-            // feral flavor — no autonomous feeding, only the berserk break.
+            // feral flavor — no autonomous feeding, only the berserk break. The one
+            // exception is a captive: no mate to reach, no way out of the cell and no
+            // break to fall back on, so a fellow prisoner is her only meal.
             Pawn partner = LowManaBreak.GetLivingBondPartner(pawn);
+            bool captiveFeed = partner == null && pawn.IsPrisoner;
+            if (captiveFeed)
+            {
+                partner = EssenceTransfer.FindFellowPrisonerToDrain(pawn);
+            }
             if (partner == null)
             {
                 return null;
@@ -107,7 +117,10 @@ namespace ProjectMomo
             // cooldown keeps her from re-issuing the same failing job every
             // think tick.
             NoteAttempt(pawn, comp, now, settings, drive);
-            return JobMaker.MakeJob(ProjectMomo_DefOf.ProjectMomo_DrainEssence, partner);
+            // Feeding on a fellow prisoner uses the dry variant: no lovin' memory, no lovin' job.
+            return JobMaker.MakeJob(
+                captiveFeed ? ProjectMomo_DefOf.ProjectMomo_DrainEssenceDry : ProjectMomo_DefOf.ProjectMomo_DrainEssence,
+                partner);
         }
 
         /// <summary>Cheap gates before any scan runs: a calm, upright, hungry Momo.</summary>

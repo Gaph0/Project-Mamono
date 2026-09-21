@@ -10,7 +10,10 @@ namespace ProjectMomo
     /// (default 10%), she can randomly break. If she has a living tsugai bond she
     /// seeks out that partner and initiates essence feeding; if unbonded she goes
     /// berserk and attacks a nearby unbonded pawn. Wild Momos never berserk —
-    /// a starving wild Momo simply leaves the map to hunt elsewhere.
+    /// a starving wild Momo simply leaves the map to hunt elsewhere. A prisoner
+    /// never breaks either: she cannot act on the hunger, and a berserk captive only
+    /// mauls the colony that holds her. Her way out is the calm fellow-prisoner
+    /// feeding in <see cref="JobGiver_SeekManaFeeding"/>.
     /// </summary>
     public static class LowManaBreak
     {
@@ -18,7 +21,10 @@ namespace ProjectMomo
         public static void CheckBreak(Pawn pawn, float manaLevel)
         {
             var settings = ProjectMomoModSettings.Settings;
-            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.Downed || pawn.InMentalState)
+            // A prisoner is excluded here as well as in Trigger: no point rolling the MTB
+            // for a pawn the break can never touch.
+            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.Downed || pawn.InMentalState
+                || pawn.IsPrisoner)
             {
                 return;
             }
@@ -37,11 +43,13 @@ namespace ProjectMomo
         /// <summary>
         /// Starts the appropriate break right now: bonded Momos seek their mate and feed;
         /// unbonded go berserk and attack a nearby unbonded pawn if one is around. Shared
-        /// by the low-mana threshold and the mana-starvation-desperate hediff.
+        /// by the low-mana threshold and the mana-starvation-desperate hediff — so the
+        /// captive exclusion has to live here, or the guaranteed desperate break would
+        /// bypass it and a starving prisoner would maul her captors anyway.
         /// </summary>
         public static void Trigger(Pawn pawn)
         {
-            if (pawn == null || pawn.Dead)
+            if (pawn == null || pawn.Dead || pawn.IsPrisoner)
             {
                 return;
             }

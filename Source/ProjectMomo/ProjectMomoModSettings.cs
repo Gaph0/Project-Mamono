@@ -251,9 +251,11 @@ namespace ProjectMomo
                 "Mana drain multiplier for wild (untamed) Momo. Lower = wild Momo drain mana more slowly than tamed/colonist Momo. 1 = same as tamed.");
             DrawPerPointSlider(listing, "Visiting Momo mana drain", ref Settings.GuestManaDrainFactor, 0.05f, 1f, 0.25f,
                 "Mana drain multiplier for visiting Momo (guests of a non-hostile faction). Lower = visitors drain mana more slowly, so a guest won't starve toward a berserk break during an ordinary visit. 1 = same as colonists.");
+            DrawPerPointSlider(listing, "Visiting Momo mana floor", ref Settings.GuestManaFloor, 0f, 0.9f, 0.2f,
+                "Mana level a visiting Momo's drain stops at, so no visit can leave her starving. Only the passive drain is floored: nothing is added back, so a guest who spends mana still spends it. 0 = no floor.");
 
             listing.Label("<b>Low-mana break</b>");
-            listing.Label("<color=#888888>While Mana is below the threshold, a Momo can randomly suffer a feeding/berserk break.</color>");
+            listing.Label("<color=#888888>While Mana is below the threshold, a free Momo can randomly suffer a feeding/berserk break. A captive never breaks: she feeds on her fellow prisoners instead.</color>");
             listing.GapLine();
 
             DrawPerPointSlider(listing, "Low mana break threshold", ref Settings.LowManaBreakThreshold, 0f, 0.5f, 0.1f,
@@ -263,18 +265,18 @@ namespace ProjectMomo
 
             listing.GapLine();
             listing.Label("<b>Autonomous feeding</b>");
-            listing.Label("<color=#888888>A bonded Momo whose Mana runs low seeks out her mate and feeds on her own — like pawns seeking food, no mental break required. If she cannot reach him or he is dry, the breaks above remain the fallback.</color>");
+            listing.Label("<color=#888888>A Momo whose Mana runs low looks for a meal on her own, with no mental break. A bonded Momo goes to her mate. A captive goes to a fellow prisoner. If she cannot reach one, or they are dry, the breaks above stay the fallback for free Momos.</color>");
             listing.GapLine();
 
-            listing.CheckboxLabeled("Bonded Momos feed autonomously", ref Settings.AutonomousFeedingEnabled,
-                "Let a bonded Momo autonomously walk to her tsugai partner and drain essence when her Mana runs low.");
+            listing.CheckboxLabeled("Momos feed autonomously", ref Settings.AutonomousFeedingEnabled,
+                "Let a Momo go for a meal on her own when her Mana runs low: a bonded Momo to her tsugai partner, a captive to a fellow prisoner.");
 
-            DrawPerPointSlider(listing, "Seek mate threshold", ref Settings.AutonomousFeedThreshold, 0f, 0.6f, 0.3f,
-                "Mana level below which a bonded Momo seeks out her mate to feed. Keep above the low mana break threshold so seeking preempts breaking.");
+            DrawPerPointSlider(listing, "Seek feeding threshold", ref Settings.AutonomousFeedThreshold, 0f, 0.6f, 0.3f,
+                "Mana level below which a Momo looks for a meal: her mate, or a fellow prisoner if she is captive. Keep it above the low mana break threshold, so she seeks before she breaks.");
             DrawPerPointSlider(listing, "Feed retry cooldown (hours)", ref Settings.AutonomousFeedRetryCooldownHours, 0.25f, 12f, 1f,
-                "Hours a Momo waits before retrying after a feed attempt failed (mate dry, or the walk/drain interrupted).", true);
+                "Hours a Momo waits before retrying after a feed attempt failed (the meal was dry, or the walk/drain was interrupted).", true);
             DrawIntField(listing, "Max natural feeds per day", ref Settings.AutonomousFeedMaxPerDay, 0, 10,
-                "Completed autonomous feeds a Momo will seek per day (0 = no limit). Past the cap, low Mana falls back to the feeding/berserk break. Break-driven feeds never count toward the cap.");
+                "Completed autonomous feeds a Momo will seek per day (0 = no limit). Past the cap, low Mana falls back to the feeding/berserk break for a free Momo; a captive simply waits. Break-driven feeds never count toward the cap.");
 
             listing.CheckboxLabeled("Feeding frequency follows lovin' MTB", ref Settings.AutonomousFeedLovinDriven,
                 "Tie autonomous feeding to the pair's lovin' MTB: the shorter their mean time between lovin' (the higher her drive), the more eagerly she seeks her mate — she starts looking at a higher Mana level, re-checks and retries sooner, and may feed more times per day. A low-drive Momo seeks less than the configured rates.");
