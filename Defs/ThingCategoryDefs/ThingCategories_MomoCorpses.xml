@@ -1,0 +1,35 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
+
+	<!--
+		One line for every momo corpse in the family: in the butcher menu, in
+		stockpile and bill filters, and anywhere else that lists corpse categories.
+		The insects, the slimes and the elementals all put their corpses here, so the
+		player sees one "momo corpses" heading instead of one entry per race.
+
+		The def lives in this mod, not in a species mod, so every momo mod can share
+		the same line. Each species mod registers its own race defs with
+		Source/ProjectMomo/MomoCorpses.cs, and that file does the moving.
+
+		Why this needs code (MomoCorpses.cs):
+		ThingDefGenerator_Corpses.GenerateCorpseDef picks a corpse's category with
+		"race.Humanlike ? CorpsesHumanlike : race.FleshType.corpseCategory". The
+		humanlike test comes first, so every momo corpse - a humanlike race with its
+		own flesh type - is filed with human corpses, whatever the flesh type says.
+		There is no XML field for the category, and corpse defs are generated after
+		XML patching, so no patch can reach them either.
+
+		Child of CorpsesHumanlike on purpose, the way vanilla's CorpsesInsect is a
+		child of CorpsesAnimal. That nesting is what keeps moving the corpses safe:
+		anything already allowing humanlike corpses - the butcher bill, corpse
+		stockpiles, the Ideology and Anomaly buildings that want one - keeps
+		accepting a momo corpse, and the filters simply show our line nested inside
+		theirs.
+	-->
+	<ThingCategoryDef>
+		<defName>PMM_MomoCorpses</defName>
+		<label>momo corpses</label>
+		<parent>CorpsesHumanlike</parent>
+	</ThingCategoryDef>
+
+</Defs>
