@@ -26,8 +26,19 @@
     <!--
         Flight: grants a leap-style "Fly" ability gizmo and makes the pawn count
         as a flying mount in caravans. The CaravanRidingSpeedFactor offset (base
-        1.0 + 2.5 = 3.5x) is read by FlightCaravanSpeedPatch, which counts every
+        1.0 + 2.5 = 3.5x) is read by CaravanMountSpeedPatch, which counts every
         flyer twice: once for herself and once for a passenger riding on her back.
+
+        Wing swap limitation (confirmed 2026-09-20): the body swap below only
+        works on a pawn whose race def is literally Human - dragons, wyverns and
+        lamias, which are xenotype-only species. B&S's gene path runs
+        SwapThingDef with force:false + targetPriority:0 (Genes/GenePatches.cs),
+        and a race def that isn't Human is entered at priority 200, so it wins
+        the "no fusion found" fallback and the swap is silently refused. A
+        species on its own race def must carry the winged body and
+        BS_HumanoidWithWings_Race on its race def instead (see the winged insect
+        momos in Project Momo Insects). The Flagger below is still required
+        there: the winged tracker blanks its own art for "Wings"-tagged genes.
     -->
     <GeneDef>
         <defName>PMM_Gene_Flight</defName>
@@ -46,6 +57,7 @@
         <customEffectDescriptions>
             <li>Grants the "Fly" ability: leap through the air to a distant location, soaring over obstacles.</li>
             <li>In a caravan she flies instead of walking, and can airlift one passenger on her back: each flyer counts as two caravan members moving at 350% speed.</li>
+            <li>On foot she ignores rough ground: mud, sand, snow and slush never slow her down, and she crosses water at her own pace.</li>
         </customEffectDescriptions>
         <descriptionHyperlinks>
             <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
@@ -62,9 +74,12 @@
              We deliberately ship NO custom render hediff: the tracker alone draws
              the wings (confirmed in-game), and a second renderer would just draw
              the same textures twice.
-             exclusionTags keep it from stacking with other wing swaps. -->
+             exclusionTags keep it from stacking with other wing swaps, and keep
+             it off a woman who carries the large frame gene: PMM_CaravanCarrier is
+             the shared tag that makes the two caravan genes exclusive. -->
         <exclusionTags>
             <li>Wings</li>
+            <li>PMM_CaravanCarrier</li>
         </exclusionTags>
         <modExtensions>
             <li Class="BigAndSmall.PawnExtension">
@@ -99,6 +114,223 @@
                 </flags>
             </li>
         </modExtensions>
+    </GeneDef>
+
+    <!--
+        Weak flight: the same wings and the same "fly" leap as PMM_Gene_Flight,
+        for momos with thin, weak wings (the vamp mosquito and soldier beetle).
+        Two differences from the strong gene:
+          1. No CaravanRidingSpeedFactor offset - the stat stays at its 1.0 base,
+             so CaravanMountSpeedPatch never counts her as a mount. She flies
+             for herself only: no passenger, and no faster caravan travel.
+          2. She draws her OWN, smaller wings (renderNodeProperties below). The
+             strong gene instead raises ShowBaseWingsRight/Left so the winged
+             body/race tracker keeps drawing its full-size wings. This gene has
+             no Flagger on purpose: the winged tracker blanks itself for a
+             wings-tagged gene, so its big wings vanish and only these smaller
+             ones draw. One gene therefore serves every race - the vamp
+             mosquito and the soldier beetle get this exact smaller set.
+        The shared Wings exclusion tag keeps the two flight genes from stacking.
+        Cheaper than the strong gene (-1 metabolic efficiency instead of -2)
+        because she gives up the mount.
+    -->
+    <GeneDef>
+        <defName>PMM_Gene_FlightWeak</defName>
+        <label>weak flight</label>
+        <description>This woman's wings are thin and too weak to lift more than herself. She can still fly, but she cannot carry a passenger or hurry a caravan along.</description>
+        <iconPath>UI/Icons/Genes/Gene_LongJumpLegs</iconPath>
+        <displayCategory>Movement</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <biostatMet>-1</biostatMet>
+        <abilities>
+            <li>PMM_Ability_FlightLeap</li>
+        </abilities>
+        <customEffectDescriptions>
+            <li>Grants the "Fly" ability: leap through the air to a distant location, soaring over obstacles.</li>
+            <li>Her wings lift only herself: she carries no passenger and adds no mount of her own.</li>
+            <li>On foot she ignores rough ground: mud, sand, snow and slush never slow her down, and she crosses water at her own pace.</li>
+        </customEffectDescriptions>
+        <descriptionHyperlinks>
+            <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
+        </descriptionHyperlinks>
+        <exclusionTags>
+            <li>Wings</li>
+        </exclusionTags>
+        <!-- Same Big & Small body plumbing as PMM_Gene_Flight: forced body swap
+             (which also brings the real BS_Wing parts), render cache off (wings
+             reach past the body atlas) and the shared toughness hediff on
+             BS_Wing. No Flagger here - see the note above. -->
+        <modExtensions>
+            <li Class="BigAndSmall.PawnExtension">
+                <forceThingDefSwap>true</forceThingDefSwap>
+                <renderCacheOff>true</renderCacheOff>
+                <thingDefSwap>BS_HumanoidWithWings</thingDefSwap>
+                <applyPartHediff>
+                    <li>
+                        <hediff>PMM_Hediff_PartToughness</hediff>
+                        <bodyparts>
+                            <li>BS_Wing</li>
+                        </bodyparts>
+                    </li>
+                </applyPartHediff>
+            </li>
+        </modExtensions>
+        <!--
+            Her wings: the same six nodes B&S puts on BS_HumanoidWithWings_Race
+            (BS_FeatheredWingFront/Inner/Back, each side, with their layers and
+            facings), at drawSize 0.8 instead of B&S's 1.23 - about 65% of a
+            strong flyer's wings. The six drawSize lines are the only knob.
+
+            Only the body-part alt is kept: no BS_Wing part, no wings. The
+            gene-tag alt from B&S's tracker is deliberately absent, because this
+            gene carries the Wings tag itself and would blank its own art.
+        -->
+        <renderNodeProperties>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingFront</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClrDark_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>South</li><li>East</li></visibleFacing>
+                <drawData><defaultData><layer>92</layer></defaultData></drawData>
+            </li>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingInner</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClr_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrSaturated_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>South</li><li>East</li><li>North</li></visibleFacing>
+                <drawData><defaultData><layer>-1</layer></defaultData><dataNorth><layer>92</layer><flip>true</flip></dataNorth></drawData>
+            </li>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingBack</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClrSaturated_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>West</li></visibleFacing>
+                <drawData><defaultData><layer>-2</layer></defaultData><dataEast><flip>true</flip></dataEast></drawData>
+            </li>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingFront</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClrDark_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>South</li><li>West</li></visibleFacing>
+                <drawData><defaultData><layer>92</layer></defaultData><dataNorth><layer>91</layer><flip>true</flip></dataNorth><dataSouth><layer>92</layer><flip>true</flip></dataSouth></drawData>
+            </li>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingInner</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClr_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrSaturated_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>West</li><li>South</li><li>North</li></visibleFacing>
+                <drawData><defaultData><layer>-1</layer></defaultData><dataSouth><layer>-1</layer><flip>true</flip></dataSouth><dataNorth><layer>92</layer><flip>false</flip></dataNorth></drawData>
+            </li>
+            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
+                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
+                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
+                <parentTagDef>Body</parentTagDef>
+                <shader>BS_TransparentThreeColor</shader>
+                <conditionalGraphics>
+                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
+                    <conditionalPaths><altDefs><li>BS_FeatheredWingBack</li></altDefs></conditionalPaths>
+                    <colorA><altDefs><li>BS_WingClrSaturated_A</li></altDefs></colorA>
+                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
+                    <alts>
+                        <li>
+                            <triggerBodyPart>
+                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
+                            </triggerBodyPart>
+                            <texturePaths><default>BS_Blank</default></texturePaths>
+                        </li>
+                    </alts>
+                </conditionalGraphics>
+                <drawSize>(0.8,0.8)</drawSize>
+                <visibleFacing><li>East</li></visibleFacing>
+                <drawData><defaultData><layer>-2</layer></defaultData></drawData>
+            </li>
+        </renderNodeProperties>
     </GeneDef>
 
     <!--
@@ -169,5 +401,56 @@
             <li>Tease damage dealt +15%.</li>
             <li>Manipulation -15%.</li>
         </customEffectDescriptions>
+    </GeneDef>
+
+    <!--
+        Large frame: the caravan gene for the momos who are already large. It changes no
+        body part and no size stat - a large momo already carries more, because her
+        BodySize feeds both the CarryingCapacity stat and the cargo a caravan can take
+        (MassUtility.Capacity is BodySize * 35) - so this gene only adds pace.
+
+        Three vanilla pieces, no speed math of our own:
+        1. CaravanBonusSpeedFactor +0.2 -> her factor is 1.2. CaravanTicksPerMoveUtility
+           reads that stat for every pawn who has it above 1 (CaravanBonusUtility
+           .HasCaravanBonus: humanlike and not downed) and AVERAGES those pawns, so the
+           caravan gets a flat 1.2 while a live carrier is in it. Vanilla cannot stack
+           the bonus per carrier - the average is the trade for zero code and for the
+           caravan UI icon and tooltip the stat comes with.
+        2. CaravanRidingSpeedFactor +0.3 -> her factor is 1.3, the donkey / elephant /
+           mastodon class. A horse and a thrumbo are 1.6, and PMM_Gene_Flight is 3.5.
+        3. CaravanMountSpeedPatch counts her as a mount, because it has to: vanilla's
+           caravan scan reads "if (pawn.RaceProps.Humanlike) people++; else if
+           (pawn.IsCaravanRideable()) mounts++", so a humanlike pawn is never asked
+           about and can never be a vanilla mount. Our patch adds her 1.3 factor to
+           the mount list (once, as the passenger on her back) and rescales the ticks
+           by the ratio.
+
+        PMM_CaravanCarrier is shared with PMM_Gene_Flight, so a woman cannot be both a
+        landed mount and a strong flyer. If the two ever meet on one pawn, vanilla keeps
+        one active and overrides the other: a xenogene beats an endogene, and between two
+        genes of the same kind the one defined earlier in this file wins
+        (Pawn_GeneTracker.CheckForOverrides, then GeneUtility.Overrides).
+    -->
+    <GeneDef>
+        <defName>PMM_Gene_LargeFrame</defName>
+        <label>large frame</label>
+        <description>This woman is built large, even by monster standards. She covers ground with long, easy strides, so any caravan she joins moves faster.</description>
+        <iconPath>UI/Icons/Genes/PMM_Gene_LargeFrame</iconPath>
+        <displayCategory>Miscellaneous</displayCategory>
+        <displayOrderInCategory>1000</displayOrderInCategory>
+        <!-- Large is already a downside, and caravans are a small part of the game,
+             so this gene costs no metabolic efficiency. -->
+        <biostatMet>0</biostatMet>
+        <statOffsets>
+            <CaravanBonusSpeedFactor>0.2</CaravanBonusSpeedFactor>
+            <CaravanRidingSpeedFactor>0.3</CaravanRidingSpeedFactor>
+        </statOffsets>
+        <customEffectDescriptions>
+            <li>In a caravan she is 20% faster than a normal pawn, so any caravan she joins travels 20% faster.</li>
+            <li>Caravans count her as a riding animal, so she speeds the whole caravan up.</li>
+        </customEffectDescriptions>
+        <exclusionTags>
+            <li>PMM_CaravanCarrier</li>
+        </exclusionTags>
     </GeneDef>
 </Defs>

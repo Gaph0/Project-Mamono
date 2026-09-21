@@ -22,6 +22,12 @@ namespace ProjectMomo
     /// and once for the passenger riding on her back. The returned ticks-per-move
     /// is then rescaled by ridingVanilla / ridingWithFlight, leaving the vanilla
     /// base/mass/bonus math (and any other mod's patches) untouched.
+    ///
+    /// A humanlike pawn can now be a vanilla mount as well: LargeFrameRideablePatch makes
+    /// a large-frame momo pass CaravanRideableUtility.IsCaravanRideable. Vanilla counts
+    /// her, so she belongs in this patch's model of what vanilla computed - otherwise her
+    /// contribution would look like ours and land twice in a caravan that also holds a
+    /// flyer.
     /// </summary>
     [HarmonyPatch(typeof(CaravanTicksPerMoveUtility), nameof(CaravanTicksPerMoveUtility.GetTicksPerMove),
         new[] { typeof(List<Pawn>), typeof(float), typeof(float), typeof(bool), typeof(StringBuilder) })]
@@ -53,7 +59,9 @@ namespace ProjectMomo
                 return;
             }
 
-            // Vanilla mount factors (animals only) and the flight-augmented ones.
+            // Vanilla's mount list and the flight-augmented one. A rideable humanlike
+            // pawn (a large-frame momo) counts in both, so she goes into animalFactors
+            // even though she is humanlike - vanilla put her there too.
             List<float> animalFactors = new List<float>();
             List<float> flightFactors = new List<float>();
             foreach (Pawn pawn in pawns)
@@ -62,14 +70,11 @@ namespace ProjectMomo
                 {
                     continue;
                 }
-                if (pawn.RaceProps.Humanlike)
+                if (pawn.RaceProps.Humanlike && IsFlyer(pawn))
                 {
-                    if (IsFlyer(pawn))
-                    {
-                        float factor = pawn.GetStatValue(StatDefOf.CaravanRidingSpeedFactor);
-                        flightFactors.Add(factor); // she flies herself
-                        flightFactors.Add(factor); // and airlifts one passenger on her back
-                    }
+                    float factor = pawn.GetStatValue(StatDefOf.CaravanRidingSpeedFactor);
+                    flightFactors.Add(factor); // she flies herself
+                    flightFactors.Add(factor); // and airlifts one passenger on her back
                 }
                 else if (pawn.IsCaravanRideable())
                 {
@@ -98,7 +103,12 @@ namespace ProjectMomo
             }
         }
 
-        /// <summary>A humanlike pawn able to fly: flight gene present, active and not downed.</summary>
+        /// <summary>
+        /// A humanlike pawn who can carry caravan weight: the strong flight gene is
+        /// present and active, and she is not downed. PMM_Gene_FlightWeak flyers are
+        /// deliberately left out - a small frame with thin wings can only lift
+        /// herself, so she never speeds a caravan up and never airlifts a passenger.
+        /// </summary>
         private static bool IsFlyer(Pawn pawn)
         {
             return !pawn.Downed && pawn.genes != null && pawn.genes.HasActiveGene(ProjectMomo_DefOf.PMM_Gene_Flight);
