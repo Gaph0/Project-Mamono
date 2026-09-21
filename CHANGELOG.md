@@ -2,6 +2,8 @@
 
 ## Player-facing
 
+- 2026-09-22: Fixed a caravan with a flying or large-frame momo moving far faster than it should. The speed is applied once now, not twice.
+
 - 2026-09-22: Changed the Medieval Overhaul factions to stay out of a new world. They no longer fill it with settlements, and you can still add them by hand at world creation.
 
 - 2026-09-22: Added a mute pawn being unable to propose or accept a tsugai bond or a transformation.
@@ -49,6 +51,8 @@
 - 2026-08-29: Changed the momo gene to cure and prevent old-age ailments without a message.
 
 ## Internal
+
+- 2026-09-22: Removed the superseded flight caravan patch, which patched the same method as CaravanMountSpeedPatch and applied the riding factor twice.
 
 - 2026-09-22: Added a patch that zeroes Medieval Overhaul's faction start counts, the same pair of fields the vanilla faction patch clears.
 
