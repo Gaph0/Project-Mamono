@@ -292,6 +292,13 @@ guaranteed at desperate starvation):
 - **No prey anywhere** → a colonist Momo leaves the player faction and
   walks off the map; NPC Momos flee.
 
+A captive Momo never breaks at all. She cannot act on the hunger, and a
+berserk prisoner would only maul her captors. Instead she feeds calmly on a
+fellow prisoner when her mana falls below the seek threshold. If no other
+prisoner has essence to give, she simply waits. That feed is not an intimate
+act: no lovin', but the mana, the mood buff and the incubisation dose still
+happen.
+
 ## Mod integrations
 
 ### ISEKAI RPG Leveling (required)
@@ -340,8 +347,64 @@ drains exactly enough essence from her partner to fill her mana bar.
   swapped-in parts as tough as the rest of her.
 - It grants `PMM_Ability_FlightLeap`: a long leap, range 29.9, no line of sight needed,
   60-tick cooldown.
-- It also raises caravan riding speed by 2.5x. `FlightCaravanSpeedPatch` counts each flyer
+- It also raises caravan riding speed by 2.5x. `CaravanMountSpeedPatch` counts each flyer
   twice, so a caravan of flyers carries extra riders.
+- On a map she ignores rough ground: mud, sand, snow and slush never slow her, and
+  she crosses water at her own pace. `FlyingPawnTerrainCostPatch` prices her cell as her own
+  ticks-per-move - the same approach VEF's floating creatures and the VRE Insector wings gene
+  use. Walls, doors and buildings still stop her, because impassable things keep their cost.
+
+`PMM_Gene_FlightWeak` is the weak-winged version of the same gene, carried by the vamp
+mosquito and the soldier beetle. They get the same `PMM_Ability_FlightLeap`, but their
+`CaravanRidingSpeedFactor` stays at its base 1.0, so `CaravanMountSpeedPatch` ignores
+them: a weak flyer carries no rider and adds no mount of her own. She still ignores rough
+ground on a map, though, just like a strong flyer.
+
+The weak gene also draws its own wings, and smaller ones: six nodes at `drawSize 0.8`
+where B&S uses 1.23, scaled by editing `renderNodeProperties` on the gene. It has no
+Flagger on purpose, so the winged body or race tracker blanks its full-size wings and
+these are the only ones drawn. That is what makes one gene fit both the tiny vamp
+mosquito and the heavy soldier beetle.
+
+### The swap only works on Human-race pawns
+
+B&S runs a gene's `thingDefSwap` with `force: false` and `targetPriority: 0`, and it
+enters the pawn's own race def at priority 200. When the two bodies cannot be fused the
+higher-priority entry wins, so a pawn whose race def is not literally `Human` keeps her
+body and the swap is refused. That is why dragons, wyverns, malef dragons and lamias -
+all xenotype-only species on vanilla Human pawns - get their wings and tails, while a
+species with its own race def does not.
+
+Species with their own race def carry the wings themselves: the three flying insect
+momos put `BS_HumanoidWithWings_Body` in `<race>` and `BS_HumanoidWithWings_Race` in the
+race's `raceHediffList`. The gene still supplies `PMM_Ability_FlightLeap` and the
+`ShowBaseWingsRight/Left` flags that keep the winged tracker from blanking its own art.
+
+## The large frame gene
+
+`PMM_Gene_LargeFrame` is for the momos who are already large. It changes no body and no
+size stat: a large momo already carries more, because her bigger body size raises both
+what she can hold in her hands and how much cargo her caravan can take.
+
+What the gene adds is pace, in two ways.
+
+- **A caravan with a live carrier in it moves 20% faster.** Vanilla averages this bonus
+  over the pawns that have it, so it is a flat 20% and not 20% per carrier. A downed
+  carrier gives nothing.
+- **She is ridden like a mount.** Vanilla can only count an animal as a mount, so
+  `CaravanMountSpeedPatch` adds her riding speed to the caravan's mount list itself. Her
+  1.3 factor counts once, as the passenger on her back.
+
+One thing to know when you look at a caravan: the game's own "Ridable animals / people"
+line counts animals only, so it still reads `0 / 2` for a caravan of momos. The
+"Multiplier from mounted momos" line our patch adds below it is the one that reports her.
+
+Her Stats tab gains a "caravan speed factor: 120%" line, which is how you can see the
+first half working.
+
+Flight and the large frame cannot sit in the same woman: both carry the
+`PMM_CaravanCarrier` exclusion tag, so the gene editor will not offer both, and if both
+ever end up on one pawn the flight gene wins and the large frame gene goes inactive.
 
 ## Bloodline genes
 
