@@ -21,6 +21,9 @@ namespace ProjectMomo
         // ~10 seconds of real time — consent is quicker than conquest.
         private const int ProposeDurationTicks = 600;
 
+        // How long a stalled walk is tolerated before the proposal gives up.
+        private const int WalkGiveUpTicks = 2500;
+
         // The partner must stay roughly adjacent; walking off cancels the ceremony.
         private const float StayWithinCells = 2.5f;
 
@@ -29,17 +32,26 @@ namespace ProjectMomo
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
             this.FailOn(() => Target == null || Target.Dead || Target.Downed || !Target.Spawned);
 
-            // Walk to the willing partner and stand next to them.
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+            // Walk to the willing partner and stand next to them. Vanilla's goto toil only
+            // completes on arrival, and a pawn with no path simply stands where he is, so give
+            // up after a while rather than standing there for the rest of the game. The order
+            // itself is refused up front when the pair cannot be reached (CanProposeTo), but
+            // the partner can walk somewhere unreachable while the proposal is under way.
+            int walkStart = -1;
+            Toil walk = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+            walk.AddPreInitAction(() => walkStart = Find.TickManager.TicksGame);
+            walk.FailOn(() => walkStart > 0
+                && (pawn.pather == null || !pawn.pather.Moving)
+                && Find.TickManager.TicksGame - walkStart > WalkGiveUpTicks);
+            yield return walk;
 
-            // Face to face at last: reveal the answer rolled when the job was created
-            // (carried on job.playerForced). A rejection applies its effects here —
-            // beside the target — so nobody is ever "remotely seduced" from across
-            // the map, and the job ends immediately without the ceremony.
+            // Face to face at last: the answer is rolled HERE, beside the target, so a
+            // rejection's effects are applied next to her and never remotely. See
+            // AcceptsProposal for why the verdict is not carried on the job.
             Toil resolve = new Toil();
             resolve.initAction = () =>
             {
-                if (!pawn.CurJob.playerForced)
+                if (!VoluntaryBonding.AcceptsProposal(pawn, Target))
                 {
                     VoluntaryBonding.ApplyFaceToFaceRejection(pawn, Target);
                     EndJobWith(JobCondition.Succeeded);
@@ -64,11 +76,9 @@ namespace ProjectMomo
                 // character logs (rejected proposals never get this far).
                 VoluntaryBonding.LogProposal(pawn, Target, accepted: true);
 
-                // The willing partner stops and waits for the ceremony to finish.
-                if (Target?.jobs != null && Target.CurJobDef != JobDefOf.Wait_MaintainPosture)
-                {
-                    Target.jobs.StartJob(JobMaker.MakeJob(JobDefOf.Wait_MaintainPosture), JobCondition.InterruptForced);
-                }
+                // The willing partner stops and waits for the ceremony to finish — and is
+                // freed by the finish action below however this ends.
+                HoldPartner(Target, ProposeDurationTicks);
             });
             bond.AddPreTickAction(() => TickBondProgress(pawn, ref bar, startTick, ProposeDurationTicks));
             bond.AddFinishAction(() =>
@@ -86,6 +96,7 @@ namespace ProjectMomo
             // Registered after the bond action so the bar vanishes the moment the
             // ceremony completes (or ends for any reason).
             bond.AddFinishAction(() => DestroyBondBar(ref bar));
+            bond.AddFinishAction(() => ReleasePartner(Target));
 
             yield return bond;
         }

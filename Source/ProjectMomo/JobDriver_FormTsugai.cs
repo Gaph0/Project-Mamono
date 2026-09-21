@@ -73,6 +73,43 @@ namespace ProjectMomo
             yield return bond;
         }
 
+        // A held partner is released a little after the ceremony's own length, so the hold
+        // can never outlive it.
+        private const int HoldGraceTicks = 600;
+
+        /// <summary>
+        /// Tells the partner to stand still for the ceremony. Wait_MaintainPosture is the right
+        /// job for that — it is not an idle job, so the partner's own AI will not re-task him
+        /// out of the ceremony — but it never ends by itself, so it carries an expiry a little
+        /// longer than the ceremony, and the ceremony's finish actions release him sooner
+        /// (<see cref="ReleasePartner"/>). Both matter: an interrupted ceremony (drafted,
+        /// ordered elsewhere, either pawn walking off or dying) would otherwise leave the
+        /// partner standing in place until the player intervened.
+        /// </summary>
+        protected static void HoldPartner(Pawn partner, int durationTicks)
+        {
+            if (partner?.jobs == null || partner.CurJobDef == JobDefOf.Wait_MaintainPosture)
+            {
+                return;
+            }
+
+            Job hold = JobMaker.MakeJob(JobDefOf.Wait_MaintainPosture);
+            hold.expiryInterval = durationTicks + HoldGraceTicks;
+            partner.jobs.StartJob(hold, JobCondition.InterruptForced);
+        }
+
+        /// <summary>
+        /// Frees a partner who was held for the ceremony. Only clears the hold we granted: if he
+        /// is doing something else by then, that job is his own.
+        /// </summary>
+        protected static void ReleasePartner(Pawn partner)
+        {
+            if (partner?.jobs != null && partner.CurJobDef == JobDefOf.Wait_MaintainPosture)
+            {
+                partner.jobs.EndCurrentJob(JobCondition.Succeeded);
+            }
+        }
+
         /// <summary>Removes the progress bar as soon as the bonding action ends.</summary>
         protected static void DestroyBondBar(ref MoteProgressBar bar)
         {

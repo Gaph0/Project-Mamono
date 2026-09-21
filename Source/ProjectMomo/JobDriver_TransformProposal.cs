@@ -38,9 +38,12 @@ namespace ProjectMomo
             // Perform the infusion ceremony (~10s), reusing the pink progress bar.
             // The finish action completes the transformation.
             Toil infuse = Toils_General.WaitWith(TargetIndex.A, CeremonyDurationTicks, false, false, false, TargetIndex.A, PathEndMode.Touch);
+            // EducationCompat: a woman who goes mute during the walk can no longer
+            // consent, so the ceremony gives up rather than completing.
             infuse.FailOn(() => Target == null || Target.Dead || Target.Downed || !Target.Spawned
                 || !Target.Position.InHorDistOf(pawn.Position, StayWithinCells)
-                || !MomoTransformation.CanEverTransform(Target));
+                || !MomoTransformation.CanEverTransform(Target)
+                || EducationCompat.IsMute(Target));
 
             int startTick = -1;
             MoteProgressBar bar = null;
@@ -52,11 +55,9 @@ namespace ProjectMomo
                 // character logs (rejected proposals never get this far).
                 VoluntaryTransformation.LogProposal(pawn, Target, accepted: true);
 
-                // The willing woman stops and waits for the ceremony to finish.
-                if (Target?.jobs != null && Target.CurJobDef != JobDefOf.Wait_MaintainPosture)
-                {
-                    Target.jobs.StartJob(JobMaker.MakeJob(JobDefOf.Wait_MaintainPosture), JobCondition.InterruptForced);
-                }
+                // The willing woman stops and waits for the ceremony to finish — and is
+                // freed by the finish action below however this ends.
+                HoldPartner(Target, CeremonyDurationTicks);
             });
             infuse.AddPreTickAction(() => TickBondProgress(pawn, ref bar, startTick, CeremonyDurationTicks));
             infuse.AddFinishAction(() =>
@@ -71,6 +72,7 @@ namespace ProjectMomo
             // Registered after the infusion action so the bar vanishes the moment
             // the ceremony completes (or ends for any reason).
             infuse.AddFinishAction(() => DestroyBondBar(ref bar));
+            infuse.AddFinishAction(() => ReleasePartner(Target));
 
             yield return infuse;
         }
