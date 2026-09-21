@@ -11,6 +11,10 @@ IK=$WS/3657580708/Assemblies          # Isekai Leveling
 Y=$WS/2877292196/1.6/Assemblies       # yayo's Animation
 VPE=$WS/2842502659/1.6/Assemblies     # Vanilla Psycasts Expanded
 VEF=$WS/2023507013/1.6/Assemblies     # Vanilla Expanded Framework
+# Big & Small is a local mod, not a workshop one, and a hard dependency of all
+# five PMM mods (see BIGSMALL-ADAPTATION.md). The core transformation calls its
+# xenotype-race API, so csc needs the assembly. Quoted: the path has spaces.
+BS="$HOME/.steam/steam/steamapps/common/RimWorld/Mods/Big and Small - Framework/1.6/Base/Assemblies"
 
 csc -nologo -target:library \
   Source/ProjectMomo/*.cs -out:Assemblies/ProjectMomo.dll \
@@ -18,6 +22,7 @@ csc -nologo -target:library \
   -r:"$M/UnityEngine.IMGUIModule.dll" -r:"$M/UnityEngine.TextRenderingModule.dll" \
   -r:"$M/netstandard.dll" \
   -r:"$H/0Harmony.dll" -r:"$IK/IsekaiLeveling.dll" -r:"$Y/yayoAni.dll" \
-  -r:"$VPE/VanillaPsycastsExpanded.dll" -r:"$VEF/VEF.dll"
+  -r:"$VPE/VanillaPsycastsExpanded.dll" -r:"$VEF/VEF.dll" \
+  -r:"$BS/BigAndSmall.dll"
 
 echo "Built Assemblies/ProjectMomo.dll"
