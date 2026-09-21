@@ -2,6 +2,8 @@
 
 ## Player-facing
 
+- 2026-09-22: Changed the cave snakes and the forest to keep spawning, so their quests still happen. The other Medieval Overhaul factions stay out of a new world.
+
 - 2026-09-22: Fixed a caravan with a flying or large-frame momo moving far faster than it should. The speed is applied once now, not twice.
 
 - 2026-09-22: Changed the Medieval Overhaul factions to stay out of a new world. They no longer fill it with settlements, and you can still add them by hand at world creation.
@@ -51,6 +53,8 @@
 - 2026-08-29: Changed the momo gene to cure and prevent old-age ailments without a message.
 
 ## Internal
+
+- 2026-09-22: Removed the cave snake and forest factions from the Medieval Overhaul faction patch, so MO's own start counts apply to them again.
 
 - 2026-09-22: Fixed the Medieval Overhaul faction patch, which never applied: its mod guard matches a mod's display name, not its package id.
 
