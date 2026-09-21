@@ -35,9 +35,9 @@
           <xpath>Defs/FactionDef[defName="Empire"]/xenotypeSet/xenotypeChances</xpath>
           <value>
             <xenotypeChances>
-              <PMM_Dragon>0.36</PMM_Dragon>
-              <PMM_ElementalGenie>0.27</PMM_ElementalGenie>
-              <PMM_ElementalApsara>0.27</PMM_ElementalApsara>
+              <PMM_Reptile_Dragon>0.36</PMM_Reptile_Dragon>
+              <PMM_Elemental_Genie>0.27</PMM_Elemental_Genie>
+              <PMM_Elemental_Apsara>0.27</PMM_Elemental_Apsara>
             </xenotypeChances>
           </value>
         </match>
@@ -54,8 +54,8 @@
         <xpath>Defs/FactionDef[defName="TradersGuild"]/xenotypeSet/xenotypeChances</xpath>
         <value>
           <xenotypeChances>
-            <PMM_ElementalApsara>0.45</PMM_ElementalApsara>
-            <PMM_ElementalGenie>0.45</PMM_ElementalGenie>
+            <PMM_Elemental_Apsara>0.45</PMM_Elemental_Apsara>
+            <PMM_Elemental_Genie>0.45</PMM_Elemental_Genie>
           </xenotypeChances>
         </value>
       </match>

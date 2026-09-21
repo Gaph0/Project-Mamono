@@ -207,6 +207,9 @@ namespace ProjectMomo
             // Stamp her with the corruptor's xenotype identity.
             pawn.genes.SetXenotypeDirect(xenotype);
 
+            // She has become that species, so her race follows her (see the helper).
+            ApplyXenotypeRace(pawn);
+
             // The corruption that brought her here is spent.
             Hediff corruption = pawn.health?.hediffSet?.GetFirstHediffOfDef(ProjectMomo_DefOf.ProjectMomo_MomoCorruption);
             if (corruption != null)
@@ -242,6 +245,31 @@ namespace ProjectMomo
             NotifyTransformed(pawn, xenotype, source);
             DecideJoinOutcome(pawn, source);
             return true;
+        }
+
+        /// <summary>
+        /// Hands the new xenotype's declared race to Big &amp; Small. A species'
+        /// body <b>is</b> its race def: temperature tolerance, body size, melee
+        /// tools and race abilities (the abaddon's egg-spew, for one) live on the
+        /// ThingDef, while the xenotype itself carries only genes. Big &amp; Small
+        /// reads the race a xenotype declares (XenotypeExtension.setRace on the
+        /// XenotypeDef) during pawn GENERATION, so a runtime transformation has to
+        /// ask for it explicitly — otherwise she awakens with the genes and the
+        /// xenotype name but a baseliner's body. No-op when the xenotype declares
+        /// no race, which is every vanilla one and the base Momo.
+        /// </summary>
+        private static void ApplyXenotypeRace(Pawn pawn)
+        {
+            if (pawn?.genes == null)
+            {
+                return;
+            }
+
+            // Big & Small's own API. forceRace on the xenotype's extension carries
+            // through as the forced swap, which is what wins over a gene's own body
+            // swap (the flight gene also asks for a winged body) instead of the two
+            // fighting over which def she ends up as.
+            BigAndSmall.XenoTypeDefExtensions.TrySwapToXenotypeThingDef(pawn);
         }
 
         /// <summary>
@@ -296,6 +324,9 @@ namespace ProjectMomo
                 }
             }
             pawn.genes.SetXenotypeDirect(xenotype);
+
+            // She has become that species, so her race follows her (see the helper).
+            ApplyXenotypeRace(pawn);
 
             // Her unborn baby follows her new genome (see ApplyXenotype).
             RefreshPregnancySnapshot(pawn);
