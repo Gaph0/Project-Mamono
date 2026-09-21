@@ -52,6 +52,8 @@
 
 ## Internal
 
+- 2026-09-22: Fixed the Medieval Overhaul faction patch, which never applied: its mod guard matches a mod's display name, not its package id.
+
 - 2026-09-22: Removed the superseded flight caravan patch, which patched the same method as CaravanMountSpeedPatch and applied the riding factor twice.
 
 - 2026-09-22: Added a patch that zeroes Medieval Overhaul's faction start counts, the same pair of fields the vanilla faction patch clears.

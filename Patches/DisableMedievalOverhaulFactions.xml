@@ -3,28 +3,36 @@
   <!--
     Keeps Medieval Overhaul's own factions out of a new world.
 
-    MO puts requiredCountAtGameStart 1 on an abstract base for each of its
-    factions, and FactionGenerator.InitializeFactions honours that for hidden
-    factions too, so they exist whether or not the player asked for them.
-    Defaults matter here: FactionDef ships startingCountAtWorldCreation = 1 and
-    maxConfigurableAtWorldCreation = -1, and the world creation page fills its
+    MO puts requiredCountAtGameStart 1 on an abstract base or directly on the def
+    for each of its factions, and FactionGenerator.InitializeFactions honours that
+    for hidden factions too, so they exist whether or not the player asked for
+    them. Defaults matter here: FactionDef ships startingCountAtWorldCreation = 1
+    and maxConfigurableAtWorldCreation = -1, and the world creation page fills its
     faction list from startingCountAtWorldCreation. MO never sets that field, so
     every MO faction with a configurable limit starts at 1.
 
-    Both fields are set to 0. Their configurable limits are left alone: the
-    seven that appear on the world creation page stay selectable, they just
-    start at 0 instead of 1, and the player can still add them by hand.
+    Both fields are set to 0. Their configurable limits are left alone: the seven
+    that appear on the world creation page stay selectable, they just start at 0
+    instead of 1, and the player can still add them by hand.
 
-    Two of them never appear on that page at all and this patch is the only way
-    to hold them back: the witch's charmed (maxConfigurableAtWorldCreation 0)
-    and the hornets (unset, so -1).
+    Two of them never appear on that page at all, so this patch is the only way to
+    hold them back: the witch's charmed (maxConfigurableAtWorldCreation 0) and the
+    hornets (unset, so -1).
 
     Each field gets a replace plus an add-if-absent pair, and both halves are
     needed: MO declares requiredCountAtGameStart inline on eight of these defs
     (the four standalone factions and the four abstract bases) and leaves the
     other seven to inherit it (the brigands, the cultists, the knights of ulrik
-    and the four noble houses). The replace catches the eight that declare it,
-    the add catches the seven that do not.
+    and the four noble houses). The replace catches the eight that declare it, the
+    add catches the seven that do not.
+
+    There is deliberately NO PatchOperationFindMod guard here. It does not compare
+    package ids: it calls ModLister.HasActiveModWithName, which compares a mod's
+    display name exactly, so a guard written against a package id never matches
+    and silently turns the whole patch into a no-op with nothing in the log. With
+    MO absent every xpath below simply matches nothing and each operation's
+    success=Always keeps that quiet, so the guard buys nothing in exchange for
+    that trap.
 
     settlementGenerationWeight is deliberately untouched: MO's factions are
     hidden, and GenerateFactionsIntoWorldLayer's random settlement pass skips
@@ -33,47 +41,42 @@
     The three player start defs (DankPyon_PlayerKingdom, DankPyon_LoneWolf,
     DankPyon_MercenaryCompany) are isPlayer options and are not targeted.
   -->
-  <Operation Class="PatchOperationFindMod">
-    <mods>
-      <li>DankPyon.Medieval.Overhaul</li>
-    </mods>
-    <match Class="PatchOperationSequence">
-      <success>Always</success>
-      <operations>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
 
-        <li Class="PatchOperationReplace">
-          <success>Always</success>
-          <xpath>Defs/FactionDef[defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage"]/requiredCountAtGameStart</xpath>
-          <value>
-            <requiredCountAtGameStart>0</requiredCountAtGameStart>
-          </value>
-        </li>
+      <li Class="PatchOperationReplace">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage"]/requiredCountAtGameStart</xpath>
+        <value>
+          <requiredCountAtGameStart>0</requiredCountAtGameStart>
+        </value>
+      </li>
 
-        <li Class="PatchOperationAdd">
-          <success>Always</success>
-          <xpath>Defs/FactionDef[(defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage") and not(requiredCountAtGameStart)]</xpath>
-          <value>
-            <requiredCountAtGameStart>0</requiredCountAtGameStart>
-          </value>
-        </li>
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage") and not(requiredCountAtGameStart)]</xpath>
+        <value>
+          <requiredCountAtGameStart>0</requiredCountAtGameStart>
+        </value>
+      </li>
 
-        <li Class="PatchOperationReplace">
-          <success>Always</success>
-          <xpath>Defs/FactionDef[defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage"]/startingCountAtWorldCreation</xpath>
-          <value>
-            <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
-          </value>
-        </li>
+      <li Class="PatchOperationReplace">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage"]/startingCountAtWorldCreation</xpath>
+        <value>
+          <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+        </value>
+      </li>
 
-        <li Class="PatchOperationAdd">
-          <success>Always</success>
-          <xpath>Defs/FactionDef[(defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage") and not(startingCountAtWorldCreation)]</xpath>
-          <value>
-            <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
-          </value>
-        </li>
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="DankPyon_BrigandFaction" or defName="DankPyon_BrigandFactionBase" or defName="DankPyon_ShadowSect" or defName="DankPyon_ShadowSectBase" or defName="DankPyon_Forest_Faction" or defName="DankPyon_Witch_Faction" or defName="DankPyon_Hornets" or defName="DankPyon_SnakeCave_Faction" or defName="DankPyon_UlrikFaction" or defName="DankPyon_UlrikFactionBase" or defName="DankPyon_NobleHouseFactionBase" or defName="DankPyon_NobleHouseFierce" or defName="DankPyon_NobleHouseCivil" or defName="DankPyon_NobleHouseCivil2" or defName="DankPyon_NobleHouseSavage") and not(startingCountAtWorldCreation)]</xpath>
+        <value>
+          <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+        </value>
+      </li>
 
-      </operations>
-    </match>
+    </operations>
   </Operation>
 </Patch>
