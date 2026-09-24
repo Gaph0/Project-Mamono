@@ -21,7 +21,7 @@
 
     <!--
         The essence-starvation berserk state. Inherits vanilla Berserk (so all of its
-        think nodes apply — our Patches/ThinkTree_Berserk.xml hooks the unbonded-hunt
+        think nodes apply - our Patches/ThinkTree_Berserk.xml hooks the unbonded-hunt
         job giver into the Berserk branch of MentalStateCritical) but tracks and hunts
         the nearest unbonded humanlike across the whole map.
     -->

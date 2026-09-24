@@ -4,8 +4,8 @@
         Log-only interaction defs: these exist so voluntary transformation
         proposals are recorded in each pawn's character log, exactly the way
         voluntary tsugai proposals are (PlayLogEntry_Interaction). They are never
-        performed through TryInteractWith — VoluntaryTransformation adds the log
-        entry directly when a proposal is accepted or rejected — so they need no
+        performed through TryInteractWith - VoluntaryTransformation adds the log
+        entry directly when a proposal is accepted or rejected - so they need no
         worker class.
     -->
     <InteractionDef>

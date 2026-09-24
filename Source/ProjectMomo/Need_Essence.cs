@@ -27,7 +27,11 @@ namespace ProjectMomo
 
             // ISEKAI: the average of STR and VIT speeds essence recovery.
             // Incubisation: a mana-touched man's essence grows ever richer.
-            CurLevel += GainPerTick * 150f * IsekaiCompat.EssenceRechargeMultiplier(pawn) * Incubisation.EssenceRegenMultiplier(pawn);
+            // Gear: a metal that wards essence (dragonium) adds a flat bonus per piece
+            // worn. PMM_EssenceRecovery is an OFFSET stat fed from worn apparel, so
+            // three pieces give three times what one piece gives, never a product.
+            float gearBonus = pawn.GetStatValue(ProjectMomo_DefOf.PMM_EssenceRecovery);
+            CurLevel += GainPerTick * 150f * IsekaiCompat.EssenceRechargeMultiplier(pawn) * Incubisation.EssenceRegenMultiplier(pawn) * (1f + gearBonus);
         }
     }
 }

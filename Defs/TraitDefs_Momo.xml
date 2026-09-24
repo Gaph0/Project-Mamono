@@ -1,0 +1,60 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
+
+	<!--
+		Arrogant (2026-09-23). A plain personality trait, forced by the reptile dragons'
+		pride gene (Reptiles, PMM_GeneTrait_DragonPride), and free for any of the family's
+		mods to force later.
+
+		commonality 0 is what keeps it off random pawns. A TraitDef that never states a
+		commonality is already 0 and never gets handed out by the pawn generator (the
+		reason mod traits "never appear" when the field is forgotten), so writing 0 says
+		that on purpose: only a gene can give this one out.
+
+		socialFightChanceFactor is the field Bloodlust uses for the same kind of friction
+		in an argument. The rest of its behaviour cannot live in XML, because a TraitDef
+		cannot read another pawn's state: how much she looks down on a pawn is decided in
+		Source/ProjectMomo/ArrogantTraitPatch.cs, where her opinion of anyone below her
+		ISEKAI level is docked and her chance to pick an insult over small talk rises.
+		That file holds the two numbers, so tuning them is one edit each.
+
+		The same file also puts the penalty on screen. Vanilla builds the Social tab's
+		opinion breakdown by listing the contributions it knows about, so a patched total
+		moved the number with no reason beside it; a second patch appends the missing line
+		(" - Arrogant (they are 6 levels lower): -6") in the engine's own shape, and only
+		while the penalty applies. Its wording is a keyed translation
+		(Languages/English/Keyed/ArrogantTrait.xml), and the trait label inside it comes from
+		this def, so renaming the trait renames the line. It reads the degree's label rather
+		than the def's own, because a def with degrees and no label of its own has an empty
+		LabelCap - and an empty one is invisible rather than obvious.
+
+		No market value offset: it used vanilla's "people dislike her" idiom (Abrasive,
+		AnnoyingVoice) until 2026-09-23, when the level-based opinion took its place.
+		It is mutually exclusive with vanilla's Kind, declared below and, for the pawn
+		generator's side of it, in Patches/Trait_ArrogantConflicts.xml.
+	-->
+	<TraitDef>
+		<defName>PMM_Arrogant</defName>
+		<!-- Both kinds of label are needed. This one is the trait's own name; each degree below
+		     carries the name a player actually reads. A TraitDef that has degrees and no label
+		     of its own has an empty Def.LabelCap, which is why the opinion line in
+		     ArrogantOpinionExplanationPatch first went out naming no trait at all (2026-09-23). -->
+		<label>arrogant</label>
+		<commonality>0</commonality>
+		<degreeDatas>
+			<li>
+				<label>arrogant</label>
+				<description>{PAWN_nameDef} is sure {PAWN_pronoun} is better than everyone else, and looks down on anyone of a lower level. {PAWN_pronoun} thinks less of them, and is quicker to insult them than to be civil.</description>
+				<socialFightChanceFactor>1.5</socialFightChanceFactor>
+			</li>
+		</degreeDatas>
+		<!-- Kind and arrogant are opposites (2026-09-23, user ruling). Vanilla's Kind
+		     lists Abrasive and Psychopath; this half of the pair is declared here and the
+		     other half in Patches/Trait_ArrogantConflicts.xml, the way vanilla's Greedy
+		     and Jealous name each other. -->
+		<conflictingTraits>
+			<li>Kind</li>
+		</conflictingTraits>
+	</TraitDef>
+
+</Defs>

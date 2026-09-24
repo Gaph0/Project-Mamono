@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <!-- The line the arrogant trait adds to a pawn's opinion breakdown in the Social tab
+         (ArrogantOpinionExplanationPatch). {0} is the trait's own label, so renaming the trait
+         renames the line; {1} is how many levels the other pawn stands below her. Vanilla's
+         own lines in that list read "Reason: +N", which is why this is a reason and not just
+         the trait name. Two keys rather than one because "1 levels lower" reads badly. -->
+    <PMM_ArrogantOpinionLine>{0} (they are {1} levels lower)</PMM_ArrogantOpinionLine>
+    <PMM_ArrogantOpinionLineOne>{0} (they are one level lower)</PMM_ArrogantOpinionLineOne>
+</LanguageData>

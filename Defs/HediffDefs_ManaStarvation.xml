@@ -3,7 +3,7 @@
     <!--
         Mana starvation: the chemical-dependency-style escalating decline for a Momo
         whose Mana need is empty. Severity is driven by Need_Mana (0 while fed, grows
-        the longer she starves). Never lethal — she collapses, not dies, per lore.
+        the longer she starves). Never lethal - she collapses, not dies, per lore.
     -->
     <HediffDef>
         <defName>ProjectMomo_ManaStarvation</defName>

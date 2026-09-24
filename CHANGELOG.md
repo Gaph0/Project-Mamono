@@ -2,6 +2,42 @@
 
 ## Player-facing
 
+- 2026-09-23: Changed corruption's minimum age to follow the hidden Debug setting for adult age, which now covers both bonding and corruption.
+
+- 2026-09-23: Changed the right-click drain order on a prisoner or slave: any Momo may do it, even a bonded one, and no lovin' follows.
+
+- 2026-09-23: Changed the mod settings menu to hide the Intimacy tab while the Intimacy mod is not loaded.
+
+- 2026-09-23: Removed the two fertility toggles. Momo fertility no longer declines with age, and only an active pregnancy stops her conceiving.
+
+- 2026-09-23: Added a hungry Momo feeding on your prisoners and slaves when her mate cannot help her. A bonded Momo may do it too, and a prisoner another Momo already fed on is not reserved for her.
+
+- 2026-09-23: Fixed a captive Momo with a mate elsewhere starving instead of feeding on the other captives.
+
+- 2026-09-23: Removed the Genes tab from the mod settings menu. The venom, fiery and claw genes all still work.
+
+- 2026-09-23: Removed the Ideology tab from the mod settings menu. The Monster Extremists meme, its precepts and its rites all still work.
+
+- 2026-09-23: Removed the "reinforced body part" entry from a winged momo's Health tab. It did nothing, and its tooltip promised a toughness bonus that was never applied.
+
+- 2026-09-23: Fixed the arrogant trait's opinion penalty not being listed in the Social tab. It moved the number but never said why; now it names the trait and says how far below her the other pawn is.
+
+- 2026-09-23: Changed the arrogant trait to rule out the kind trait. No pawn can be both kind and arrogant.
+
+- 2026-09-23: Changed the arrogant trait: she now looks down on anyone of a lower level than her, thinks less of them, and insults them more often. She no longer haggles worse than anyone else.
+
+- 2026-09-23: Added the arrogant trait. She thinks she is better than everyone else and other people find her hard to be around, so she is a worse trader and argues more.
+
+- 2026-09-23: Changed the medieval merchant's guild to be mostly lizardmen, wyverns and salamanders, with a few apsaras and humans.
+
+- 2026-09-23: Changed the civil and rough outlander unions to stay out of a new world, even one whose planet type names them. You can still add them by hand at world creation.
+
+- 2026-09-23: Changed the civil kingdom and the rough clan to stay out of a new world. You can still add them by hand at world creation.
+
+- 2026-09-22: Fixed visitors proposing a bond or a transformation to your colonists. They keep to each other now.
+
+- 2026-09-22: Changed momos in a caravan to keep their mana while they travel.
+
 - 2026-09-22: Changed the cave snakes and the forest to keep spawning, so their quests still happen. The other Medieval Overhaul factions stay out of a new world.
 
 - 2026-09-22: Fixed a caravan with a flying or large-frame momo moving far faster than it should. The speed is applied once now, not twice.
@@ -53,6 +89,29 @@
 - 2026-08-29: Changed the momo gene to cure and prevent old-age ailments without a message.
 
 ## Internal
+
+- 2026-09-24: Changed the em dashes in this mod's text to plain hyphens.
+
+- 2026-09-24: Added `IsekaiCompat.Strength`, with the base-value fallback for mobs (they carry a `MobRankComponent`, not an `IsekaiComponent`), for the lamia's coil escape roll in Reptiles.
+
+- 2026-09-23: Added `/out` to sync.sh's excludes and to .gitignore. A stray IL dump sat in the repo root and was copied into the game mod folder on every sync.
+
+- 2026-09-23: Changed `EssenceTransfer.FindFellowPrisonerToDrain` into `FindCaptiveToDrain`, widened to the colony's prisoners and slaves. The captive exemptions (bond rule, incubation mark) are now `IsCaptiveFeedTarget`, which also gates the dry job in `JobDriver_DrainEssence`.
+
+- 2026-09-23: Fixed the arrogant opinion line rendering with no trait name: the trait def carried only a degree label, so `Def.LabelCap` was empty. The def now has its own `<label>`, and the patch reads the degree label instead.
+
+- 2026-09-23: Added ArrogantOpinionExplanationPatch, appending the arrogant opinion penalty to `Pawn_RelationsTracker.OpinionExplanation`. The Social tab lists only the contributions the engine knows, so a patched total moved the number with no reason shown. The line's wording is a keyed translation (`Languages/English/Keyed/ArrogantTrait.xml`).
+
+- 2026-09-23: Added `Kind` to `PMM_Arrogant`'s `conflictingTraits`, and patched vanilla `Kind` to name `PMM_Arrogant` in return (`Patches/Trait_ArrogantConflicts.xml`), so the pair is declared on both sides.
+
+- 2026-09-23: Changed the arrogant trait's teeth to live in code (`ArrogantTraitPatch.cs`): a `Pawn_RelationsTracker.OpinionOf` postfix and an `InteractionWorker_Insult.RandomSelectionWeight` postfix, both keyed on `IsekaiCompat.GetLevel`. The market value offset is gone.
+
+- 2026-09-23: Added `PMM_Arrogant` (`Defs/TraitDefs_Momo.xml`): `commonality` 0, so only a gene can hand it out, using vanilla's own `marketValueFactorOffset` and `socialFightChanceFactor`.
+- 2026-09-22: Added EssenceTransfer.IsGuestColonistPair and used it in the autonomous target gates of VoluntaryBonding and VoluntaryTransformation, which never called the CanProposeTo guard that already refused visitor on colonist pairs.
+
+- 2026-09-22: Added a caravan guard to Need_Mana.NeedInterval, so the alive-world-pawn tick cannot drain mana, run the starvation timer or roll a break off-map.
+
+- 2026-09-22: Added gear-driven stats for essence recovery and mana drain, so worn apparel can ward either resource.
 
 - 2026-09-22: Removed the cave snake and forest factions from the Medieval Overhaul faction patch, so MO's own start counts apply to them again.
 

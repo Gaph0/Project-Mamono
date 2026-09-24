@@ -6,12 +6,16 @@ using Verse.AI;
 namespace ProjectMomo
 {
     /// <summary>
-    /// Lets a bonded Momo autonomously seek out her tsugai partner and feed when
-    /// her Mana runs low — the mana equivalent of vanilla's JobGiver_GetFood.
-    /// No mental break, no letter: she simply walks to her mate and drains
-    /// essence, then goes back to her day. A captive Momo is shut out of the break
-    /// system and cannot leave, so when no bonded mate is available she feeds on a
-    /// fellow prisoner instead — the same act, without the intimate side effects.
+    /// Lets a Momo autonomously seek out a meal when her Mana runs low — the mana
+    /// equivalent of vanilla's JobGiver_GetFood. No mental break, no letter: she
+    /// simply walks to her mate and drains essence, then goes back to her day.
+    ///
+    /// When no mate can feed her — she is unbonded, or her tsugai is off-map,
+    /// unreachable or dry — she falls back on a captive of the colony, a prisoner
+    /// or a slave (see EssenceTransfer.IsCaptiveFeedTarget). That fallback is what
+    /// a captive Momo lives on: she cannot leave, cannot hunt and is shut out of
+    /// the break system, so a fellow prisoner or a slave is her only meal. A
+    /// captive feed uses the dry job, without the intimate side effects.
     /// Only fires for a Momo at or below the configured seek threshold; if no one
     /// suitable is around, the low-mana break system remains the fallback for the
     /// free Momos it still covers.
@@ -89,22 +93,38 @@ namespace ProjectMomo
                 }
             }
 
-            // Her living, reachable tsugai partner. Unbonded Momos keep their
-            // feral flavor — no autonomous feeding, only the berserk break. The one
-            // exception is a captive: no mate to reach, no way out of the cell and no
-            // break to fall back on, so a fellow prisoner is her only meal.
+            // Her living, reachable tsugai partner — null when she is unbonded, or when
+            // her mate is off-map or walled off. Unbonded Momos keep their feral flavor on
+            // the mate path (no autonomous feeding for them, only the berserk break), so
+            // this is where the captive fallback comes in.
             Pawn partner = LowManaBreak.GetLivingBondPartner(pawn);
-            bool captiveFeed = partner == null && pawn.IsPrisoner;
-            if (captiveFeed)
+            bool captiveFeed = false;
+
+            // The captive fallback: a prisoner or slave of the colony. A captive is a meal
+            // the colony owns, not a partner, so she may take it even while bonded
+            // (EssenceTransfer.IsCaptiveFeedTarget) — which is the only way a Momo whose
+            // mate is away or spent gets fed without a mental break.
+            if (settings.FeedOnCaptivesEnabled
+                && (partner == null || !EssenceTransfer.CanTransfer(pawn, partner)))
             {
-                partner = EssenceTransfer.FindFellowPrisonerToDrain(pawn);
+                Pawn captive = EssenceTransfer.FindCaptiveToDrain(pawn);
+                if (captive != null)
+                {
+                    partner = captive;
+                    captiveFeed = true;
+                }
             }
             if (partner == null)
             {
                 return null;
             }
 
-            if (!EssenceTransfer.CanTransfer(pawn, partner))
+            // A captive meal answers to the captive rules (exempt from the bond rule and
+            // the incubation mark); every other target answers to the ordinary ones.
+            bool canFeed = captiveFeed
+                ? EssenceTransfer.IsCaptiveFeedTarget(pawn, partner)
+                : EssenceTransfer.CanTransfer(pawn, partner);
+            if (!canFeed)
             {
                 // Her mate is dry: back off for the (drive-scaled) retry cooldown
                 // so his essence can recover, instead of re-checking every scan.
@@ -117,7 +137,7 @@ namespace ProjectMomo
             // cooldown keeps her from re-issuing the same failing job every
             // think tick.
             NoteAttempt(pawn, comp, now, settings, drive);
-            // Feeding on a fellow prisoner uses the dry variant: no lovin' memory, no lovin' job.
+            // Feeding on a captive uses the dry variant: no lovin' memory, no lovin' job.
             return JobMaker.MakeJob(
                 captiveFeed ? ProjectMomo_DefOf.ProjectMomo_DrainEssenceDry : ProjectMomo_DefOf.ProjectMomo_DrainEssence,
                 partner);

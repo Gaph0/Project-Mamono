@@ -16,10 +16,11 @@
         <casualInterruptible>true</casualInterruptible>
     </JobDef>
 
-    <!-- The same act as ProjectMomo_DrainEssence, but used by a captive Momo on a fellow
-         prisoner. Same driver; the def is what tells it to skip the intimate side effects
-         (no lovin' memory, no lovin' job). Mana, the shared mood buff and the incubisation
-         dose still happen. -->
+    <!-- The same act as ProjectMomo_DrainEssence, used whenever the meal is a captive: a
+         fellow prisoner, or a prisoner or slave of the colony. Same driver; the def is what
+         tells it to skip the intimate side effects (no lovin' memory, no lovin' job) and to
+         gate the job on the captive rules instead of the bond rule and the incubation mark.
+         Mana, the shared mood buff and the incubisation dose still happen. -->
     <JobDef>
         <defName>ProjectMomo_DrainEssenceDry</defName>
         <driverClass>ProjectMomo.JobDriver_DrainEssence</driverClass>

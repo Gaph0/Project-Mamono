@@ -63,6 +63,7 @@ rsync -a --delete --delete-excluded \
   --exclude='NuGet.config' \
   --exclude='*.sh' \
   --exclude='*.bak*' \
+  --exclude='/out' \
   --exclude='*.pdb' \
   --exclude='*.zip' \
   --exclude='*.ods' \

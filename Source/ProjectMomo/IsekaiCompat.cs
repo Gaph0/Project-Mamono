@@ -105,6 +105,22 @@ namespace ProjectMomo
             return Mathf.Clamp(mult, 0.3f, 1.2f);
         }
 
+        /// <summary>
+        /// A pawn's STR, for contests outside the tease maths (the lamia's coil escape
+        /// roll). Mobs and hostiles carry a MobRankComponent rather than an
+        /// IsekaiComponent, so they fall back to the base value - a raider lamia is as
+        /// strong as a pawn who has spent nothing.
+        /// </summary>
+        public static int Strength(Pawn pawn)
+        {
+            var comp = Comp(pawn);
+            if (comp?.stats == null)
+            {
+                return BaseStat;
+            }
+            return comp.stats.strength;
+        }
+
         /// <summary>Award Isekai XP to a Momo-carrier for breaking a victim's will.</summary>
         public static void AwardKnockoutXP(Pawn attacker)
         {

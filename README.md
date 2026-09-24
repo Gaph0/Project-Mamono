@@ -31,7 +31,8 @@ Reproduction category):
 - Forces its holder female on add (gender, body type, feminine hairstyle).
 - Silently cures age-related ailments and blocks new ones (hourly backstop
   sweep catches mod/quest-forced ones).
-- Fertility never declines with age (toggleable, default on).
+- Fertility never declines with age, and nothing makes her sterile — not
+  sterilization, drained or removed ovaries, or sterile genes (Biotech).
 - Immune to all nudity thoughts; lovin' age factor forced to 1.
 - Enables the Mana need, disables the Essence need.
 - Melee strikes inflict tease damage instead of physical damage (see below).
@@ -56,6 +57,8 @@ Corruption master switch).
 
 - Drains a full bar over 2 days. Avg(WIS, INT) above 5 reduces the drain
   3%/point (clamped 0.3x–1.2x); wild Momos drain at 0.25x.
+- A Momo in a caravan keeps her mana. The drain and the starvation decline
+  pause while she travels, and start again when she is back on a map.
 - Eating restores 0.15 mana per nutrition — a supplement, not a substitute.
 - Feeding moves essence into mana 1:1 (Give/Drain jobs, bonding, Intimacy
   sex).
@@ -87,7 +90,8 @@ Corruption master switch).
   Incubisation).
 - Right-click float-menu orders: "Give essence" (human → Momo) and "Drain
   essence" (Momo → human), greyed out with a reason when the rules block
-  them.
+  them. On one of your own prisoners or slaves the drain ignores both rules
+  above — any Momo may take that meal — and skips the lovin' afterwards.
 
 ## Willpower and tease damage
 
@@ -165,7 +169,8 @@ Effects while the bond lives:
   relation, his essence, her mana hunger, and grief; it must reach 0.6 to
   act (6h attempt cooldown per pawn, 24h rejection cooldown per pair). Your own colonists are
   exempt by default (`VoluntaryBondColonistProposals`, on the Tsugai bond tab), so only
-  outsiders propose on their own and your pawns bond only when you order it.
+  outsiders propose on their own — and only to each other: a visitor never bonds one
+  of your colonists, in either direction. Your pawns bond only when you order it.
 - A bond costs the man half his essence bar — he must hold at least 0.5 to
   offer or be offered one.
 - Acceptance: desire floor 0.25, scaling to near-certain at 0.95; a man's
@@ -214,6 +219,8 @@ monster (stages: mana-touched → infused → blooming → on the verge).
   opinion, her mana, and family ties — mothers, daughters and sisters are
   weighted; 0.6 threshold, same cooldowns) — or right-click an **upright**
   woman with a Momo selected → "Offer transformation".
+- A visiting Momo never offers the change to one of your colonists. Your own
+  Momo may still offer it to a visitor.
 - Acceptance completes the transformation in one short ceremony — no mana
   cost, no gradual corruption. Refusals sting (−4, 2 days) and are logged;
   willing conversions get the +25% join bonus.
@@ -293,11 +300,17 @@ guaranteed at desperate starvation):
   walks off the map; NPC Momos flee.
 
 A captive Momo never breaks at all. She cannot act on the hunger, and a
-berserk prisoner would only maul her captors. Instead she feeds calmly on a
-fellow prisoner when her mana falls below the seek threshold. If no other
-prisoner has essence to give, she simply waits. That feed is not an intimate
-act: no lovin', but the mana, the mood buff and the incubisation dose still
-happen.
+berserk prisoner would only maul her captors. Instead she feeds calmly on
+another captive when her mana falls below the seek threshold — a fellow
+prisoner, or a slave. If no other captive has essence to give, she simply
+waits. That feed is not an intimate act: no lovin', but the mana, the mood
+buff and the incubisation dose still happen.
+
+Any other Momo can do the same. When no mate can feed her — she is unbonded,
+her mate is off the map, behind a wall, or drained dry — she falls back on one
+of your prisoners or slaves. A captive is a meal the colony owns, not a
+partner, so the rule that keeps a bonded Momo faithful does not stop her, and
+neither does the mark another Momo left on him.
 
 ## Mod integrations
 
@@ -343,8 +356,8 @@ drains exactly enough essence from her partner to fill her mana bar.
 `PMM_Gene_Flight` is what gives dragons, wyverns and malef dragons their wings.
 
 - It swaps the pawn's body for the Big & Small winged body, so she grows real wing parts
-  and renders feathered wings. A hidden hediff (`PMM_Hediff_PartToughness`) keeps those
-  swapped-in parts as tough as the rest of her.
+  and renders feathered wings. The wings are as tough as any other part: every part's
+  health is her `hitPoints x HealthScale`, and no hediff can change that.
 - It grants `PMM_Ability_FlightLeap`: a long leap, range 29.9, no line of sight needed,
   60-tick cooldown.
 - It also raises caravan riding speed by 2.5x. `CaravanMountSpeedPatch` counts each flyer
@@ -419,9 +432,10 @@ Three genes sit beside the Momo gene. All of them are tunable on the Genes setti
 
 ## Autonomous mana feeding
 
-A bonded Momo whose mana drops below 30% walks to her mate and feeds, with no low-mana
-mental break. Retries are rate-limited, the daily amount is capped, and the pace follows
-the lovin' MTB.
+A Momo whose mana drops below 30% walks to a meal, with no low-mana mental break. Her
+mate comes first; if she has none to reach, or he is dry, she falls back on one of your
+prisoners or slaves. Retries are rate-limited, the daily amount is capped, the pace
+follows the lovin' MTB, and the captive fallback can be turned off in settings.
 
 ## Factions and world creation
 
@@ -442,10 +456,11 @@ transformation, join chances, autonomous infusion) · **Incubisation**
 (accrual, cap, mark, perks, decay) · **Tsugai bond** (voluntary bonding,
 costs, cooldowns, join chances) · **Bonded** (opinion/romance floors,
 willpower bonus, stack cap, grief) · **Animation** · **Intimacy** ·
-**Ideology** (meme opinion offsets, captive rite aftermath) · **Genes** (the three bloodline
-genes) ·
-**Debug**. Only **Debug** is hidden; every other tab is visible. A "Restore defaults" button
-resets all values.
+**Debug**. Only **Debug** is hidden, and the **Intimacy** tab appears only while the
+Intimacy mod is loaded. A "Restore defaults" button
+resets all values. The Monster Extremists meme and the three bloodline genes have no tabs:
+their values are fixed, and the meme, its precepts and rites, the venom, the fiery ward and
+the claws all work exactly as before.
 
 Dev-mode debug actions (Project Momo category) cover incubisation: add
 progress, mark by a Momo, complete, clear, log status, test mark

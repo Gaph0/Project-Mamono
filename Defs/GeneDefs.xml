@@ -3,7 +3,7 @@
     <GeneDef>
         <defName>ProjectMomo_Momo</defName>
         <label>Momo</label>
-        <description>This woman has inherited the "Inma" of the current Mamono Lord.</description>
+        <description>This monster bears the mark of the current Mamono Lord.</description>
         <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
         <geneClass>ProjectMomo.Gene_Momo</geneClass>
         <displayCategory>Reproduction</displayCategory>
@@ -16,7 +16,7 @@
             <li>ProjectMomo_Essence</li>
         </disablesNeeds>
         <customEffectDescriptions>
-            <li>This woman has inherited the "Inma" of the current Mamono Lord.</li>
+            <li>This monster bears the mark of the current Mamono Lord.</li>
             <li>Melee strikes inflict tease damage on pawns without this gene, eroding their willpower.</li>
             <li>Her fertility never fades with age.</li>
             <li>The ailments of old age never touch her; ones she already has silently melt away.</li>
@@ -92,18 +92,11 @@
                      body render atlas; without this they get cropped. -->
                 <renderCacheOff>true</renderCacheOff>
                 <thingDefSwap>BS_HumanoidWithWings</thingDefSwap>
-                <!-- Toughen the swapped-in wing parts through the shared hidden
-                     hediff (Defs/HediffDefs_BSDurability.xml): wings use the
-                     pawn's own HealthScale, which for small races is low - this
-                     keeps BS-added parts on the same plumbing as insect chitin. -->
-                <applyPartHediff>
-                    <li>
-                        <hediff>PMM_Hediff_PartToughness</hediff>
-                        <bodyparts>
-                            <li>BS_Wing</li>
-                        </bodyparts>
-                    </li>
-                </applyPartHediff>
+                <!-- No part-toughness hediff here (removed 2026-09-23). A
+                     hediff cannot change part HP at all - that is
+                     hitPoints x HealthScale - and addedPartProps is only read
+                     for Hediff_AddedPart, so PMM_Hediff_PartToughness was a
+                     no-op that still showed up in the Health tab. -->
             </li>
             <!-- Keep the B&S race tracker from hiding its wing graphics on the
                  gene path. Same pattern as the lamia tail's ShowBaseAbdomen. -->
@@ -157,22 +150,14 @@
             <li>Wings</li>
         </exclusionTags>
         <!-- Same Big & Small body plumbing as PMM_Gene_Flight: forced body swap
-             (which also brings the real BS_Wing parts), render cache off (wings
-             reach past the body atlas) and the shared toughness hediff on
-             BS_Wing. No Flagger here - see the note above. -->
+             (which also brings the real BS_Wing parts) and render cache off
+             (wings reach past the body atlas). No toughness hediff and no
+             Flagger here - see the notes above. -->
         <modExtensions>
             <li Class="BigAndSmall.PawnExtension">
                 <forceThingDefSwap>true</forceThingDefSwap>
                 <renderCacheOff>true</renderCacheOff>
                 <thingDefSwap>BS_HumanoidWithWings</thingDefSwap>
-                <applyPartHediff>
-                    <li>
-                        <hediff>PMM_Hediff_PartToughness</hediff>
-                        <bodyparts>
-                            <li>BS_Wing</li>
-                        </bodyparts>
-                    </li>
-                </applyPartHediff>
             </li>
         </modExtensions>
         <!--

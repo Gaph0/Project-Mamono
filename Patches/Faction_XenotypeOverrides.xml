@@ -2,20 +2,23 @@
 <Patch>
   <!--
     Faction xenotype overrides: replaces the vanilla xenotype mixes of the
-    shattered Empire (Royalty) and the orbital traders guild (Odyssey) with
-    Project Momo monster xenotypes.
+    shattered Empire (Royalty), the orbital traders guild (Odyssey) and VFE
+    Medieval 2's travelling merchant's guild with Project Momo monster
+    xenotypes.
 
       Shattered Empire -> dragons, genies, apsaras
       Traders Guild    -> apsaras, genies
+      Medieval 2 guild -> lizardmen, wyverns, salamanders, apsaras, baseliners
 
     The whole <xenotypeChances> node is replaced, wiping the vanilla
     Neanderthal/Hussar/Genie/Starjack entries. Each faction's chances sum to
     0.9 - the unlisted 10% remainder defaults to baseliners, so both factions
     keep a small human minority among the monster girls.
 
-    No pawn kind in either faction forces a xenotype (verified against 1.6
-    game data), so the faction xenotypeSet governs every spawn: raids,
-    settlements, caravans, traders, leaders and royalty.
+    No pawn kind in any of the three factions forces a xenotype, and none of their
+    kinds is a non-human race (verified against 1.6 game data), so the faction
+    xenotypeSet governs every spawn: raids, settlements, caravans, traders, leaders
+    and royalty.
 
     Guards: PatchOperationFindMod ensures each block only runs when the submod
     providing its xenotypes is loaded, and PatchOperationConditional silently
@@ -58,6 +61,39 @@
             <PMM_Elemental_Genie>0.45</PMM_Elemental_Genie>
           </xenotypeChances>
         </value>
+      </match>
+    </match>
+  </Operation>
+  <!-- ===== VFE Medieval 2 merchant's guild (the travelling merchants):
+       lizardmen + wyverns + salamanders + apsaras + baseliners =====
+       The guild has settlementGenerationWeight 0 and hidden true, so it never holds
+       ground: this roster is what its travelling caravans, its guards, its traders
+       and its guildmaster look like.
+
+       Reptiles carry the guild: lizardmen and wyverns at 0.3 each (bumped up from
+       0.25), salamanders at 0.2. Apsaras and baseliners take a tenth each, so the
+       monster share is 0.9 in total - the same human tenth the Empire and Traders
+       Guild blocks above keep - written out as a Baseliner entry rather than left as
+       the implicit remainder those blocks rely on. Watched by the same guards as the
+       blocks above: both submods must be loaded, and the def must exist. -->
+  <Operation Class="PatchOperationFindMod">
+    <mods><li>Project Momo Reptiles</li></mods>
+    <match Class="PatchOperationFindMod">
+      <mods><li>Project Momo Elementals</li></mods>
+      <match Class="PatchOperationConditional">
+        <xpath>Defs/FactionDef[defName="VFEM2_MerchantGuild"]/xenotypeSet/xenotypeChances</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>Defs/FactionDef[defName="VFEM2_MerchantGuild"]/xenotypeSet/xenotypeChances</xpath>
+          <value>
+            <xenotypeChances>
+              <PMM_Reptile_Lizardman>0.3</PMM_Reptile_Lizardman>
+              <PMM_Reptile_Wyvern>0.3</PMM_Reptile_Wyvern>
+              <PMM_Reptile_Salamander>0.2</PMM_Reptile_Salamander>
+              <PMM_Elemental_Apsara>0.1</PMM_Elemental_Apsara>
+              <Baseliner MayRequire="Ludeon.RimWorld.Biotech">0.1</Baseliner>
+            </xenotypeChances>
+          </value>
+        </match>
       </match>
     </match>
   </Operation>

@@ -1,4 +1,5 @@
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace ProjectMomo
@@ -8,7 +9,8 @@ namespace ProjectMomo
     /// + the gene's enablesNeeds). It drains over time. When empty, a Momo suffers a
     /// chemical-dependency-style escalating "mana starvation" decline (a visible
     /// hediff) and, once desperate, is guaranteed to break — independent of her mood.
-    /// Feeding (future mechanic) will restore it.
+    /// Feeding (future mechanic) will restore it. A Momo in a caravan does not drain
+    /// at all — see the caravan guard in <see cref="NeedInterval"/>.
     /// </summary>
     public class Need_Mana : Need
     {
@@ -34,6 +36,17 @@ namespace ProjectMomo
         public override void NeedInterval()
         {
             if (IsFrozen)
+            {
+                return;
+            }
+
+            // A caravan member is ticked like any other alive world pawn (WorldPawns.WorldPawnsTick
+            // calls Thing.DoTick on her), so without this guard her mana drains in transit exactly as
+            // it does on a map — about half a bar a day of travelling. Nothing can feed her out
+            // there, so the whole interval is frozen instead: no drain, no starvation timer, no break
+            // roll, resuming the moment she spawns again. Vanilla's Need.IsFrozen counts caravan
+            // members as live on purpose, so this guard has to be ours.
+            if (pawn != null && CaravanUtility.IsCaravanMember(pawn))
             {
                 return;
             }
@@ -86,6 +99,11 @@ namespace ProjectMomo
             {
                 drainMultiplier *= ProjectMomoModSettings.Settings.GuestManaDrainFactor;
             }
+
+            // Gear: a metal that wards mana (dragonium) slows the drain while it is
+            // worn. PMM_ManaDrain is a FACTOR stat fed from worn apparel, so a full
+            // set drains slower than any one piece on its own.
+            drainMultiplier *= pawn.GetStatValue(ProjectMomo_DefOf.PMM_ManaDrain);
 
             return drainMultiplier;
         }

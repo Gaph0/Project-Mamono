@@ -23,8 +23,6 @@ namespace ProjectMomo
             BondedCouple,
             Animation,
             Intimacy,
-            Ideology,
-            Genes,
             Debug
         }
 
@@ -97,11 +95,15 @@ namespace ProjectMomo
                 new TabRecord("Incubisation", () => SwitchTab(SettingsTab.Incubisation), currentTab == SettingsTab.Incubisation),
                 new TabRecord("Tsugai bond", () => SwitchTab(SettingsTab.TsugaiBond), currentTab == SettingsTab.TsugaiBond),
                 new TabRecord("Bonded", () => SwitchTab(SettingsTab.BondedCouple), currentTab == SettingsTab.BondedCouple),
-                new TabRecord("Animation", () => SwitchTab(SettingsTab.Animation), currentTab == SettingsTab.Animation),
-                new TabRecord("Intimacy", () => SwitchTab(SettingsTab.Intimacy), currentTab == SettingsTab.Intimacy),
-                new TabRecord("Ideology", () => SwitchTab(SettingsTab.Ideology), currentTab == SettingsTab.Ideology),
-                new TabRecord("Genes", () => SwitchTab(SettingsTab.Genes), currentTab == SettingsTab.Genes)
+                new TabRecord("Animation", () => SwitchTab(SettingsTab.Animation), currentTab == SettingsTab.Animation)
             };
+
+            // Intimacy tab, only while Intimacy - Friends n' Lovers is loaded: every
+            // row in it tunes that mod's integration and means nothing without it.
+            if (IntimacyCompat.Active)
+            {
+                tabs.Add(new TabRecord("Intimacy", () => SwitchTab(SettingsTab.Intimacy), currentTab == SettingsTab.Intimacy));
+            }
 
             // Hidden debug tab, enabled through HiddenTab.txt or the DebugTabEnabled setting.
             if (HiddenTabFileEnabled() || DebugTabEnabled)
@@ -152,12 +154,6 @@ namespace ProjectMomo
                     break;
                 case SettingsTab.Intimacy:
                     DrawIntimacyTab(listing);
-                    break;
-                case SettingsTab.Ideology:
-                    DrawIdeologyTab(listing);
-                    break;
-                case SettingsTab.Genes:
-                    DrawGenesTab(listing);
                     break;
                 case SettingsTab.Debug:
                     DrawDebugTab(listing);
@@ -255,7 +251,7 @@ namespace ProjectMomo
                 "Mana level a visiting Momo's drain stops at, so no visit can leave her starving. Only the passive drain is floored: nothing is added back, so a guest who spends mana still spends it. 0 = no floor.");
 
             listing.Label("<b>Low-mana break</b>");
-            listing.Label("<color=#888888>While Mana is below the threshold, a free Momo can randomly suffer a feeding/berserk break. A captive never breaks: she feeds on her fellow prisoners instead.</color>");
+            listing.Label("<color=#888888>While Mana is below the threshold, a free Momo can randomly suffer a feeding/berserk break. A captive never breaks: she feeds on the other captives instead.</color>");
             listing.GapLine();
 
             DrawPerPointSlider(listing, "Low mana break threshold", ref Settings.LowManaBreakThreshold, 0f, 0.5f, 0.1f,
@@ -265,14 +261,16 @@ namespace ProjectMomo
 
             listing.GapLine();
             listing.Label("<b>Autonomous feeding</b>");
-            listing.Label("<color=#888888>A Momo whose Mana runs low looks for a meal on her own, with no mental break. A bonded Momo goes to her mate. A captive goes to a fellow prisoner. If she cannot reach one, or they are dry, the breaks above stay the fallback for free Momos.</color>");
+            listing.Label("<color=#888888>A Momo whose Mana runs low looks for a meal on her own, with no mental break. She goes to her mate when she has one, and to a prisoner or slave of the colony when she does not. If she cannot reach one, or they are dry, the breaks above stay the fallback for free Momos.</color>");
             listing.GapLine();
 
             listing.CheckboxLabeled("Momos feed autonomously", ref Settings.AutonomousFeedingEnabled,
-                "Let a Momo go for a meal on her own when her Mana runs low: a bonded Momo to her tsugai partner, a captive to a fellow prisoner.");
+                "Let a Momo go for a meal on her own when her Mana runs low: to her tsugai partner, or to one of your prisoners or slaves.");
 
             DrawPerPointSlider(listing, "Seek feeding threshold", ref Settings.AutonomousFeedThreshold, 0f, 0.6f, 0.3f,
-                "Mana level below which a Momo looks for a meal: her mate, or a fellow prisoner if she is captive. Keep it above the low mana break threshold, so she seeks before she breaks.");
+                "Mana level below which a Momo looks for a meal: her mate first, then a captive. Keep it above the low mana break threshold, so she seeks before she breaks.");
+            listing.CheckboxLabeled("Feed on prisoners and slaves", ref Settings.FeedOnCaptivesEnabled,
+                "Let a hungry Momo fall back on one of your own prisoners or slaves when her mate cannot feed her. A captive is not a partner, so this works even for a bonded Momo, and a prisoner another Momo has already fed on stays open to the rest.");
             DrawPerPointSlider(listing, "Feed retry cooldown (hours)", ref Settings.AutonomousFeedRetryCooldownHours, 0.25f, 12f, 1f,
                 "Hours a Momo waits before retrying after a feed attempt failed (the meal was dry, or the walk/drain was interrupted).", true);
             DrawIntField(listing, "Max natural feeds per day", ref Settings.AutonomousFeedMaxPerDay, 0, 10,
@@ -299,8 +297,6 @@ namespace ProjectMomo
                 "Corruption lost per day while the victim's willpower is above the knockout threshold.");
             DrawPerPointSlider(listing, "Mana cost per infusion", ref Settings.CorruptionManaCost, 0.05f, 1f, 0.2f,
                 "Mana one infusion costs the Momo (fraction of her mana bar).");
-            DrawPerPointSlider(listing, "Minimum age", ref Settings.CorruptionMinAge, 0f, 20f, 16f,
-                "Minimum biological age a woman must be to be corrupted.", true);
 
             listing.GapLine();
             listing.Label("<b>Join offer</b>");
@@ -475,14 +471,7 @@ namespace ProjectMomo
         private void DrawIntimacyTab(Listing_Standard listing)
         {
             listing.Label("<b>Intimacy - Friends n' Lovers</b>");
-            listing.Label("<color=#888888>Only applies while the Intimacy mod is active. With it off, Momos gain no Mana from Intimacy sex acts.</color>");
             listing.GapLine();
-
-            listing.CheckboxLabeled("Ageless fertility", ref Settings.MomoFertilityAgeless,
-                "Momos never lose fertility to age (Biotech's fertility age curve is cancelled for Momo-carriers). Hediff-based fertility changes still apply.");
-
-            listing.CheckboxLabeled("Always fertile (requires Biotech)", ref Settings.MomoAlwaysFertile,
-                "Momos can always conceive: an adult Momo's fertility never drops below 100%, and sterility from sterilization, fertility-drained or removed reproductive organs, and sterile genes is ignored. An active pregnancy still prevents another conception, and children are unaffected. Subsumes ageless fertility.");
 
             listing.CheckboxLabeled("Feed through Intimacy sex acts", ref Settings.IntimacyFeeding,
                 "When a Momo has sex through the Intimacy mod, she drains enough of her partner's essence to fill her Mana bar (limited by how much essence the partner has).");
@@ -491,66 +480,14 @@ namespace ProjectMomo
                 "Play Yayo's romancin' (lovin') bounce on both partners while an Intimacy sex act runs. Intimacy ships no pawn animation of its own, and Yayo only recognizes the vanilla Lovin job — this bridges the two.");
         }
 
-        private void DrawIdeologyTab(Listing_Standard listing)
-        {
-            listing.Label("<b>Monster Extremists meme (Ideology DLC)</b>");
-            listing.Label("<color=#888888>The Monster Extremists meme (\"All men should be drained, and all women should be transformed!\") grants believers a social opinion of ascended pawns — transformed women (any Momo) and tsugai-bonded men — and, depending on the monster ascension precept, a low opinion of untransformed, unbonded baseliner adults. The precept comes in three varieties, exclusive to the meme: relaxed (admires the ascended, no judgment of baseliners), exalted (the values below) and strict (doubled values). The meme also unlocks two rites of awakening: one transforms a willing colonist into the organiser's own monster xenotype, the other transforms a prisoner or slave into a random monster. A failed rite simply fizzles.</color>");
-            listing.GapLine();
-
-            DrawIntField(listing, "Ascended opinion", ref Settings.MonsterExtremistAscendedOpinion, -100, 100,
-                "Believers' social opinion of ascended pawns (any Momo, or any pawn with a living tsugai bond). The relaxed precept grants half this, the strict precept double.");
-            DrawIntField(listing, "Baseliner opinion", ref Settings.MonsterExtremistBaselinerOpinion, -100, 100,
-                "Believers' social opinion of baseliners: adult humanlikes who are neither transformed nor bonded. Children are ignored. Only the exalted and strict precepts judge baseliners — the strict precept doubles this, the relaxed precept has no baseliner opinion.");
-
-            listing.GapLine();
-            listing.Label("<b>Captive rite aftermath</b>");
-            listing.Label("<color=#888888>A prisoner or slave transformed by the rite of awakening keeps these fractions of her will, resistance and certainty in her old beliefs (50% = halved). 100% = no effect.</color>");
-            listing.GapLine();
-
-            DrawPerPointSlider(listing, "Will remaining", ref Settings.MonsterExtremistCaptiveWillFactor, 0f, 1f, 0.5f,
-                "Fraction of a transformed prisoner's will remaining after the captive rite (50% = halved).", true);
-            DrawPerPointSlider(listing, "Resistance remaining", ref Settings.MonsterExtremistCaptiveResistanceFactor, 0f, 1f, 0.5f,
-                "Fraction of a transformed prisoner's resistance remaining after the captive rite (50% = halved).", true);
-            DrawPerPointSlider(listing, "Ideo certainty remaining", ref Settings.MonsterExtremistCaptiveCertaintyFactor, 0f, 1f, 0.5f,
-                "Fraction of a transformed captive's certainty in her old ideoligion remaining after the rite (50% = halved).", true);
-        }
-
-        private void DrawGenesTab(Listing_Standard listing)
-        {
-            listing.Label("<b>Momo venom</b>");
-            listing.Label("<color=#888888>A venom-gene carrier's melee strikes inject a slowing toxin into any living victim — humans, animals and other momos alike. The venom only suppresses the Moving capacity: it pins victims helpless but alive and aware, and a full dose wears off in 4 hours.</color>");
-            listing.GapLine();
-
-            DrawPerPointSlider(listing, "Venom per hit", ref Settings.VenomSeverityPerHit, 0.01f, 0.25f, 0.05f,
-                "Venom build-up per melee hit (5% = 20 hits to fully pin a victim; 100% wears off in 4 hours).");
-
-            listing.GapLine();
-            listing.Label("<b>Fiery momo</b>");
-            listing.Label("<color=#888888>A fiery momo is fully immune to fire, heat and lava: she cannot ignite, takes no flame damage, and no heat can discomfort her. A man bonded to her shares a lesser ward: +40C max comfortable temperature, 15% less flammable, and flame damage reduced to this fraction.</color>");
-            listing.GapLine();
-
-            DrawPerPointSlider(listing, "Warded flame damage taken", ref Settings.FieryWardFlameFactor, 0f, 1f, 0.85f,
-                "Flame-damage multiplier for a pawn bonded to a fiery momo (85% = 15% less flame damage). The carrier herself is always fully immune.");
-
-            listing.GapLine();
-            listing.Label("<b>Momo claws</b>");
-            listing.Label("<color=#888888>A clawed momo's strikes inflame her victims: more tease damage with every hit, paid for with clumsier hands.</color>");
-            listing.GapLine();
-
-            DrawPerPointSlider(listing, "Claws tease damage", ref Settings.ClawsTeaseMultiplier, 1f, 3f, 1.15f,
-                "Tease-damage multiplier for a clawed momo (115% = a little more tease per strike).");
-            DrawPerPointSlider(listing, "Claws manipulation penalty", ref Settings.ClawsManipulationPenalty, 0f, 0.5f, 0.15f,
-                "Manipulation capacity penalty for a clawed momo (15% = clumsier hands).");
-        }
-
         private void DrawDebugTab(Listing_Standard listing)
         {
             listing.Label("<b>Debug</b>");
             listing.Label("<color=#888888>This tab is hidden unless HiddenTab.txt in the mod folder is set to true.</color>");
             listing.GapLine();
 
-            DrawPerPointSlider(listing, "Minimum bond age", ref Settings.BondMinAge, 0f, 20f, 16f,
-                "Minimum biological age a male must be to be bonded to.", true);
+            DrawPerPointSlider(listing, "Minimum adult age", ref Settings.BondMinAge, 0f, 20f, 16f,
+                "Minimum biological age to count as an adult: a male must be at least this old to be bonded to, and a woman this old to be corrupted.", true);
 
             listing.CheckboxLabeled("Disable incest prevention", ref Settings.DisableIncestPrevention,
                 "When enabled, blood relations will not reduce romance chance for pawns affected by Project Momo systems.");

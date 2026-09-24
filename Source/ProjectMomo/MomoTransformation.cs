@@ -95,7 +95,7 @@ namespace ProjectMomo
                 reason = "not female";
                 return false;
             }
-            if (pawn.ageTracker == null || pawn.ageTracker.AgeBiologicalYearsFloat < Settings.CorruptionMinAge)
+            if (pawn.ageTracker == null || pawn.ageTracker.AgeBiologicalYearsFloat < Settings.BondMinAge)
             {
                 reason = "too young";
                 return false;

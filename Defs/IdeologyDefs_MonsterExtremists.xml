@@ -12,7 +12,7 @@
           rites): relaxed (admires the ascended, no judgment of non-momos),
           exalted (the original: ascended + baseliner social opinion thoughts),
           and strict (both thoughts at doubled values). Ascended = any Momo or
-          tsugai-bonded pawn; baseliner = any adult humanlike who is neither —
+          tsugai-bonded pawn; baseliner = any adult humanlike who is neither -
           children are ignored.
         - Two rites of awakening (ritual precept + pattern + behavior + outcome),
           also gated behind the meme: the colonist rite transforms a willing
@@ -30,13 +30,13 @@
         <iconPath>UI/Icons/Issues/Monsterise</iconPath>
     </IssueDef>
 
-    <!-- Relaxed: the ascended are admired, but baseliners are left in peace —
+    <!-- Relaxed: the ascended are admired, but baseliners are left in peace -
          no negative opinions or moods toward non-momos at all. -->
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_MonsterAscension_Relaxed</defName>
         <issue>ProjectMomo_Issue_MonsterAscension</issue>
         <label>relaxed</label>
-        <description>Monsters and their bonded mates are admired as the vanguard of a beautiful transformation, but those content with baseline flesh are simply left to their own path — no scorn, no pressure.</description>
+        <description>Monsters and their bonded mates are admired as the vanguard of a beautiful transformation, but those content with baseline flesh are simply left to their own path - no scorn, no pressure.</description>
         <impact>Low</impact>
         <displayOrderInIssue>0</displayOrderInIssue>
         <displayOrderInImpact>100</displayOrderInImpact>
@@ -65,7 +65,7 @@
         <defName>ProjectMomo_MonsterAscension_Exalted</defName>
         <issue>ProjectMomo_Issue_MonsterAscension</issue>
         <label>exalted</label>
-        <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
+        <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended - monsters and their bonded mates - are truly worthy.</description>
         <impact>Medium</impact>
         <displayOrderInIssue>1</displayOrderInIssue>
         <displayOrderInImpact>100</displayOrderInImpact>
@@ -96,13 +96,13 @@
         </comps>
     </PreceptDef>
 
-    <!-- Strict: the same judgment as exalted, but zealous — ascended admired
+    <!-- Strict: the same judgment as exalted, but zealous - ascended admired
          twice as strongly, baseliners scorned twice as harshly. -->
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_MonsterAscension_Strict</defName>
         <issue>ProjectMomo_Issue_MonsterAscension</issue>
         <label>strict</label>
-        <description>The baseline human form is a stain to be scrubbed from the world. Women who refuse remaking and men who refuse claiming are worse than ignorant — they are cowards hoarding rotten flesh. Only the ascended — monsters and their bonded mates — deserve honor.</description>
+        <description>The baseline human form is a stain to be scrubbed from the world. Women who refuse remaking and men who refuse claiming are worse than ignorant - they are cowards hoarding rotten flesh. Only the ascended - monsters and their bonded mates - deserve honor.</description>
         <impact>High</impact>
         <displayOrderInIssue>2</displayOrderInIssue>
         <displayOrderInImpact>100</displayOrderInImpact>
@@ -621,7 +621,7 @@
     <MemeDef MayRequire="Ludeon.RimWorld.Ideology">
         <defName>ProjectMomo_Meme_MonsterExtremists</defName>
         <label>monster extremists</label>
-        <description>All men should be drained, and all women should be transformed! The baseline human form is a larval state, unworthy of respect: women must be remade as monsters, and men must be claimed and drained by them. Only the ascended — monsters and their bonded mates — are truly worthy.</description>
+        <description>All men should be drained, and all women should be transformed! The baseline human form is a larval state, unworthy of respect: women must be remade as monsters, and men must be claimed and drained by them. Only the ascended - monsters and their bonded mates - are truly worthy.</description>
         <iconPath>UI/Memes/Monsterbucker</iconPath>
         <groupDef>Misc</groupDef>
         <impact>2</impact>

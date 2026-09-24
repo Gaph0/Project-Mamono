@@ -205,10 +205,7 @@ namespace ProjectMomo
             // No visitor/colonist bonds: a visiting Momo who bonded a colonist could only
             // leave (kidnapping him) or defect, neither of which a visit should produce, so
             // the consensual path is closed to guests of the colony in both directions.
-            bool momoIsGuest = EssenceTransfer.IsVisitingGuest(momo);
-            bool manIsColonist = man.Faction != null && man.Faction.IsPlayer;
-            if ((momoIsGuest && manIsColonist)
-                || (EssenceTransfer.IsVisitingGuest(man) && momo.Faction != null && momo.Faction.IsPlayer))
+            if (EssenceTransfer.IsGuestColonistPair(momo, man))
             {
                 reason = "a visitor cannot bond a colonist";
                 return false;
@@ -515,6 +512,13 @@ namespace ProjectMomo
             }
             // No wartime proposals — raiders bond by force, not by asking nicely.
             if (initiator.Faction != null && target.Faction != null && initiator.Faction.HostileTo(target.Faction))
+            {
+                return false;
+            }
+            // The visitor rule belongs on this path too, not only in CanProposeTo: the autonomous
+            // scan never calls that, so a visitor could pick a colonist and walk up to her. Visitors
+            // may still propose to each other — they are the only ones who do it on their own.
+            if (EssenceTransfer.IsGuestColonistPair(initiator, target))
             {
                 return false;
             }

@@ -1,0 +1,93 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
+    <!--
+        Gear-driven essence and mana stats (2026-09-22).
+
+        Two pairs, following vanilla's own shape for "what you wear changes a
+        number on you": the PSYCHIC pair (pawn stat PsychicSensitivity reads the
+        item stat PsychicSensitivityFactor through StatPart_GearStatFactor), and
+        the ENTROPY pair (PsychicEntropyRecoveryRate reads
+        PsychicEntropyRecoveryRateOffset through StatPart_GearStatOffset). Nothing
+        here is specific to any one mod:
+
+          PMM_EssenceRecoveryOffset   item level   what one worn piece is worth
+          PMM_EssenceRecovery         pawn level   the sum of those pieces
+          PMM_ManaDrainFactor         item level   what one worn piece multiplies
+          PMM_ManaDrain               pawn level   the product of those pieces
+
+        A material supplies the item-level stats from its stuffProps - Reptiles'
+        dragonium sets the offset to 0.1 and the factor to 0.95 - so any apparel
+        made of it, from any mod, gains the effect. Only WORN apparel counts; a
+        weapon or a wall made of the same metal changes nothing, because
+        StatPart_GearStatOffset and StatPart_GearStatFactor read the apparel list
+        (their <includeWeapon> is deliberately left off).
+
+        Offsets add, factors multiply. That is the whole reason for having one of
+        each: a set of three dragonium pieces gives +30% essence recovery but
+        drains mana at 86%, so the essence ward is predictable at any set size
+        while the mana ward rewards wearing the whole set.
+    -->
+    <StatDef>
+        <defName>PMM_EssenceRecoveryOffset</defName>
+        <label>essence recovery</label>
+        <description>How much wearing this speeds up the wearer's own essence recovery, as a fraction of her normal rate. Pieces add together.</description>
+        <category>Basics</category>
+        <defaultBaseValue>0</defaultBaseValue>
+        <hideAtValue>0</hideAtValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>false</showOnAnimals>
+        <showOnPawns>false</showOnPawns>
+        <showIfUndefined>false</showIfUndefined>
+        <displayPriorityInCategory>3520</displayPriorityInCategory>
+    </StatDef>
+
+    <StatDef>
+        <defName>PMM_EssenceRecovery</defName>
+        <label>essence recovery</label>
+        <description>Extra essence recovery this pawn gains from the gear she is wearing, as a fraction of her normal rate. Every piece she wears adds to it.</description>
+        <category>Basics</category>
+        <defaultBaseValue>0</defaultBaseValue>
+        <hideAtValue>0</hideAtValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>false</showOnAnimals>
+        <showIfUndefined>false</showIfUndefined>
+        <displayPriorityInCategory>3525</displayPriorityInCategory>
+        <parts>
+            <li Class="StatPart_GearStatOffset">
+                <apparelStat>PMM_EssenceRecoveryOffset</apparelStat>
+            </li>
+        </parts>
+    </StatDef>
+
+    <StatDef>
+        <defName>PMM_ManaDrainFactor</defName>
+        <label>mana drain</label>
+        <description>How fast wearing this makes the wearer's mana drain, as a fraction of normal. Pieces multiply together, so a full set drains slower than any single piece.</description>
+        <category>Basics</category>
+        <defaultBaseValue>1</defaultBaseValue>
+        <hideAtValue>1</hideAtValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>false</showOnAnimals>
+        <showOnPawns>false</showOnPawns>
+        <showIfUndefined>false</showIfUndefined>
+        <displayPriorityInCategory>3530</displayPriorityInCategory>
+    </StatDef>
+
+    <StatDef>
+        <defName>PMM_ManaDrain</defName>
+        <label>mana drain</label>
+        <description>How fast this pawn's mana drains, as a fraction of normal, once the gear she is wearing is taken into account.</description>
+        <category>Basics</category>
+        <defaultBaseValue>1</defaultBaseValue>
+        <hideAtValue>1</hideAtValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>false</showOnAnimals>
+        <showIfUndefined>false</showIfUndefined>
+        <displayPriorityInCategory>3535</displayPriorityInCategory>
+        <parts>
+            <li Class="StatPart_GearStatFactor">
+                <apparelStat>PMM_ManaDrainFactor</apparelStat>
+            </li>
+        </parts>
+    </StatDef>
+</Defs>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SettingsBlock>
+	<ModSettings Class="AlphaBiomes.AlphaBiomes_Settings">
+		<AB_UseAgariluxParticles>True</AB_UseAgariluxParticles>
+		<AB_BrighterCrags>True</AB_BrighterCrags>
+		<AB_SpawnFeraliskInfestedJungle>True</AB_SpawnFeraliskInfestedJungle>
+		<AB_SpawnGallatrossGraveyard>True</AB_SpawnGallatrossGraveyard>
+		<AB_SpawnGelatinousSuperorganism>True</AB_SpawnGelatinousSuperorganism>
+		<AB_SpawnIdyllicMeadows>True</AB_SpawnIdyllicMeadows>
+		<AB_SpawnMechanoidIntrusion>True</AB_SpawnMechanoidIntrusion>
+		<AB_SpawnMiasmicMangrove>True</AB_SpawnMiasmicMangrove>
+		<AB_SpawnMycoticJungle>True</AB_SpawnMycoticJungle>
+		<AB_SpawnOcularForest>True</AB_SpawnOcularForest>
+		<AB_SpawnPropaneLakes>True</AB_SpawnPropaneLakes>
+		<AB_SpawnRockyCrags>True</AB_SpawnRockyCrags>
+		<AB_SpawnPyroclasticConflagration>True</AB_SpawnPyroclasticConflagration>
+		<AB_SpawnTarPits>True</AB_SpawnTarPits>
+		<feraliskInfestedJungleMultiplier>0.1</feraliskInfestedJungleMultiplier>
+		<gallatrossGraveyardMultiplier>0.1</gallatrossGraveyardMultiplier>
+		<gelatinousSuperorganismMultiplier>0.1</gelatinousSuperorganismMultiplier>
+		<idyllicMeadowsMultiplier>0.1</idyllicMeadowsMultiplier>
+		<mechanoidIntrusionMultiplier>0.1</mechanoidIntrusionMultiplier>
+		<miasmicMangroveMultiplier>0.1</miasmicMangroveMultiplier>
+		<mycoticJungleMultiplier>0.1</mycoticJungleMultiplier>
+		<ocularForestMultiplier>0.1</ocularForestMultiplier>
+		<propaneLakesMultiplier>0.1</propaneLakesMultiplier>
+		<rockyCragsMultiplier>0.1</rockyCragsMultiplier>
+		<pyroclasticConflagrationMultiplier>0.1</pyroclasticConflagrationMultiplier>
+		<tarPitsMultiplier>0.1</tarPitsMultiplier>
+		<AB_RemoveVanillaBiomes>False</AB_RemoveVanillaBiomes>
+	</ModSettings>
+</SettingsBlock>

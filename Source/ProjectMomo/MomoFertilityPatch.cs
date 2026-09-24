@@ -8,20 +8,20 @@ namespace ProjectMomo
     /// <summary>
     /// Momo fertility protection, in three layers (all Biotech-only):
     ///
-    /// 1. Ageless fertility (MomoFertilityAgeless): Momos don't lose fertility
+    /// 1. Ageless fertility: Momos don't lose fertility
     ///    to age. Vanilla models the decline as StatPart_FertilityByGenderAge on
     ///    the Fertility stat, which multiplies the stat by the female age curve:
     ///    1.0 at 20-28, fading to 0 by 50. The postfix undoes the curve's
     ///    multiplier for Momo-carriers, restoring fertility to its peak (the
     ///    curve tops out at 1.0, so dividing by it returns the pre-age value).
     ///
-    /// 2. Always fertile (MomoAlwaysFertile): a postfix on StatExtension
+    /// 2. Always fertile: a postfix on StatExtension
     ///    .GetStatValue floors an adult Momo's Fertility at 1.0, so no source —
     ///    sterilized, fertility-drained or removed ovaries (StatPart_
     ///    FertilityByHediffs), gene/trait offsets, or age — can push her below
     ///    100%. Boosts above 100% are untouched.
     ///
-    /// 3. Sterility gate (MomoAlwaysFertile): Pawn.Sterile() also blocks
+    /// 3. Sterility gate: Pawn.Sterile() also blocks
     ///    reproduction when a hediff has preventsPregnancy (Core's Sterilized —
     ///    and pregnancy itself) or a gene has sterilize (Biotech's Sterile).
     ///    A postfix reports adult Momo-carriers as not-sterile — except while
@@ -103,7 +103,7 @@ namespace ProjectMomo
         /// </summary>
         public static void SterilePostfix(Pawn __instance, ref bool __result)
         {
-            if (!__result || !ProjectMomoModSettings.Settings.MomoAlwaysFertile)
+            if (!__result)
             {
                 return;
             }
@@ -140,11 +140,6 @@ namespace ProjectMomo
                 return;
             }
 
-            if (!ProjectMomoModSettings.Settings.MomoAlwaysFertile)
-            {
-                return;
-            }
-
             if (!(thing is Pawn pawn) || (!EssenceTransfer.IsMomo(pawn) && !Incubisation.IsFullIncubus(pawn)))
             {
                 return;
@@ -166,11 +161,6 @@ namespace ProjectMomo
         /// </summary>
         public static void Postfix(StatPart_FertilityByGenderAge __instance, StatRequest req, ref float val)
         {
-            if (!ProjectMomoModSettings.Settings.MomoFertilityAgeless)
-            {
-                return;
-            }
-
             if (!(req.Thing is Pawn pawn) || (!EssenceTransfer.IsMomo(pawn) && !Incubisation.IsFullIncubus(pawn)))
             {
                 return;

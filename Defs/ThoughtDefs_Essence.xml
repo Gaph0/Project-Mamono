@@ -16,7 +16,7 @@
     </ThoughtDef>
 
     <!-- Relief for a Momo who broke from starvation and finally fed. The mood
-         boost is deliberately large — vanilla's Catharsis is +40 — because the
+         boost is deliberately large - vanilla's Catharsis is +40 - because the
          low-mana break is one of the worst states a Momo can reach. -->
     <ThoughtDef>
         <defName>ProjectMomo_ManaCatharsis</defName>

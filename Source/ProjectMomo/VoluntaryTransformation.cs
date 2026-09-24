@@ -374,6 +374,13 @@ namespace ProjectMomo
             {
                 return false;
             }
+            // A visitor never offers the change to one of your colonists. The woman she turns is
+            // yours to keep, and the offerer is off the map in a few days either way. The reverse is
+            // deliberate: your own Momo may still offer it to a visitor.
+            if (EssenceTransfer.IsVisitingGuest(momo) && target.Faction?.IsPlayer == true)
+            {
+                return false;
+            }
             if (target.CurJobDef == ProjectMomo_DefOf.ProjectMomo_TransformProposal
                 || target.CurJobDef == ProjectMomo_DefOf.ProjectMomo_InfuseMomo)
             {

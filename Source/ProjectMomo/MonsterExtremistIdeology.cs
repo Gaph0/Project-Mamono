@@ -34,7 +34,7 @@ namespace ProjectMomo
             {
                 return false;
             }
-            if (pawn.ageTracker == null || pawn.ageTracker.AgeBiologicalYearsFloat < Settings.CorruptionMinAge)
+            if (pawn.ageTracker == null || pawn.ageTracker.AgeBiologicalYearsFloat < Settings.BondMinAge)
             {
                 return false;
             }

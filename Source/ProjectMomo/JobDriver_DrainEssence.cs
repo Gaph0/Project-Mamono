@@ -17,13 +17,28 @@ namespace ProjectMomo
         private Pawn Human => job?.targetA.Thing as Pawn;
 
         /// <summary>
-        /// False for the dry variant (ProjectMomo_DrainEssenceDry), which a captive Momo
-        /// uses on a fellow prisoner: feeding on a fellow captive is not an intimate act,
-        /// so the lovin' memory and the follow-up lovin' job are skipped. Mana, the shared
-        /// mood buff, the catharsis and the incubisation dose all still happen — see
-        /// EssenceTransfer.Transfer. Unknown or missing defs stay intimate, the old behaviour.
+        /// False for the dry variant (ProjectMomo_DrainEssenceDry), which is used whenever the
+        /// meal is a captive: a fellow prisoner, or a prisoner or slave of the colony. Feeding
+        /// on a captive is not an intimate act, so the lovin' memory and the follow-up lovin'
+        /// job are skipped. Mana, the shared mood buff, the catharsis and the incubisation dose
+        /// all still happen — see EssenceTransfer.Transfer. The def also picks the gate: a dry
+        /// job answers to <see cref="EssenceTransfer.IsCaptiveFeedTarget"/> (exempt from the bond
+        /// rule and the incubation mark) instead of <see cref="EssenceTransfer.CanTransfer"/>.
+        /// Unknown or missing defs stay intimate, the old behaviour.
         /// </summary>
         private bool IntimateSideEffects => job?.def != ProjectMomo_DefOf.ProjectMomo_DrainEssenceDry;
+
+        /// <summary>
+        /// The gate for this job's own def, re-checked on every toil so a target that stops
+        /// being valid (drained dry, hauled away, forbidding door) ends the walk instead of
+        /// finishing a feed nobody allows any more.
+        /// </summary>
+        private bool CanFeed()
+        {
+            return IntimateSideEffects
+                ? EssenceTransfer.CanTransfer(pawn, Human)
+                : EssenceTransfer.IsCaptiveFeedTarget(pawn, Human);
+        }
 
         /// <summary>True while the drain action is actively being performed (drives the Yayo lovin' animation).</summary>
         public bool FeedInProgress { get; private set; }
@@ -36,19 +51,19 @@ namespace ProjectMomo
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
-            this.FailOn(() => !EssenceTransfer.CanTransfer(pawn, Human));
+            this.FailOn(() => !CanFeed());
 
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch);
 
             Toil drain = Toils_General.WaitWith(TargetIndex.A, DurationTicks, false, true, false, TargetIndex.A, PathEndMode.ClosestTouch);
-            drain.FailOn(() => !EssenceTransfer.CanTransfer(pawn, Human));
+            drain.FailOn(() => !CanFeed());
             drain.WithProgressBarToilDelay(TargetIndex.A);
             drain.AddPreInitAction(() => FeedInProgress = true);
             drain.AddPreTickAction(PingPartnerAnimation);
             drain.AddFinishAction(() =>
             {
                 FeedInProgress = false;
-                if (EssenceTransfer.CanTransfer(pawn, Human))
+                if (CanFeed())
                 {
                     EssenceTransfer.Transfer(pawn, Human, float.MaxValue, IntimateSideEffects);
                     // Only a completed feed counts toward the daily cap, and only

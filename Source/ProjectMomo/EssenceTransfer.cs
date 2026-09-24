@@ -36,6 +36,20 @@ namespace ProjectMomo
             return player == null || !pawn.Faction.HostileTo(player);
         }
 
+        /// <summary>
+        /// True when one of the pair is a visitor and the other is one of the player's own pawns.
+        /// Every consensual proposal refuses this pair: a visitor who bonds a colonist can only
+        /// leave (kidnapping him) or defect, and either way she is off the map in a few days while
+        /// the colonist stays. The right-click orders use this for their refusal reason, and the
+        /// autonomous givers use it in their target gates, which never call those orders.
+        /// </summary>
+        public static bool IsGuestColonistPair(Pawn a, Pawn b)
+        {
+            bool aIsOurs = a?.Faction?.IsPlayer == true;
+            bool bIsOurs = b?.Faction?.IsPlayer == true;
+            return (IsVisitingGuest(a) && bIsOurs) || (IsVisitingGuest(b) && aIsOurs);
+        }
+
         /// <summary>The pawn's Essence need, or null.</summary>
         public static Need_Essence Essence(Pawn pawn)
         {
@@ -53,9 +67,20 @@ namespace ProjectMomo
         /// a living Momo with a Mana need and a living, non-Momo humanlike with an
         /// Essence need that has something left to give. A Momo who carries a living
         /// tsugai bond may only feed from a bonded partner — she will not draw from
-        /// a human she is not bonded to.
+        /// a human she is not bonded to. A captive of the colony is the one exception:
+        /// see <see cref="IsCaptiveFeedTarget"/>.
         /// </summary>
         public static bool CanTransfer(Pawn momo, Pawn human)
+        {
+            return HasEssenceToDraw(momo, human) && BondAllowsFeeding(momo, human);
+        }
+
+        /// <summary>
+        /// The checks every transfer shares, with no partner rules at all: a living Momo
+        /// with a Mana need, and a living, non-Momo humanlike with essence left to give.
+        /// Split out so a captive meal can skip <see cref="BondAllowsFeeding"/>.
+        /// </summary>
+        private static bool HasEssenceToDraw(Pawn momo, Pawn human)
         {
             if (momo == null || human == null || momo == human || momo.Dead || human.Dead)
             {
@@ -74,16 +99,14 @@ namespace ProjectMomo
                 return false;
             }
             Need_Essence essence = Essence(human);
-            if (essence == null || essence.CurLevel <= 0.001f)
-            {
-                return false;
-            }
-            return BondAllowsFeeding(momo, human);
+            return essence != null && essence.CurLevel > 0.001f;
         }
 
         /// <summary>
         /// The bonded-feeding rule on its own, so callers (float menu) can explain
-        /// why an otherwise-valid transfer is refused.
+        /// why an otherwise-valid transfer is refused. A captive of the colony is the one
+        /// exception: a captive meal bypasses this rule and the mark inside it — see
+        /// <see cref="IsCaptiveFeedTarget"/>, which does not call this.
         /// </summary>
         public static bool BondAllowsFeeding(Pawn momo, Pawn human)
         {
@@ -115,19 +138,37 @@ namespace ProjectMomo
         }
 
         /// <summary>
-        /// True if a captive <paramref name="momo"/> may feed from <paramref name="candidate"/>:
-        /// a fellow prisoner on her map that she can reach and that the ordinary rules
-        /// (<see cref="CanTransfer"/>: non-Momo humanlike with essence left, plus the bond rule)
-        /// accept. A prisoner cannot leave, cannot hunt and is shut out of the break system, so
-        /// fellow captives are her only meal — see JobGiver_SeekManaFeeding.
+        /// True if <paramref name="candidate"/> is a captive of the colony: one of the
+        /// player's own prisoners, or one of the player's own slaves.
         /// </summary>
-        public static bool IsFellowPrisonerFeedTarget(Pawn momo, Pawn candidate)
+        public static bool IsColonyCaptive(Pawn candidate)
+        {
+            return candidate != null && (candidate.IsPrisonerOfColony || candidate.IsSlaveOfColony);
+        }
+
+        /// <summary>
+        /// True if <paramref name="momo"/> may feed from <paramref name="candidate"/> as a
+        /// captive meal: one of the colony's own prisoners or slaves, on her map and
+        /// reachable, with essence left to give.
+        ///
+        /// A captive is a larder the colony owns, not a partner, so a captive meal is exempt
+        /// from BOTH rules that govern feeding from a free human: the bond rule (a Momo with a
+        /// living tsugai may still take it) and the incubation mark (another Momo's claim does
+        /// not reserve him). The second exemption is what keeps the stock usable: without it,
+        /// the first Momo to feed on a captive would own him for good, and a married Momo whose
+        /// mate is away or dry would go hungry beside a full cell.
+        ///
+        /// Two callers share this: a captive Momo feeding on a fellow prisoner or a slave (she
+        /// cannot leave, cannot hunt, and is shut out of the break system, so captives are her
+        /// only meal), and any hungry Momo falling back to a captive when no mate can feed her.
+        /// </summary>
+        public static bool IsCaptiveFeedTarget(Pawn momo, Pawn candidate)
         {
             if (momo == null || candidate == null || candidate == momo || momo.Map == null)
             {
                 return false;
             }
-            if (!candidate.IsPrisoner || candidate.Dead || !candidate.Spawned || candidate.Map != momo.Map)
+            if (!IsColonyCaptive(candidate) || candidate.Dead || !candidate.Spawned || candidate.Map != momo.Map)
             {
                 return false;
             }
@@ -135,11 +176,11 @@ namespace ProjectMomo
             {
                 return false;
             }
-            return CanTransfer(momo, candidate);
+            return HasEssenceToDraw(momo, candidate);
         }
 
-        /// <summary>The nearest fellow prisoner <paramref name="momo"/> may drain, or null.</summary>
-        public static Pawn FindFellowPrisonerToDrain(Pawn momo)
+        /// <summary>The nearest colony captive <paramref name="momo"/> may drain, or null.</summary>
+        public static Pawn FindCaptiveToDrain(Pawn momo)
         {
             if (momo?.Map == null)
             {
@@ -153,11 +194,11 @@ namespace ProjectMomo
             {
                 Pawn candidate = pawns[i];
                 // Cheap filter first: the reachability test inside is the expensive part.
-                if (candidate == null || !candidate.IsPrisoner)
+                if (!IsColonyCaptive(candidate))
                 {
                     continue;
                 }
-                if (!IsFellowPrisonerFeedTarget(momo, candidate))
+                if (!IsCaptiveFeedTarget(momo, candidate))
                 {
                     continue;
                 }

@@ -1,7 +1,7 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
-        Incubisation: a Momo's mana slowly rewriting a MAN into an incubus — the
+        Incubisation: a Momo's mana slowly rewriting a MAN into an incubus - the
         male counterpart to mamono corruption. Severity grows only through
         intimate essence transfers (EssenceTransfer.Transfer → Incubisation.ApplyDose),
         daily-capped, faster when the feeding Momo is bonded to him. Unlike the
@@ -9,12 +9,12 @@
         he stays human, and each severity stage simply grants more of the
         incubus' perks. The change is permanent by default (decay is opt-in via
         settings). The hediff remembers the most recent Momo whose mana infused
-        him — her mark protects him from other Momos' feeding.
+        him - her mark protects him from other Momos' feeding.
     -->
     <HediffDef>
         <defName>ProjectMomo_Incubisation</defName>
         <label>incubisation</label>
-        <description>Mamono mana is pooling in this man's body, slowly rewriting him into an incubus — an ideal mate for monsters. The change is gradual but permanent: his essence grows richer, his stamina inhuman, and in time the frailties of age will fall away as his lifespan stretches to match his mate's.</description>
+        <description>Mamono mana is pooling in this man's body, slowly rewriting him into an incubus - an ideal mate for monsters. The change is gradual but permanent: his essence grows richer, his stamina inhuman, and in time the frailties of age will fall away as his lifespan stretches to match his mate's.</description>
         <hediffClass>ProjectMomo.Hediff_Incubisation</hediffClass>
         <defaultLabelColor>(0.65, 0.55, 1.0)</defaultLabelColor>
         <isBad>false</isBad>
@@ -22,7 +22,7 @@
         <maxSeverity>1</maxSeverity>
         <stages>
             <!-- The change hides from the Health tab until it is well advanced
-                 (0.75) — the man (and the colony) only notice once the mana has
+                 (0.75) - the man (and the colony) only notice once the mana has
                  clearly taken hold. The mark's protection and the growing perks
                  still work while unseen. Same mechanism as vanilla's
                  GeneticDrugNeed (becomeVisible per stage). -->

@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
   <!--
-    Only official factions that are normally selectable at world creation are
-    targeted. Their configurable limits remain untouched, so the player can
-    still add them from the dropdown. Modded and hidden factions are unchanged.
-    The Empire and the Traders Guild are deliberately NOT targeted: they spawn
-    at world creation as usual so their monster-girl xenotypes
+    Holds the official factions that are normally selectable at world creation out of
+    a new world. Their configurable limits (maxConfigurableAtWorldCreation) are left
+    untouched, so the player can still add them by hand at world creation. Modded and
+    hidden factions are unchanged. The Empire and the Traders Guild are deliberately
+    NOT targeted: they spawn as usual so their monster-girl xenotypes
     (Faction_XenotypeOverrides.xml) show up in every game.
+
+    Two separate measures, because the counts alone are not enough:
+
+      * requiredCountAtGameStart and startingCountAtWorldCreation are set to 0.
+        startingCountAtWorldCreation is what the world creation page pre-adds and
+        what Worldbuilder's GenerateWorldFromPreset repeats into the faction list,
+        and requiredCountAtGameStart is what FactionGenerator.InitializeFactions
+        force-adds even against that list - so 0 on both takes these factions out of
+        the default set and out of the guaranteed set.
+
+      * The civil and rough outlander unions ALSO get layerBlacklist Surface and
+        Orbit. Zeroed counts do not cover the one remaining path: a preset that
+        stores its own faction list (a Worldbuilder preset with saveFactions, e.g.
+        Progression Worlds' Shamblerworld, which names both unions) hands those defs
+        straight to InitializeFactions' first loop, and that loop only asks
+        FactionGenerator.CanExistOnLayer - which fails for a def whose layerBlacklist
+        names the layer. So the faction is never created at all, on the planet or in
+        orbit. Surface and Orbit are the only layers in this modlist whose
+        worldGenSteps include Factions (every other PlanetLayerDef in it is patched,
+        not added). Orbit only exists with the Odyssey DLC, so that one entry is
+        written inside a PatchOperationFindMod - FindMod compares display names, and
+        "Odyssey" is one, unlike a package id (see the header note below on that
+        trap). Nothing else about the defs changes: a direct creation path such
+        as a mid-game add-faction window does not consult CanExistOnLayer, so they
+        stay addable by hand.
+
+    Deliberately no PatchOperationFindMod guard: it compares mod display names, not
+    package ids, so a guard written against a package id never matches and turns the
+    patch into a silent no-op (see DisableMedievalOverhaulFactions.xml). Every
+    operation is success=Always, so a def that is absent simply changes nothing.
   -->
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
@@ -41,6 +71,40 @@
         <value>
           <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
         </value>
+      </li>
+
+      <!-- The two unions get a layer blacklist as well - see the header. Written as a
+           create-if-absent, an append for a def that already carries a blacklist
+           (e.g. from another mod), and an Odyssey-only Orbit entry. -->
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough") and not(layerBlacklist)]</xpath>
+        <value>
+          <layerBlacklist>
+            <li>Surface</li>
+          </layerBlacklist>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough")]/layerBlacklist</xpath>
+        <value>
+          <li>Surface</li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationFindMod">
+        <mods>
+          <li>Odyssey</li>
+        </mods>
+        <match Class="PatchOperationAdd">
+          <success>Always</success>
+          <xpath>Defs/FactionDef[(defName="OutlanderCivil" or defName="OutlanderRough")]/layerBlacklist</xpath>
+          <value>
+            <li>Orbit</li>
+          </value>
+        </match>
       </li>
 
     </operations>

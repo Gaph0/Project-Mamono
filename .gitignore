@@ -20,3 +20,9 @@ Thumbs.db
 # dotnet build output
 bin/
 obj/
+
+# Stray scratch output (an IL dump once landed here and was deployed by sync.sh)
+/out
+
+# Tool reports (dev-only; sync.sh excludes them and the sibling repos ignore them)
+reports/

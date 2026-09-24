@@ -12,8 +12,8 @@ namespace ProjectMomo
     /// berserk and attacks a nearby unbonded pawn. Wild Momos never berserk —
     /// a starving wild Momo simply leaves the map to hunt elsewhere. A prisoner
     /// never breaks either: she cannot act on the hunger, and a berserk captive only
-    /// mauls the colony that holds her. Her way out is the calm fellow-prisoner
-    /// feeding in <see cref="JobGiver_SeekManaFeeding"/>.
+    /// mauls the colony that holds her. Her way out is the calm captive feeding in
+    /// <see cref="JobGiver_SeekManaFeeding"/> — a fellow prisoner or a slave.
     /// </summary>
     public static class LowManaBreak
     {

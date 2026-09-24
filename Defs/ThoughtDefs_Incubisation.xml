@@ -9,7 +9,7 @@
         <stages>
             <li>
                 <label>unshackled</label>
-                <description>The mana settled into my body and something gave way — like chains I never knew I wore falling off. I feel tireless, ravenous, alive.</description>
+                <description>The mana settled into my body and something gave way - like chains I never knew I wore falling off. I feel tireless, ravenous, alive.</description>
                 <baseMoodEffect>12</baseMoodEffect>
             </li>
         </stages>
@@ -24,7 +24,7 @@
         <stages>
             <li>
                 <label>marked me as hers</label>
-                <description>Her mana is in me now, and it sings when she's near. I belong to her — and I wouldn't have it any other way.</description>
+                <description>Her mana is in me now, and it sings when she's near. I belong to her - and I wouldn't have it any other way.</description>
                 <baseMoodEffect>6</baseMoodEffect>
                 <baseOpinionOffset>20</baseOpinionOffset>
             </li>

@@ -9,7 +9,7 @@
         <stages>
             <li>
                 <label>reborn as a monster</label>
-                <description>My old body and my old worries melted away in the mana. I have never felt so alive — or so hungry for a mate.</description>
+                <description>My old body and my old worries melted away in the mana. I have never felt so alive - or so hungry for a mate.</description>
                 <baseMoodEffect>12</baseMoodEffect>
             </li>
         </stages>
@@ -24,7 +24,7 @@
         <stages>
             <li>
                 <label>remade me</label>
-                <description>Her mana remade me. I am hers in a way I can't explain — and I don't want to.</description>
+                <description>Her mana remade me. I am hers in a way I can't explain - and I don't want to.</description>
                 <baseMoodEffect>6</baseMoodEffect>
                 <baseOpinionOffset>20</baseOpinionOffset>
             </li>

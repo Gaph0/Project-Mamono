@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<!--
+		The other half of arrogant vs kind (2026-09-23, user ruling). PMM_Arrogant's own
+		def names Kind under conflictingTraits; this names PMM_Arrogant under Kind's, so the
+		pair is declared on both sides the way vanilla's Greedy and Jealous name each other.
+
+		Kind already carries a conflictingTraits list (Abrasive, Psychopath), so the
+		conditional appends to it - a plain PatchOperationAdd would have added a second
+		conflictingTraits element. The nomatch branch covers the case of another mod
+		rebuilding the def without one: vanilla never uses PatchOperationConditional's
+		nomatch, but it exists in the assembly, and this keeps the patch applying instead of
+		failing once the def it targets is gone.
+
+		Note the pair is still only as strong as the pawn generator: two forced sources (our
+		dragons' pride gene, and a Biotech KindInstinct gene) can each insist on their own
+		trait with nothing to arbitrate between them.
+	-->
+	<Operation Class="PatchOperationConditional">
+		<xpath>Defs/TraitDef[defName="Kind"]/conflictingTraits</xpath>
+		<match Class="PatchOperationAdd">
+			<success>Always</success>
+			<xpath>Defs/TraitDef[defName="Kind"]/conflictingTraits</xpath>
+			<value>
+				<li>PMM_Arrogant</li>
+			</value>
+		</match>
+		<nomatch Class="PatchOperationAdd">
+			<success>Always</success>
+			<xpath>Defs/TraitDef[defName="Kind"]</xpath>
+			<value>
+				<conflictingTraits>
+					<li>PMM_Arrogant</li>
+				</conflictingTraits>
+			</value>
+		</nomatch>
+	</Operation>
+</Patch>

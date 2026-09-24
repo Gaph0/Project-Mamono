@@ -83,6 +83,11 @@ namespace ProjectMomo
         // Cap on how far lovin' drive may speed up (or slow down) autonomous
         // feeding (3 = up to 3x more often, or a third as often, at the extremes).
         public float AutonomousFeedLovinDriveMaxEffect = 3f;
+        // Let a Momo fall back on a captive of the colony — one of your prisoners or
+        // slaves — when no mate can feed her (unbonded, mate away, or mate dry). A
+        // captive is not a partner, so he is exempt from the bond rule and from the
+        // incubation mark: any Momo may take that meal.
+        public bool FeedOnCaptivesEnabled = true;
 
         // Base chance a Momo who bonds to a colonist joins the colony (equal levels).
         public float BondJoinBaseChance = 0.25f;
@@ -97,7 +102,9 @@ namespace ProjectMomo
         public float BondRomanceFactor = 1.0f;
         // Opinion floor between bonded pawns (vanilla cap is 100).
         public int BondOpinion = 100;
-        // Minimum biological age a male must be to be bonded to.
+        // Minimum biological age to count as an adult: a male must be at least
+        // this old to be bonded to, and a woman this old to be corrupted. Lives
+        // in the hidden Debug tab; corruption has no separate age setting.
         public float BondMinAge = 16f;
         // Willpower bonus per tsugai bond (stacks with each bond; 0.25 = +25% each).
         public float BondWillpowerBonus = 0.25f;
@@ -147,16 +154,6 @@ namespace ProjectMomo
         // partners for the duration of an Intimacy sex act.
         public bool IntimacyAnimation = true;
 
-        // Momos don't lose fertility to age (Biotech's fertility age curve is
-        // cancelled for Momo-carriers).
-        public bool MomoFertilityAgeless = true;
-
-        // Momos are always fertile: an adult carrier's Fertility stat never
-        // drops below 100%, and sterility from hediffs (sterilized, fertility-
-        // drained, removed ovaries) or sterilize-genes is ignored. An active
-        // pregnancy still suppresses re-conception; children are unaffected.
-        public bool MomoAlwaysFertile = true;
-
         // Hidden debug tab enabler.
         public bool DebugTabEnabled = false;
 
@@ -172,8 +169,6 @@ namespace ProjectMomo
         public float CorruptionDecayPerDay = 0.2f;
         // Mana one infusion costs the Momo (fraction of her mana bar).
         public float CorruptionManaCost = 0.2f;
-        // Minimum biological age a woman must be to be corrupted.
-        public float CorruptionMinAge = 16f;
 
         // Base chance a non-colonist corrupted by one of your colonists joins the colony (equal levels).
         public float CorruptionJoinBaseChance = 0.25f;
@@ -266,6 +261,7 @@ namespace ProjectMomo
             AutonomousFeedMaxPerDay = 2;
             AutonomousFeedLovinDriven = true;
             AutonomousFeedLovinDriveMaxEffect = 3f;
+            FeedOnCaptivesEnabled = true;
             BondJoinBaseChance = 0.25f;
             BondJoinChancePerLevel = 0.05f;
             BondJoinMaxChance = 0.9f;
@@ -291,15 +287,12 @@ namespace ProjectMomo
             YayoBondingAnimation = true;
             IntimacyFeeding = true;
             IntimacyAnimation = true;
-            MomoFertilityAgeless = true;
-            MomoAlwaysFertile = true;
             DebugTabEnabled = false;
             DisableIncestPrevention = false;
             CorruptionEnabled = true;
             CorruptionSeverityPerInfusion = 0.25f;
             CorruptionDecayPerDay = 0.2f;
             CorruptionManaCost = 0.2f;
-            CorruptionMinAge = 16f;
             CorruptionJoinBaseChance = 0.25f;
             CorruptionJoinChancePerLevel = 0.05f;
             CorruptionJoinMaxChance = 0.9f;
@@ -357,13 +350,14 @@ namespace ProjectMomo
             Scribe_Values.Look(ref AutonomousFeedMaxPerDay, "AutonomousFeedMaxPerDay", 2);
             Scribe_Values.Look(ref AutonomousFeedLovinDriven, "AutonomousFeedLovinDriven", true);
             Scribe_Values.Look(ref AutonomousFeedLovinDriveMaxEffect, "AutonomousFeedLovinDriveMaxEffect", 3f);
+            Scribe_Values.Look(ref FeedOnCaptivesEnabled, "FeedOnCaptivesEnabled", true);
             Scribe_Values.Look(ref BondJoinBaseChance, "BondJoinBaseChance", 0.25f);
             Scribe_Values.Look(ref BondJoinChancePerLevel, "BondJoinChancePerLevel", 0.05f);
             Scribe_Values.Look(ref BondJoinMaxChance, "BondJoinMaxChance", 0.9f);
             Scribe_Values.Look(ref BondCompatibility, "BondCompatibility", 1.0f);
             Scribe_Values.Look(ref BondRomanceFactor, "BondRomanceFactor", 1.0f);
             Scribe_Values.Look(ref BondOpinion, "BondOpinion", 100);
-            Scribe_Values.Look(ref BondMinAge, "BondMinAge", 7f);
+            Scribe_Values.Look(ref BondMinAge, "BondMinAge", 16f);
             Scribe_Values.Look(ref BondWillpowerBonus, "BondWillpowerBonus", 0.25f);
             Scribe_Values.Look(ref BondMaxStacks, "BondMaxStacks", 10);
             Scribe_Values.Look(ref BondLossWillpowerPenalty, "BondLossWillpowerPenalty", 0.5f);
@@ -382,15 +376,12 @@ namespace ProjectMomo
             Scribe_Values.Look(ref YayoBondingAnimation, "YayoBondingAnimation", true);
             Scribe_Values.Look(ref IntimacyFeeding, "IntimacyFeeding", true);
             Scribe_Values.Look(ref IntimacyAnimation, "IntimacyAnimation", true);
-            Scribe_Values.Look(ref MomoFertilityAgeless, "MomoFertilityAgeless", true);
-            Scribe_Values.Look(ref MomoAlwaysFertile, "MomoAlwaysFertile", true);
             Scribe_Values.Look(ref DebugTabEnabled, "DebugTabEnabled", false);
             Scribe_Values.Look(ref DisableIncestPrevention, "DisableIncestPrevention", false);
             Scribe_Values.Look(ref CorruptionEnabled, "CorruptionEnabled", true);
             Scribe_Values.Look(ref CorruptionSeverityPerInfusion, "CorruptionSeverityPerInfusion", 0.25f);
             Scribe_Values.Look(ref CorruptionDecayPerDay, "CorruptionDecayPerDay", 0.2f);
             Scribe_Values.Look(ref CorruptionManaCost, "CorruptionManaCost", 0.2f);
-            Scribe_Values.Look(ref CorruptionMinAge, "CorruptionMinAge", 16f);
             Scribe_Values.Look(ref CorruptionJoinBaseChance, "CorruptionJoinBaseChance", 0.25f);
             Scribe_Values.Look(ref CorruptionJoinChancePerLevel, "CorruptionJoinChancePerLevel", 0.05f);
             Scribe_Values.Look(ref CorruptionJoinMaxChance, "CorruptionJoinMaxChance", 0.9f);

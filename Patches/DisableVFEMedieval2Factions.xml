@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Keeps Vanilla Factions Expanded - Medieval 2's two default realms out of a new
+    world: the civil kingdom (VFEM2_KingdomCivil) and the rough clan
+    (VFEM2_ClanRough). Both declare startingCountAtWorldCreation 1, so the world
+    creation page pre-adds one instance of each and every new world starts with a
+    kingdom and a clan already founded and expanding.
+
+    Both fields are set to 0. The configurable limits (maxConfigurableAtWorldCreation
+    9999) are left alone, so both stay selectable by hand at world creation - they just
+    no longer start there by themselves. This is the same treatment
+    DisableVisibleFactions.xml gives the vanilla factions and
+    DisableMedievalOverhaulFactions.xml gives Medieval Overhaul's.
+
+    requiredCountAtGameStart is 0 on both defs, inherited from their abstract bases
+    (VFEM2_MedievalFactionBase / VFEM2_VikingBase), so nothing force-adds them once the
+    starting count is 0: FactionGenerator.InitializeFactions only adds a def whose
+    required count is above 0.
+
+    Deliberately NOT targeted, so a future edit here does not overreach:
+      * VFEM2_KingdomRough, VFEM2_KingdomSavage, VFEM2_CivilClan, VFEM2_ClanSavage -
+        already startingCountAtWorldCreation 0, so they never spawn on their own.
+      * VFEM2_MerchantGuild - requiredCountAtGameStart 1, and VFE Medieval 2 marks it
+        hidden: it is a faction with no settlements that exists to send the guild's
+        caravans and sites, so holding it back would take that content away.
+      * VFEM2_PlayerKingdom - a player start option, not a world faction.
+
+    The defs are only held back, never removed: PawnKindDefs_Kingdom.xml names
+    VFEM2_KingdomCivil as its defaultFactionType, and VFE Medieval 2's RoyaltyPatch
+    lists both defNames on the Empire's permanentEnemyToEveryoneExcept, so anything
+    that reads the defs still resolves. Nothing in VFEMedieval.dll touches faction
+    generation either (checked: no FactionGenerator, no ConfigurableFactions), so the
+    counts above are the whole mechanism.
+
+    Each field gets a replace plus an add-if-absent pair: the replace catches the
+    inline declaration (startingCountAtWorldCreation is inline on both defs), and the
+    add writes the 0 out explicitly on a def that only inherits the field, so a future
+    change to the shared base cannot bring the realm back silently.
+
+    Deliberately no PatchOperationFindMod guard: it compares mod display names rather
+    than package ids, so a guard written against a package id never matches and turns
+    the whole patch into a silent no-op (see DisableMedievalOverhaulFactions.xml). With
+    VFE Medieval 2 absent every xpath below simply matches nothing, and each
+    operation's success=Always keeps that quiet.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+
+      <li Class="PatchOperationReplace">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[defName="VFEM2_KingdomCivil" or defName="VFEM2_ClanRough"]/requiredCountAtGameStart</xpath>
+        <value>
+          <requiredCountAtGameStart>0</requiredCountAtGameStart>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="VFEM2_KingdomCivil" or defName="VFEM2_ClanRough") and not(requiredCountAtGameStart)]</xpath>
+        <value>
+          <requiredCountAtGameStart>0</requiredCountAtGameStart>
+        </value>
+      </li>
+
+      <li Class="PatchOperationReplace">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[defName="VFEM2_KingdomCivil" or defName="VFEM2_ClanRough"]/startingCountAtWorldCreation</xpath>
+        <value>
+          <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <success>Always</success>
+        <xpath>Defs/FactionDef[(defName="VFEM2_KingdomCivil" or defName="VFEM2_ClanRough") and not(startingCountAtWorldCreation)]</xpath>
+        <value>
+          <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+        </value>
+      </li>
+
+    </operations>
+  </Operation>
+</Patch>

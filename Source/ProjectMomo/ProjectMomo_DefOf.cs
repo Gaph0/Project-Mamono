@@ -35,6 +35,8 @@ namespace ProjectMomo
         public static ThoughtDef ProjectMomo_ManaCatharsis;
         public static NeedDef ProjectMomo_Essence;
         public static NeedDef ProjectMomo_Mana;
+        public static StatDef PMM_EssenceRecovery;
+        public static StatDef PMM_ManaDrain;
         public static JobDef ProjectMomo_GiveEssence;
         public static JobDef ProjectMomo_DrainEssence;
         public static JobDef ProjectMomo_DrainEssenceDry;
@@ -62,6 +64,10 @@ namespace ProjectMomo
         // ISEKAI: a husband with the Protagonist trait always wins over a bonded Momo.
         [MayRequire("JellyCreative.IsekaiLeveling")]
         public static TraitDef Isekai_Protagonist;
+
+        // Arrogant (2026-09-23): a plain personality trait, forced by the reptile dragons'
+        // pride gene. Its teeth are in ArrogantTraitPatch.cs, keyed on ISEKAI levels.
+        public static TraitDef PMM_Arrogant;
 
         // Monster Extremists ideology meme: ascended/baseliner social opinions.
         [MayRequire("Ludeon.RimWorld.Ideology")]
