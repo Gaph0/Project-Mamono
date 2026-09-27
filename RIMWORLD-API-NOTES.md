@@ -1,4 +1,4 @@
-# RimWorld API notes (Project Momo)
+# RimWorld API notes (Project Mamono)
 
 Facts we checked in the game's own code: `Assembly-CSharp`, RimWorld 1.6.9676.
 Each note says what the player sees, why it happens, and how to write it right.
@@ -17,7 +17,7 @@ Seen on 2026-09-24 in the Reptiles medusa ruins ambush letter.
 
 **Why it happens.** `"...".Translate()` looks up a translation key. A finished
 sentence from a def is not a key, so the lookup fails. RimWorld then returns the
-sentence as the "translation" — and when Dev Mode is on, it runs that result
+sentence as the "translation" - and when Dev Mode is on, it runs that result
 through `Translator.PseudoTranslated`.
 
 `PseudoTranslated` swaps every letter for an accented one: a→à, e→è, i→ì, o→ò,
@@ -29,7 +29,7 @@ accented text is the tell.
 argument, and it never looks for a key.
 
 - Our example: `IncidentWorker_MedusaRuinsAmbush` in
-  `Source/Reptiles/RuinsAmbush.cs` (`Project Momo Reptiles`).
+  `Source/Reptiles/RuinsAmbush.cs` (`Project Mamono Reptiles`).
 - Vanilla example: `IncidentWorker_Ambush_ManhunterPack.GetLetterText` fills
   `def.letterText` with `Formatted(...)`.
 - Pass the argument with no label. Then `{0}` fills by position, and a

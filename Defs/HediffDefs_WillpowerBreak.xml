@@ -1,10 +1,10 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <HediffDef>
-        <defName>ProjectMomo_WillpowerBreak</defName>
+        <defName>ProjectMamono_WillpowerBreak</defName>
         <label>broken will</label>
         <description>The victim's willpower has crumbled completely, leaving them collapsed and helpless - conscious, but unable to resist.</description>
-        <hediffClass>ProjectMomo.Hediff_WillpowerBreak</hediffClass>
+        <hediffClass>ProjectMamono.Hediff_WillpowerBreak</hediffClass>
         <defaultLabelColor>(1.0, 0.6, 0.8)</defaultLabelColor>
         <isBad>true</isBad>
         <initialSeverity>1</initialSeverity>

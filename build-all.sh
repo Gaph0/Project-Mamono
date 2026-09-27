@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds the whole Project Momo solution (core + all sub-mods that have a csproj).
+# Builds the whole Project Mamono solution (core + all sub-mods that have a csproj).
 set -e
 cd "$(dirname "$0")"
 
@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 # --strict (or CHANGELOG_STRICT=1) to make unlogged changes fatal as well.
 ./changelog-check.sh "$@"
 
-dotnet build ProjectMomo.sln
+dotnet build ProjectMamono.sln
 
 # The Zlepper SDK overwrites About/About.xml with a generated minimal version
 # on every core build. Restore the hand-written one so sync.sh deploys correctly.

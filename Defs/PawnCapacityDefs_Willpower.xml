@@ -1,11 +1,11 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <PawnCapacityDef>
-        <defName>ProjectMomo_Willpower</defName>
+        <defName>ProjectMamono_Willpower</defName>
         <label>willpower</label>
         <description>Strength of mind and resistance to teasing influence. Willpower falls as tease damage builds up; a pawn who reaches 0% willpower collapses.</description>
         <listOrder>15</listOrder>
-        <workerClass>ProjectMomo.PawnCapacityWorker_Willpower</workerClass>
+        <workerClass>ProjectMamono.PawnCapacityWorker_Willpower</workerClass>
         <showOnCaravanHealthTab>true</showOnCaravanHealthTab>
         <showOnMechanoids>false</showOnMechanoids>
         <showOnAnomalyEntities>false</showOnAnomalyEntities>

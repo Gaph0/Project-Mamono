@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	Auto Mod Config (Continued) preset for Sensible Factions (Boots.SensibleFactions),
-	shipped by Project Momo (Defs/Preset.xml). The file name must match the settings
+	shipped by Project Mamono (Defs/Preset.xml). The file name must match the settings
 	file RimWorld writes for Sensible Factions (identifier = its mod display name).
 
 	What this tunes: only the Reptiles mod defines real FactionDefs, so it is the
-	only Momo family Sensible Factions can weight. Both factions are mountain realms
+	only Mamono family Sensible Factions can weight. Both factions are mountain realms
 	(settlement placement is hard-locked to Mountainous tiles in C#), so their biome
 	weights are biased toward rugged, temperate-to-cold high country and away from
 	flat, frozen, or scorched lowlands - their existing spawn restrictions.
@@ -19,7 +19,7 @@
 	    ExtremeDesert / IceSheet / SeaIce / Odyssey_LavaField 0.
 
 	allowedFactionDefNames mirrors the live selection (the two reptile factions plus
-	Empire, which Project Momo deliberately leaves enabled at world creation).
+	Empire, which Project Mamono deliberately leaves enabled at world creation).
 -->
 <SettingsBlock>
 	<ModSettings Class="Boots_SensibleFactions.SensibleFactions_Settings">

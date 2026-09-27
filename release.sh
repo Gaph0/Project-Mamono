@@ -1,5 +1,5 @@
 #!/bin/bash
-# Creates a GitHub Release for Project Momo: builds the mod, zips the
+# Creates a GitHub Release for Project Mamono: builds the mod, zips the
 # distributable files, and uploads the zip as a release asset.
 #
 # Usage:   ./release.sh v1.0.0 ["release notes"]
@@ -10,7 +10,7 @@ set -e
 cd "$(dirname "$0")"
 
 REPO="Gaph0/Project-Momo"
-MOD="ProjectMomo"
+MOD="ProjectMamono"
 TAG="$1"
 NOTES="${2:-Release $TAG}"
 
@@ -30,7 +30,7 @@ DLL="Assemblies/$MOD.dll"
 if [ ! -f "$DLL" ] || [ -n "$(find Source -name '*.cs' -newer "$DLL" -print -quit)" ]; then
   ./build.sh
 else
-  echo "$DLL is up to date — skipping build"
+  echo "$DLL is up to date - skipping build"
 fi
 
 # 1b. Ensure the tag exists locally and on GitHub

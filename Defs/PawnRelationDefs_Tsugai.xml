@@ -1,12 +1,12 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
-        Tsugai: the lifelong bond between a Momo and the man she has claimed as her
+        Tsugai: the lifelong bond between a Mamono and the man she has claimed as her
         husband. Shown on the Social tab. Reflexive so it appears on both pawns.
     -->
     <PawnRelationDef>
-        <workerClass>ProjectMomo.PawnRelationWorker_Tsugai</workerClass>
-        <defName>ProjectMomo_Tsugai</defName>
+        <workerClass>ProjectMamono.PawnRelationWorker_Tsugai</workerClass>
+        <defName>ProjectMamono_Tsugai</defName>
         <label>bonded</label>
         <labelFemale>bonded</labelFemale>
         <importance>210</importance>

@@ -2,7 +2,7 @@
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Granted to a woman at the moment her corruption completes and she awakens as a monster. -->
     <ThoughtDef>
-        <defName>ProjectMomo_MomoAwakened</defName>
+        <defName>ProjectMamono_MamonoAwakened</defName>
         <thoughtClass>Thought_Memory</thoughtClass>
         <durationDays>10</durationDays>
         <stackLimit>1</stackLimit>
@@ -14,9 +14,9 @@
             </li>
         </stages>
     </ThoughtDef>
-    <!-- What the new monster remembers of the Momo whose mana remade her. -->
+    <!-- What the new monster remembers of the Mamono whose mana remade her. -->
     <ThoughtDef>
-        <defName>ProjectMomo_MomoTurned</defName>
+        <defName>ProjectMamono_MamonoTurned</defName>
         <thoughtClass>Thought_MemorySocial</thoughtClass>
         <durationDays>10</durationDays>
         <stackLimit>2</stackLimit>
@@ -33,7 +33,7 @@
 
     <!-- The initiator's sting when a transformation offer is turned down. -->
     <ThoughtDef>
-        <defName>ProjectMomo_TransformRejected</defName>
+        <defName>ProjectMamono_TransformRejected</defName>
         <thoughtClass>Thought_MemorySocial</thoughtClass>
         <durationDays>2</durationDays>
         <stackLimit>3</stackLimit>

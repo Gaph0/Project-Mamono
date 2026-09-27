@@ -1,0 +1,20 @@
+flowchart TB
+    A["Unbonded Male in colony"] -- event can trigger --> B("Event")
+    B --> C{"Talk to Refugee"} & n1["Ignore Refugee"]
+    C --> n2["Accept"] & n3["Reject"]
+    n3 --> n4["Run Isekai RPG Level check<br>"]
+    n4 -- mamono lvl &gt; pawn level --> n5["Attacks"]
+    n4 -- pawn lvl &gt; mamono lvl --> n6["Leave"]
+    n2 --> n7["Joins colony"]
+    n7 --> n8["Will bond to pawn who talked to refugee if unbonded"]
+    n1 --> n9["Leaves"]
+
+    n1@{ shape: diam}
+    n2@{ shape: rounded}
+    n3@{ shape: rounded}
+    n4@{ shape: rounded}
+    n5@{ shape: hex}
+    n6@{ shape: hex}
+    n7@{ shape: rounded}
+    n8@{ shape: hex}
+    n9@{ shape: hex}

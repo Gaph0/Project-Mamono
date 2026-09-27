@@ -1,0 +1,35 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
+    <!--
+        Mana: a need unique to Mamono-carriers. Gated by onlyIfCausedByGene + the
+        Mamono gene's <enablesNeeds>, so ONLY carriers ever have it.
+    -->
+    <NeedDef>
+        <defName>ProjectMamono_Mana</defName>
+        <needClass>ProjectMamono.Need_Mana</needClass>
+        <label>mana</label>
+        <description>A Mamono's reserve of demonic energy, gathered from the essence of men. It slowly drains away and must be replenished, or she grows desperate.</description>
+        <baseLevel>0.5</baseLevel>
+        <listPriority>750</listPriority>
+        <major>true</major>
+        <minIntelligence>Humanlike</minIntelligence>
+        <onlyIfCausedByGene>true</onlyIfCausedByGene>
+    </NeedDef>
+
+    <!--
+        Essence: a need on ordinary humans (the resource Mamonos feed on). Gated to
+        humanlikes via minIntelligence, and removed from Mamono-carriers by the Mamono
+        gene's <disablesNeeds>.
+    -->
+    <NeedDef>
+        <defName>ProjectMamono_Essence</defName>
+        <needClass>ProjectMamono.Need_Essence</needClass>
+        <label>essence</label>
+        <description>Life energy held by ordinary humans, densest in men. Mamonos draw on it to sustain their mana. When drained, a person is left spent.</description>
+        <baseLevel>0.8</baseLevel>
+        <listPriority>760</listPriority>
+        <major>true</major>
+        <minIntelligence>Humanlike</minIntelligence>
+        <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    </NeedDef>
+</Defs>

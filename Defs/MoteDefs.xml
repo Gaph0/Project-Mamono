@@ -1,16 +1,16 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
-        Progress bar shown over a Momo while she forms the tsugai bond.
+        Progress bar shown over a Mamono while she forms the tsugai bond.
         Same look as the vanilla work progress bar, but pink (see
-        ProjectMomo.MoteBondProgressBar, which draws it with pink materials).
+        ProjectMamono.MoteBondProgressBar, which draws it with pink materials).
     -->
-    <ThingDef ParentName="MoteBase" Name="ProjectMomo_MoteBondProgressBar">
-        <defName>ProjectMomo_MoteBondProgressBar</defName>
+    <ThingDef ParentName="MoteBase" Name="ProjectMamono_MoteBondProgressBar">
+        <defName>ProjectMamono_MoteBondProgressBar</defName>
         <graphicData>
             <texPath>Things/Mote/Transparent</texPath>
         </graphicData>
-        <thingClass>ProjectMomo.MoteBondProgressBar</thingClass>
+        <thingClass>ProjectMamono.MoteBondProgressBar</thingClass>
         <altitudeLayer>MetaOverlays</altitudeLayer>
         <mote>
             <solidTime>999</solidTime>

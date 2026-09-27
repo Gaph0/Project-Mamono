@@ -9,7 +9,7 @@
         worker class.
     -->
     <InteractionDef>
-        <defName>ProjectMomo_TransformProposalAccepted</defName>
+        <defName>ProjectMamono_TransformProposalAccepted</defName>
         <label>transformation offer</label>
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>
@@ -27,7 +27,7 @@
     </InteractionDef>
 
     <InteractionDef>
-        <defName>ProjectMomo_TransformProposalRejected</defName>
+        <defName>ProjectMamono_TransformProposalRejected</defName>
         <label>transformation offer</label>
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>

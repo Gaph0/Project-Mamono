@@ -1,19 +1,19 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <GeneDef>
-        <defName>ProjectMomo_Momo</defName>
-        <label>Momo</label>
+        <defName>ProjectMamono_Mamono</defName>
+        <label>Mamono</label>
         <description>This monster bears the mark of the current Mamono Lord.</description>
         <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
-        <geneClass>ProjectMomo.Gene_Momo</geneClass>
+        <geneClass>ProjectMamono.Gene_Mamono</geneClass>
         <displayCategory>Reproduction</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <biostatMet>3</biostatMet>
         <enablesNeeds>
-            <li>ProjectMomo_Mana</li>
+            <li>ProjectMamono_Mana</li>
         </enablesNeeds>
         <disablesNeeds>
-            <li>ProjectMomo_Essence</li>
+            <li>ProjectMamono_Essence</li>
         </disablesNeeds>
         <customEffectDescriptions>
             <li>This monster bears the mark of the current Mamono Lord.</li>
@@ -37,7 +37,7 @@
         the "no fusion found" fallback and the swap is silently refused. A
         species on its own race def must carry the winged body and
         BS_HumanoidWithWings_Race on its race def instead (see the winged insect
-        momos in Project Momo Insects). The Flagger below is still required
+        mamonos in Project Mamono Insects). The Flagger below is still required
         there: the winged tracker blanks its own art for "Wings"-tagged genes.
     -->
     <GeneDef>
@@ -111,7 +111,7 @@
 
     <!--
         Weak flight: the same wings and the same "fly" leap as PMM_Gene_Flight,
-        for momos with thin, weak wings (the vamp mosquito and soldier beetle).
+        for mamonos with thin, weak wings (the vamp mosquito and soldier beetle).
         Two differences from the strong gene:
           1. No CaravanRidingSpeedFactor offset - the stat stays at its 1.0 base,
              so CaravanMountSpeedPatch never counts her as a mount. She flies
@@ -319,39 +319,39 @@
     </GeneDef>
 
     <!--
-        Momo venom: melee strikes inject a slowing toxin into ANY living victim
-        (humans, animals and other momos alike). VenomDamagePatch applies the
-        build-up (ProjectMomo_VenomBuildup); the hediff only suppresses the
+        Mamono venom: melee strikes inject a slowing toxin into ANY living victim
+        (humans, animals and other mamonos alike). VenomDamagePatch applies the
+        build-up (ProjectMamono_VenomBuildup); the hediff only suppresses the
         Moving capacity, so it pins victims down without ever killing them, and
         a full dose wears off in 4 hours. Balance in the Genes settings tab.
     -->
     <GeneDef>
-        <defName>ProjectMomo_MomoVenom</defName>
-        <label>momo venom</label>
-        <description>This momo's body produces a slowing venom that her strikes pass into her victims. As it builds, limbs grow heavy until the victim can no longer stand - helpless, unharmed, and fully conscious. The venom is never lethal and wears off completely within hours.</description>
+        <defName>ProjectMamono_MamonoVenom</defName>
+        <label>mamono venom</label>
+        <description>This mamono's body produces a slowing venom that her strikes pass into her victims. As it builds, limbs grow heavy until the victim can no longer stand - helpless, unharmed, and fully conscious. The venom is never lethal and wears off completely within hours.</description>
         <iconPath>UI/Icons/Genes/Gene_PartialToxicityResistance</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <customEffectDescriptions>
-            <li>Melee strikes inject venom into any living victim - humans, animals and other momos alike.</li>
+            <li>Melee strikes inject venom into any living victim - humans, animals and other mamonos alike.</li>
             <li>The venom slows the victim as it builds (about 20 strikes to fully pin), then wears off completely within 4 hours.</li>
             <li>Non-lethal: a fully envenomed victim simply collapses, conscious and alive.</li>
         </customEffectDescriptions>
     </GeneDef>
 
     <!--
-        Fiery momo: total immunity to fire, heat and lava. Flammability x0
+        Fiery mamono: total immunity to fire, heat and lava. Flammability x0
         means vanilla fire-attach always refuses (she can never ignite);
         FireImmunityPatch nullifies every Heat armour-category damage; the
         +1000C comfy-temperature ceiling means no environment can overheat
-        her. Men bonded (tsugai) to her gain the lesser ProjectMomo_FieryBondWard
+        her. Men bonded (tsugai) to her gain the lesser ProjectMamono_FieryBondWard
         hediff via FireWardComponent: +40C comfy ceiling, x0.85 flammability,
         x0.85 flame damage.
     -->
     <GeneDef>
-        <defName>ProjectMomo_MomoFiery</defName>
-        <label>fiery momo</label>
-        <description>These momo are unaffected by heat, fire or lava, being infused with an excess of the Fire Element. Typically these momo can control the Fire Element in other ways too.</description>
+        <defName>ProjectMamono_MamonoFiery</defName>
+        <label>fiery mamono</label>
+        <description>These mamono are unaffected by heat, fire or lava, being infused with an excess of the Fire Element. Typically these mamono can control the Fire Element in other ways too.</description>
         <iconPath>UI/Icons/Genes/Gene_FireResistant</iconPath>
         <displayCategory>Temperature</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
@@ -369,16 +369,16 @@
     </GeneDef>
 
     <!--
-        Momo claws: +15% tease damage (MomoClaws.TeaseDealtMultiplier, folded
+        Mamono claws: +15% tease damage (MamonoClaws.TeaseDealtMultiplier, folded
         into both tease paths), paid for with -15% manipulation
         (ClawsManipulationPatch). The cutting/inflaming flavour is lore only:
         on humanlikes the tease system already replaces wounds entirely.
         Balance in the Genes settings tab.
     -->
     <GeneDef>
-        <defName>ProjectMomo_MomoClaws</defName>
-        <label>momo claws</label>
-        <description>These sharp claws, meant for vicious killing during the time of the last Mamono Lord, now serve a different, more lustful purpose. Momo claws cut the skin, causing a great heat to radiate into the victim's body, inflaming their lusts. These claws however do interfere with the dexterity of the momo.</description>
+        <defName>ProjectMamono_MamonoClaws</defName>
+        <label>mamono claws</label>
+        <description>These sharp claws, meant for vicious killing during the time of the last Mamono Lord, now serve a different, more lustful purpose. Mamono claws cut the skin, causing a great heat to radiate into the victim's body, inflaming their lusts. These claws however do interfere with the dexterity of the mamono.</description>
         <iconPath>UI/Icons/Genes/Gene_StrongMeleeDamage</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
@@ -389,8 +389,8 @@
     </GeneDef>
 
     <!--
-        Large frame: the caravan gene for the momos who are already large. It changes no
-        body part and no size stat - a large momo already carries more, because her
+        Large frame: the caravan gene for the mamonos who are already large. It changes no
+        body part and no size stat - a large mamono already carries more, because her
         BodySize feeds both the CarryingCapacity stat and the cargo a caravan can take
         (MassUtility.Capacity is BodySize * 35) - so this gene only adds pace.
 

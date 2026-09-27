@@ -1,6 +1,6 @@
 # Changelog Format
 
-The rule for every `CHANGELOG.md` in the Project Momo family. Five mods follow it.
+The rule for every `CHANGELOG.md` in the Project Mamono family. Five mods follow it.
 
 ## Shape
 
@@ -9,7 +9,7 @@ The rule for every `CHANGELOG.md` in the Project Momo family. Five mods follow i
 
 ## Player-facing
 
-- 2026-09-19: Fixed adult insect momos failing to roll an age.
+- 2026-09-19: Fixed adult insect mamonos failing to roll an age.
 - 2026-09-06: Added hive nourishment.
 
 ## Internal
@@ -27,9 +27,9 @@ The rules:
 
 ## Which list
 
-**Player-facing** — a change she can see in the game. A new gene, item or event. A balance change. A bug she hit. A new required mod.
+**Player-facing** - a change she can see in the game. A new gene, item or event. A balance change. A bug she hit. A new required mod.
 
-**Internal** — a change she cannot see. Build changes, refactors, file moves, new code with no visible effect yet.
+**Internal** - a change she cannot see. Build changes, refactors, file moves, new code with no visible effect yet.
 
 One test decides it: would a player notice this? If no, it goes in `Internal`.
 

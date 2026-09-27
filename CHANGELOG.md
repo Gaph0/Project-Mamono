@@ -2,6 +2,16 @@
 
 ## Player-facing
 
+- 2026-09-27: Changed every internal name to Mamono, so saves from earlier versions no longer load.
+- 2026-09-27: Changed the mod name to Project Mamono.
+- 2026-09-27: Changed the word momo to mamono in the mod's labels and descriptions.
+- 2026-09-27: Changed the modlist preset label to Project Mamono.
+
+- 2026-09-26: Changed romance to follow Project Momo's own rules. Big & Small's species compatibility no longer decides who can pair up.
+- 2026-09-26: Changed the fertility protection to stand aside for a Momo who is barren on purpose. A gene that says sterile, or a condition that stops pregnancy, now really does stop it.
+
+- 2026-09-25: Fixed a monster xenotype applied to a woman leaving her in her old body. She now becomes that species, with its size, wings and extra arms.
+
 - 2026-09-23: Changed corruption's minimum age to follow the hidden Debug setting for adult age, which now covers both bonding and corruption.
 
 - 2026-09-23: Changed the right-click drain order on a prisoner or slave: any Momo may do it, even a bonded one, and no lovin' follows.
@@ -89,6 +99,13 @@
 - 2026-08-29: Changed the momo gene to cure and prevent old-age ailments without a message.
 
 ## Internal
+
+- 2026-09-27: Changed the folder, project, solution and assembly names to Mamono.
+- 2026-09-27: Fixed the csc build's Big and Small reference to use the workshop copy.
+- 2026-09-27: Changed the defNames, class names, scribe labels and file names to Mamono.
+- 2026-09-27: Changed the modlist preset version to 1.2.
+- 2026-09-27: Changed the design docs to say mamono.
+- 2026-09-27: Changed the rename to leave defNames, class names and folder names alone.
 
 - 2026-09-24: Changed the em dashes in this mod's text to plain hyphens.
 

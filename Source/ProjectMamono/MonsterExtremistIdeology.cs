@@ -1,0 +1,99 @@
+using RimWorld;
+using Verse;
+
+namespace ProjectMamono
+{
+    /// <summary>
+    /// Shared ascended/baseliner classification for the Monster Extremists
+    /// ideology meme ("All men should be drained, and all women should be
+    /// transformed!"). Ascended = a transformed woman (any Mamono) or a claimed
+    /// man (living tsugai bond). Baseliner = an adult humanlike who is neither.
+    /// Believers form no opinion about children, and "drained" is flavour only:
+    /// no essence or incubisation check is involved. Every def that uses these
+    /// classes is gated behind MayRequire Ideology, so they are only ever
+    /// instantiated when the DLC is active.
+    /// </summary>
+    public static class MonsterExtremist
+    {
+        private static ProjectMamonoSettings Settings => ProjectMamonoModSettings.Settings;
+
+        /// <summary>True for pawns the meme approves of: any Mamono, or any pawn with a living tsugai bond.</summary>
+        public static bool IsAscended(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || pawn.RaceProps == null || !pawn.RaceProps.Humanlike)
+            {
+                return false;
+            }
+            return EssenceTransfer.IsMamono(pawn) || TsugaiFormation.HasBondedPartner(pawn);
+        }
+
+        /// <summary>True for adult humanlikes who are neither transformed nor bonded - the meme's "baseliners".</summary>
+        public static bool IsBaseliner(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || pawn.RaceProps == null || !pawn.RaceProps.Humanlike)
+            {
+                return false;
+            }
+            if (pawn.ageTracker == null || pawn.ageTracker.AgeBiologicalYearsFloat < Settings.BondMinAge)
+            {
+                return false;
+            }
+            return !IsAscended(pawn);
+        }
+    }
+
+    /// <summary>Positive social opinion of ascended pawns, granted by the ascension precept.</summary>
+    public class ThoughtWorker_MonsterExtremistAscendedSocial : ThoughtWorker_Precept_Social
+    {
+        protected override ThoughtState ShouldHaveThought(Pawn p, Pawn otherPawn)
+        {
+            return MonsterExtremist.IsAscended(otherPawn);
+        }
+    }
+
+    /// <summary>Negative social opinion of untransformed, unbonded adults, granted by the ascension precept.</summary>
+    public class ThoughtWorker_MonsterExtremistBaselinerSocial : ThoughtWorker_Precept_Social
+    {
+        protected override ThoughtState ShouldHaveThought(Pawn p, Pawn otherPawn)
+        {
+            return MonsterExtremist.IsBaseliner(otherPawn);
+        }
+    }
+
+    /// <summary>
+    /// The situational social thought behind every Monster Extremist opinion.
+    /// The opinion offset itself is read from mod settings (per thought def) so
+    /// players can tune how zealously believers judge each other. The ascension
+    /// precept varieties scale that baseline: relaxed grants half the ascended
+    /// opinion (and has no baseliner thought at all), strict doubles both.
+    /// </summary>
+    public class Thought_MonsterExtremistSocial : Thought_SituationalSocial
+    {
+        private static ProjectMamonoSettings Settings => ProjectMamonoModSettings.Settings;
+
+        public override float OpinionOffset()
+        {
+            if (ThoughtUtility.ThoughtNullified(pawn, def))
+            {
+                return 0f;
+            }
+            if (def == ProjectMamono_DefOf.ProjectMamono_MonsterExtremistAscended)
+            {
+                return Settings.MonsterExtremistAscendedOpinion;
+            }
+            if (def == ProjectMamono_DefOf.ProjectMamono_MonsterExtremistAscendedRelaxed)
+            {
+                return Settings.MonsterExtremistAscendedOpinion * 0.5f;
+            }
+            if (def == ProjectMamono_DefOf.ProjectMamono_MonsterExtremistAscendedStrict)
+            {
+                return Settings.MonsterExtremistAscendedOpinion * 2f;
+            }
+            if (def == ProjectMamono_DefOf.ProjectMamono_MonsterExtremistBaselinerStrict)
+            {
+                return Settings.MonsterExtremistBaselinerOpinion * 2f;
+            }
+            return Settings.MonsterExtremistBaselinerOpinion;
+        }
+    }
+}

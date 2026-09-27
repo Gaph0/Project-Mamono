@@ -1,8 +1,8 @@
 <Project>
-  <!-- Shared paths and compiler settings for all Project Momo mods.
-       The core project (ProjectMomo.csproj, Zlepper SDK) defines its own
+  <!-- Shared paths and compiler settings for all Project Mamono mods.
+       The core project (ProjectMamono.csproj, Zlepper SDK) defines its own
        values and does not import this file. Sub-mods import it explicitly:
-       <Import Project="..\Project Momo\PMM.Shared.props" /> -->
+       <Import Project="..\Project Mamono\PMM.Shared.props" /> -->
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -13,11 +13,13 @@
     <RimWorldPath>/home/gapho/.steam/debian-installation/steamapps/common/RimWorld</RimWorldPath>
     <RimWorldManagedPath>$(RimWorldPath)/RimWorldLinux_Data/Managed</RimWorldManagedPath>
     <SteamModContentFolder>/home/gapho/.steam/debian-installation/steamapps/workshop/content/294100</SteamModContentFolder>
-    <!-- Big and Small Framework, installed locally (not the workshop copy). -->
-    <BigSmallPath>$(RimWorldPath)/Mods/Big and Small - Framework</BigSmallPath>
+    <!-- Big and Small Framework, from its Steam workshop folder (id 2925432336). The copy in
+         the local Mods folder was pruned on 2026-09-27 when the game's mods were updated, and
+         the workshop copy cannot be deleted out from under the build the same way. -->
+    <BigSmallPath>$(SteamModContentFolder)/2925432336</BigSmallPath>
   </PropertyGroup>
 
-  <!-- References shared by every Project Momo mod. Private=false: never
+  <!-- References shared by every Project Mamono mod. Private=false: never
        copied to the output folder, so Assemblies/ stays clean. -->
   <ItemGroup>
     <Reference Include="Assembly-CSharp">

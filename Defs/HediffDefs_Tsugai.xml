@@ -2,10 +2,10 @@
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Visible marker of the tsugai bond on a pawn's Health tab. -->
     <HediffDef>
-        <defName>ProjectMomo_TsugaiBond</defName>
+        <defName>ProjectMamono_TsugaiBond</defName>
         <label>bonded</label>
         <description>Bound in body and spirit to their mate. Their bodies have adapted to one another. The bond steels their resolve, raising willpower.</description>
-        <hediffClass>ProjectMomo.Hediff_TsugaiBond</hediffClass>
+        <hediffClass>ProjectMamono.Hediff_TsugaiBond</hediffClass>
         <defaultLabelColor>(1.0, 0.6, 0.8)</defaultLabelColor>
         <isBad>false</isBad>
         <initialSeverity>1</initialSeverity>

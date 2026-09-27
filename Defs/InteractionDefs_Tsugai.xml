@@ -8,7 +8,7 @@
         proposal is accepted or rejected - so they need no worker class.
     -->
     <InteractionDef>
-        <defName>ProjectMomo_TsugaiProposalAccepted</defName>
+        <defName>ProjectMamono_TsugaiProposalAccepted</defName>
         <label>tsugai bond proposal</label>
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>
@@ -26,7 +26,7 @@
     </InteractionDef>
 
     <InteractionDef>
-        <defName>ProjectMomo_TsugaiProposalRejected</defName>
+        <defName>ProjectMamono_TsugaiProposalRejected</defName>
         <label>tsugai bond proposal</label>
         <symbol>Things/Mote/SpeechSymbols/MarriageProposal</symbol>
         <logRulesInitiator>

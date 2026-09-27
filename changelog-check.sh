@@ -1,5 +1,5 @@
 #!/bin/bash
-# Checks all five Project Momo changelogs against CHANGELOG-FORMAT.md.
+# Checks all five Project Mamono changelogs against CHANGELOG-FORMAT.md.
 #
 # Two checks per mod:
 #   STRUCTURE  always fatal. The file starts with "# Changelog", it has the two
@@ -30,11 +30,11 @@ done
 # PMM_ROOT if that layout ever changes.
 ROOT="${PMM_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 MODS=(
-	"Project Momo"
-	"Project Momo Reptiles"
-	"Project Momo Slime Faction"
-	"Project Momo Elementals"
-	"Project Momo Insects"
+	"Project Mamono"
+	"Project Mamono Reptiles"
+	"Project Mamono Slime Faction"
+	"Project Mamono Elementals"
+	"Project Mamono Insects"
 )
 CONTENT_PATHS=(Defs Source Patches About Languages Textures)
 LONG_LINE_WORDS=40
@@ -108,7 +108,7 @@ done
 
 echo
 if [ "$fail" -ne 0 ]; then
-	echo "changelog-check: FAILED (structure). Fix the lines above. See Project Momo/CHANGELOG-FORMAT.md."
+	echo "changelog-check: FAILED (structure). Fix the lines above. See Project Mamono/CHANGELOG-FORMAT.md."
 	exit 1
 fi
 if [ "$STRICT" -eq 1 ] && [ "$warn" -ne 0 ]; then

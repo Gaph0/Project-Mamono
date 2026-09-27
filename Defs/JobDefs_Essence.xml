@@ -1,45 +1,45 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
-    <!-- A human gives some of their essence to a Momo, restoring her mana. -->
+    <!-- A human gives some of their essence to a Mamono, restoring her mana. -->
     <JobDef>
-        <defName>ProjectMomo_GiveEssence</defName>
-        <driverClass>ProjectMomo.JobDriver_GiveEssence</driverClass>
+        <defName>ProjectMamono_GiveEssence</defName>
+        <driverClass>ProjectMamono.JobDriver_GiveEssence</driverClass>
         <reportString>giving essence to TargetA.</reportString>
         <casualInterruptible>true</casualInterruptible>
     </JobDef>
 
-    <!-- A Momo drains essence from a human, restoring her mana. -->
+    <!-- A Mamono drains essence from a human, restoring her mana. -->
     <JobDef>
-        <defName>ProjectMomo_DrainEssence</defName>
-        <driverClass>ProjectMomo.JobDriver_DrainEssence</driverClass>
+        <defName>ProjectMamono_DrainEssence</defName>
+        <driverClass>ProjectMamono.JobDriver_DrainEssence</driverClass>
         <reportString>draining essence from TargetA.</reportString>
         <casualInterruptible>true</casualInterruptible>
     </JobDef>
 
-    <!-- The same act as ProjectMomo_DrainEssence, used whenever the meal is a captive: a
+    <!-- The same act as ProjectMamono_DrainEssence, used whenever the meal is a captive: a
          fellow prisoner, or a prisoner or slave of the colony. Same driver; the def is what
          tells it to skip the intimate side effects (no lovin' memory, no lovin' job) and to
          gate the job on the captive rules instead of the bond rule and the incubation mark.
          Mana, the shared mood buff and the incubisation dose still happen. -->
     <JobDef>
-        <defName>ProjectMomo_DrainEssenceDry</defName>
-        <driverClass>ProjectMomo.JobDriver_DrainEssence</driverClass>
+        <defName>ProjectMamono_DrainEssenceDry</defName>
+        <driverClass>ProjectMamono.JobDriver_DrainEssence</driverClass>
         <reportString>draining essence from TargetA.</reportString>
         <casualInterruptible>true</casualInterruptible>
     </JobDef>
 
-    <!-- An essence-berserk Momo chases down an unbonded humanlike across the map. -->
+    <!-- An essence-berserk Mamono chases down an unbonded humanlike across the map. -->
     <JobDef>
-        <defName>ProjectMomo_EssenceBerserkAttack</defName>
-        <driverClass>ProjectMomo.JobDriver_EssenceBerserkAttack</driverClass>
+        <defName>ProjectMamono_EssenceBerserkAttack</defName>
+        <driverClass>ProjectMamono.JobDriver_EssenceBerserkAttack</driverClass>
         <reportString>hunting TargetA.</reportString>
         <casualInterruptible>false</casualInterruptible>
     </JobDef>
 
-    <!-- A colonist Momo leaves the player faction and exits the map when no bondable prey remains. -->
+    <!-- A colonist Mamono leaves the player faction and exits the map when no bondable prey remains. -->
     <JobDef>
-        <defName>ProjectMomo_LeaveColony</defName>
-        <driverClass>ProjectMomo.JobDriver_LeaveColony</driverClass>
+        <defName>ProjectMamono_LeaveColony</defName>
+        <driverClass>ProjectMamono.JobDriver_LeaveColony</driverClass>
         <reportString>leaving the colony.</reportString>
         <casualInterruptible>false</casualInterruptible>
     </JobDef>

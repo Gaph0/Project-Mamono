@@ -26,7 +26,7 @@ if [ "${PMM_SYNC_FORCE:-0}" != "1" ]; then
   fi
 fi
 
-DEST="$HOME/.steam/steam/steamapps/common/RimWorld/Mods/Project Momo"
+DEST="$HOME/.steam/steam/steamapps/common/RimWorld/Mods/Project Mamono"
 mkdir -p "$DEST"
 
 # --- What gets deployed -------------------------------------------------
@@ -71,4 +71,4 @@ rsync -a --delete --delete-excluded \
 
 echo "Synced to: $DEST"
 echo "Deployed top level: $(cd "$DEST" && ls -m)"
-echo "Enable 'Project Momo' (pmm.core) first in the mod list, before the faction mods."
+echo "Enable 'Project Mamono' (pmm.core) first in the mod list, before the faction mods."

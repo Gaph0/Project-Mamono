@@ -1,9 +1,9 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <HediffDef>
-        <defName>ProjectMomo_TeaseDamage</defName>
+        <defName>ProjectMamono_TeaseDamage</defName>
         <label>tease damage</label>
-        <description>Overwhelming flusteration inflicted by a Momo's teasing strikes. As it builds, the victim's willpower erodes.</description>
+        <description>Overwhelming flusteration inflicted by a Mamono's teasing strikes. As it builds, the victim's willpower erodes.</description>
         <hediffClass>HediffWithComps</hediffClass>
         <defaultLabelColor>(1.0, 0.6, 0.8)</defaultLabelColor>
         <isBad>true</isBad>

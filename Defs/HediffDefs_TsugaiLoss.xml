@@ -2,10 +2,10 @@
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Grief debuff applied to a surviving partner when a tsugai bond dies. -->
     <HediffDef>
-        <defName>ProjectMomo_TsugaiLoss</defName>
+        <defName>ProjectMamono_TsugaiLoss</defName>
         <label>bond grief</label>
         <description>Their bonded mate has died. The severed tsugai bond leaves a hollow ache that saps their will.</description>
-        <hediffClass>ProjectMomo.Hediff_TsugaiLoss</hediffClass>
+        <hediffClass>ProjectMamono.Hediff_TsugaiLoss</hediffClass>
         <defaultLabelColor>(1.0, 0.4, 0.6)</defaultLabelColor>
         <isBad>true</isBad>
         <initialSeverity>1</initialSeverity>

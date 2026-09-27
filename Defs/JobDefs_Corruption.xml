@@ -1,16 +1,16 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
-    <!-- Forced corruption: a Momo pours mana into a will-broken woman. -->
+    <!-- Forced corruption: a Mamono pours mana into a will-broken woman. -->
     <JobDef>
-        <defName>ProjectMomo_InfuseMomo</defName>
-        <driverClass>ProjectMomo.JobDriver_InfuseMomo</driverClass>
+        <defName>ProjectMamono_InfuseMamono</defName>
+        <driverClass>ProjectMamono.JobDriver_InfuseMamono</driverClass>
         <reportString>infusing TargetA with mana.</reportString>
         <casualInterruptible>false</casualInterruptible>
     </JobDef>
     <!-- Voluntary transformation: a short, consensual ceremony with a willing woman. -->
     <JobDef>
-        <defName>ProjectMomo_TransformProposal</defName>
-        <driverClass>ProjectMomo.JobDriver_TransformProposal</driverClass>
+        <defName>ProjectMamono_TransformProposal</defName>
+        <driverClass>ProjectMamono.JobDriver_TransformProposal</driverClass>
         <reportString>infusing TargetA with mana.</reportString>
         <casualInterruptible>true</casualInterruptible>
     </JobDef></Defs>

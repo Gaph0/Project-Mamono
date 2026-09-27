@@ -1,0 +1,85 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
+    <!--
+        Mamono venom build-up. Injected by the melee strikes of a venom-gene
+        carrier (VenomDamagePatch); works on ANY living victim - humanlike,
+        animal, or fellow mamono. Non-lethal by construction: the stages only
+        suppress the Moving capacity (never consciousness or vitals), so a
+        fully envenomed victim collapses helpless but alive and aware. The
+        final stage drops a healthy pawn to Moving 0.10, below the 0.15
+        capability floor: a true pin-down. Fades from 100% to nothing in
+        exactly 4 hours (severityPerDay -6 = one full bar per 1/6 day);
+        VenomSeverityPatch re-checks the downed state on every severity
+        change so the collapse and the recovery happen on the same tick.
+    -->
+    <HediffDef>
+        <defName>ProjectMamono_VenomBuildup</defName>
+        <label>mamono venom</label>
+        <description>A slowing venom injected by a mamono's strikes. As it builds, the victim's limbs grow heavy and sluggish until they can barely move at all. The venom is not lethal - it wears off completely within hours.</description>
+        <hediffClass>HediffWithComps</hediffClass>
+        <defaultLabelColor>(0.55, 0.85, 0.45)</defaultLabelColor>
+        <isBad>true</isBad>
+        <initialSeverity>0.05</initialSeverity>
+        <maxSeverity>1</maxSeverity>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-6</severityPerDay>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <label>tingling</label>
+            </li>
+            <li>
+                <minSeverity>0.15</minSeverity>
+                <label>sluggish</label>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <offset>-0.10</offset>
+                    </li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.35</minSeverity>
+                <label>slowed</label>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <offset>-0.25</offset>
+                    </li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.6</minSeverity>
+                <label>heavy-limbed</label>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <offset>-0.45</offset>
+                    </li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.85</minSeverity>
+                <label>pinned</label>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <offset>-0.90</offset>
+                        <!--
+                            Hard cap below the 0.15 capability floor. The flat
+                            -0.90 offset alone loses to victims whose Moving is
+                            propped up by boosted Breathing / BloodPumping
+                            (bionic lungs and heart, genes): 1.4 base - 0.9
+                            still clears the floor. setMax clamps the FINAL
+                            capacity, so no amount of respiratory or circulatory
+                            buffing keeps a fully envenomed victim standing.
+                        -->
+                        <setMax>0.10</setMax>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+</Defs>

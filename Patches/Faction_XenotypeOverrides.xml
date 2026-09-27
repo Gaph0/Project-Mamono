@@ -3,7 +3,7 @@
   <!--
     Faction xenotype overrides: replaces the vanilla xenotype mixes of the
     shattered Empire (Royalty), the orbital traders guild (Odyssey) and VFE
-    Medieval 2's travelling merchant's guild with Project Momo monster
+    Medieval 2's travelling merchant's guild with Project Mamono monster
     xenotypes.
 
       Shattered Empire -> dragons, genies, apsaras
@@ -29,9 +29,9 @@
 
   <!-- ===== Shattered Empire (Royalty): dragons + genies + apsaras ===== -->
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Project Momo Reptiles</li></mods>
+    <mods><li>Project Mamono Reptiles</li></mods>
     <match Class="PatchOperationFindMod">
-      <mods><li>Project Momo Elementals</li></mods>
+      <mods><li>Project Mamono Elementals</li></mods>
       <match Class="PatchOperationConditional">
         <xpath>Defs/FactionDef[defName="Empire"]/xenotypeSet/xenotypeChances</xpath>
         <match Class="PatchOperationReplace">
@@ -50,7 +50,7 @@
 
   <!-- ===== Traders Guild (Odyssey): apsaras + genies ===== -->
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Project Momo Elementals</li></mods>
+    <mods><li>Project Mamono Elementals</li></mods>
     <match Class="PatchOperationConditional">
       <xpath>Defs/FactionDef[defName="TradersGuild"]/xenotypeSet/xenotypeChances</xpath>
       <match Class="PatchOperationReplace">
@@ -77,9 +77,9 @@
        the implicit remainder those blocks rely on. Watched by the same guards as the
        blocks above: both submods must be loaded, and the def must exist. -->
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Project Momo Reptiles</li></mods>
+    <mods><li>Project Mamono Reptiles</li></mods>
     <match Class="PatchOperationFindMod">
-      <mods><li>Project Momo Elementals</li></mods>
+      <mods><li>Project Mamono Elementals</li></mods>
       <match Class="PatchOperationConditional">
         <xpath>Defs/FactionDef[defName="VFEM2_MerchantGuild"]/xenotypeSet/xenotypeChances</xpath>
         <match Class="PatchOperationReplace">

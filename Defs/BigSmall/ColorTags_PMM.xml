@@ -1,7 +1,7 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
 
-    <!-- Shared color tags for all Project Momo races.
+    <!-- Shared color tags for all Project Mamono races.
 
          How it works: a race, gene, or hediff carries a
          BigAndSmall.HasCustomizableGraphics modExtension with a tag. The
@@ -58,7 +58,7 @@
         </flags>
     </BigAndSmall.FlagStringData>
 
-    <!-- Chitin plates and shell for insect momos. -->
+    <!-- Chitin plates and shell for insect mamonos. -->
     <BigAndSmall.FlagStringData>
         <defName>PMM_ChitinGraphics</defName>
         <label>chitin</label>

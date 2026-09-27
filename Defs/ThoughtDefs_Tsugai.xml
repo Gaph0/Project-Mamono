@@ -1,7 +1,7 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <ThoughtDef>
-        <defName>ProjectMomo_TsugaiFormed</defName>
+        <defName>ProjectMamono_TsugaiFormed</defName>
         <thoughtClass>Thought_Memory</thoughtClass>
         <durationDays>5</durationDays>
         <stackLimit>3</stackLimit>
@@ -27,7 +27,7 @@
 
     <!-- Granted to both partners of a voluntary (consensual) bond, remembered against each other. -->
     <ThoughtDef>
-        <defName>ProjectMomo_TsugaiWilling</defName>
+        <defName>ProjectMamono_TsugaiWilling</defName>
         <thoughtClass>Thought_MemorySocial</thoughtClass>
         <durationDays>8</durationDays>
         <stackLimit>3</stackLimit>
@@ -43,7 +43,7 @@
 
     <!-- The initiator's sting when a bond proposal is turned down. -->
     <ThoughtDef>
-        <defName>ProjectMomo_TsugaiRejected</defName>
+        <defName>ProjectMamono_TsugaiRejected</defName>
         <thoughtClass>Thought_MemorySocial</thoughtClass>
         <durationDays>2</durationDays>
         <stackLimit>3</stackLimit>

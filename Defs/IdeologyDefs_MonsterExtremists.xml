@@ -9,9 +9,9 @@
         Contents:
         - Issue + three ascension precept varieties, all gated behind the
           Monster Extremists meme via requiredMemes (like vanilla's Blindsight
-          rites): relaxed (admires the ascended, no judgment of non-momos),
+          rites): relaxed (admires the ascended, no judgment of non-mamonos),
           exalted (the original: ascended + baseliner social opinion thoughts),
-          and strict (both thoughts at doubled values). Ascended = any Momo or
+          and strict (both thoughts at doubled values). Ascended = any Mamono or
           tsugai-bonded pawn; baseliner = any adult humanlike who is neither -
           children are ignored.
         - Two rites of awakening (ritual precept + pattern + behavior + outcome),
@@ -25,16 +25,16 @@
     <!-- ===================== Issue & ascension precepts ===================== -->
 
     <IssueDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Issue_MonsterAscension</defName>
+        <defName>ProjectMamono_Issue_MonsterAscension</defName>
         <label>monster ascension</label>
         <iconPath>UI/Icons/Issues/Monsterise</iconPath>
     </IssueDef>
 
     <!-- Relaxed: the ascended are admired, but baseliners are left in peace -
-         no negative opinions or moods toward non-momos at all. -->
+         no negative opinions or moods toward non-mamonos at all. -->
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterAscension_Relaxed</defName>
-        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <defName>ProjectMamono_MonsterAscension_Relaxed</defName>
+        <issue>ProjectMamono_Issue_MonsterAscension</issue>
         <label>relaxed</label>
         <description>Monsters and their bonded mates are admired as the vanguard of a beautiful transformation, but those content with baseline flesh are simply left to their own path - no scorn, no pressure.</description>
         <impact>Low</impact>
@@ -46,14 +46,14 @@
             <li>Transhumanist</li>
         </conflictingMemes>
         <associatedMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </associatedMemes>
         <requiredMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </requiredMemes>
         <comps>
             <li Class="PreceptComp_SituationalThought">
-                <thought>ProjectMomo_MonsterExtremistAscendedRelaxed</thought>
+                <thought>ProjectMamono_MonsterExtremistAscendedRelaxed</thought>
                 <thoughtStageDescriptions>
                     <li>Monster ascension (ascended)</li>
                 </thoughtStageDescriptions>
@@ -62,8 +62,8 @@
     </PreceptDef>
 
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterAscension_Exalted</defName>
-        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <defName>ProjectMamono_MonsterAscension_Exalted</defName>
+        <issue>ProjectMamono_Issue_MonsterAscension</issue>
         <label>exalted</label>
         <description>The baseline human form is a larval state, unworthy of respect. Women must be remade as monsters, and men must be claimed and drained by them. Only the ascended - monsters and their bonded mates - are truly worthy.</description>
         <impact>Medium</impact>
@@ -75,20 +75,20 @@
             <li>Transhumanist</li>
         </conflictingMemes>
         <associatedMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </associatedMemes>
         <requiredMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </requiredMemes>
         <comps>
             <li Class="PreceptComp_SituationalThought">
-                <thought>ProjectMomo_MonsterExtremistAscended</thought>
+                <thought>ProjectMamono_MonsterExtremistAscended</thought>
                 <thoughtStageDescriptions>
                     <li>Monster ascension (ascended)</li>
                 </thoughtStageDescriptions>
             </li>
             <li Class="PreceptComp_SituationalThought">
-                <thought>ProjectMomo_MonsterExtremistBaseliner</thought>
+                <thought>ProjectMamono_MonsterExtremistBaseliner</thought>
                 <thoughtStageDescriptions>
                     <li>Monster ascension (baseliner)</li>
                 </thoughtStageDescriptions>
@@ -99,8 +99,8 @@
     <!-- Strict: the same judgment as exalted, but zealous - ascended admired
          twice as strongly, baseliners scorned twice as harshly. -->
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterAscension_Strict</defName>
-        <issue>ProjectMomo_Issue_MonsterAscension</issue>
+        <defName>ProjectMamono_MonsterAscension_Strict</defName>
+        <issue>ProjectMamono_Issue_MonsterAscension</issue>
         <label>strict</label>
         <description>The baseline human form is a stain to be scrubbed from the world. Women who refuse remaking and men who refuse claiming are worse than ignorant - they are cowards hoarding rotten flesh. Only the ascended - monsters and their bonded mates - deserve honor.</description>
         <impact>High</impact>
@@ -112,20 +112,20 @@
             <li>Transhumanist</li>
         </conflictingMemes>
         <associatedMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </associatedMemes>
         <requiredMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </requiredMemes>
         <comps>
             <li Class="PreceptComp_SituationalThought">
-                <thought>ProjectMomo_MonsterExtremistAscendedStrict</thought>
+                <thought>ProjectMamono_MonsterExtremistAscendedStrict</thought>
                 <thoughtStageDescriptions>
                     <li>Monster ascension (ascended)</li>
                 </thoughtStageDescriptions>
             </li>
             <li Class="PreceptComp_SituationalThought">
-                <thought>ProjectMomo_MonsterExtremistBaselinerStrict</thought>
+                <thought>ProjectMamono_MonsterExtremistBaselinerStrict</thought>
                 <thoughtStageDescriptions>
                     <li>Monster ascension (baseliner)</li>
                 </thoughtStageDescriptions>
@@ -138,9 +138,9 @@
          opinions. The stage values below only mirror the resulting defaults
          for UI readouts that bypass OpinionOffset(). -->
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterExtremistAscendedRelaxed</defName>
-        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
-        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <defName>ProjectMamono_MonsterExtremistAscendedRelaxed</defName>
+        <thoughtClass>ProjectMamono.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMamono.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
         <stages>
             <li>
                 <label>ascended</label>
@@ -150,9 +150,9 @@
     </ThoughtDef>
 
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterExtremistAscended</defName>
-        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
-        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <defName>ProjectMamono_MonsterExtremistAscended</defName>
+        <thoughtClass>ProjectMamono.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMamono.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
         <stages>
             <li>
                 <label>ascended</label>
@@ -162,9 +162,9 @@
     </ThoughtDef>
 
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterExtremistAscendedStrict</defName>
-        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
-        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
+        <defName>ProjectMamono_MonsterExtremistAscendedStrict</defName>
+        <thoughtClass>ProjectMamono.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMamono.ThoughtWorker_MonsterExtremistAscendedSocial</workerClass>
         <stages>
             <li>
                 <label>ascended</label>
@@ -174,9 +174,9 @@
     </ThoughtDef>
 
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterExtremistBaseliner</defName>
-        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
-        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
+        <defName>ProjectMamono_MonsterExtremistBaseliner</defName>
+        <thoughtClass>ProjectMamono.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMamono.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
         <stages>
             <li>
                 <label>unascended baseliner</label>
@@ -186,9 +186,9 @@
     </ThoughtDef>
 
     <ThoughtDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_MonsterExtremistBaselinerStrict</defName>
-        <thoughtClass>ProjectMomo.Thought_MonsterExtremistSocial</thoughtClass>
-        <workerClass>ProjectMomo.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
+        <defName>ProjectMamono_MonsterExtremistBaselinerStrict</defName>
+        <thoughtClass>ProjectMamono.Thought_MonsterExtremistSocial</thoughtClass>
+        <workerClass>ProjectMamono.ThoughtWorker_MonsterExtremistBaselinerSocial</workerClass>
         <stages>
             <li>
                 <label>unascended baseliner</label>
@@ -200,7 +200,7 @@
     <!-- ===================== Ritual speech interactions ===================== -->
 
     <InteractionDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Speech_TransformRite</defName>
+        <defName>ProjectMamono_Speech_TransformRite</defName>
         <label>awakening rite speech</label>
         <workerClass>InteractionWorker</workerClass>
         <ignoreTimeSinceLastInteraction>True</ignoreTimeSinceLastInteraction>
@@ -222,7 +222,7 @@
     </InteractionDef>
 
     <InteractionDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Speech_TransformCaptiveRite</defName>
+        <defName>ProjectMamono_Speech_TransformCaptiveRite</defName>
         <label>forced awakening speech</label>
         <workerClass>InteractionWorker</workerClass>
         <ignoreTimeSinceLastInteraction>True</ignoreTimeSinceLastInteraction>
@@ -245,16 +245,16 @@
     <!-- ===================== Ritual precepts ===================== -->
 
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Ritual_TransformColonist</defName>
+        <defName>ProjectMamono_Ritual_TransformColonist</defName>
         <label>rite of awakening</label>
         <description>A sacred rite in which a monster pours her mana into a willing sister, remaking her as a monster like herself. If the rite goes poorly, the mana fails to take hold and nothing happens.</description>
         <issue>Ritual</issue>
         <impact>Medium</impact>
         <iconPath>UI/Icons/Rituals/FreeMonsterise</iconPath>
         <preceptClass>Precept_Ritual</preceptClass>
-        <ritualPatternBase>ProjectMomo_RitualPattern_TransformColonist</ritualPatternBase>
+        <ritualPatternBase>ProjectMamono_RitualPattern_TransformColonist</ritualPatternBase>
         <requiredMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </requiredMemes>
         <!-- No allowDuplicates: a single-purpose rite must be granted once, like
              vanilla's Execution/GladiatorDuel. Setting it true (as Scarification
@@ -265,16 +265,16 @@
     </PreceptDef>
 
     <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Ritual_TransformCaptive</defName>
+        <defName>ProjectMamono_Ritual_TransformCaptive</defName>
         <label>rite of forced awakening</label>
         <description>A solemn rite in which a monster pours her mana into a prisoner or slave, willing or not, remaking her as a monster. If the rite goes poorly, the mana fails to take hold and nothing happens.</description>
         <issue>Ritual</issue>
         <impact>Medium</impact>
         <iconPath>UI/Icons/Rituals/ForceMonsterise</iconPath>
         <preceptClass>Precept_Ritual</preceptClass>
-        <ritualPatternBase>ProjectMomo_RitualPattern_TransformCaptive</ritualPatternBase>
+        <ritualPatternBase>ProjectMamono_RitualPattern_TransformCaptive</ritualPatternBase>
         <requiredMemes>
-            <li>ProjectMomo_Meme_MonsterExtremists</li>
+            <li>ProjectMamono_Meme_MonsterExtremists</li>
         </requiredMemes>
         <countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
         <selectionWeight>1.0</selectionWeight>
@@ -284,28 +284,28 @@
     <!-- ===================== Ritual patterns ===================== -->
 
     <RitualPatternDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualPattern_TransformColonist</defName>
+        <defName>ProjectMamono_RitualPattern_TransformColonist</defName>
         <alwaysStartAnytime>true</alwaysStartAnytime>
         <ritualObligationTargetFilter>RitualSpotIdeogramOrAltar</ritualObligationTargetFilter>
         <ritualTargetFilter>AltarIdeogramOrRitualSpot</ritualTargetFilter>
-        <ritualBehavior>ProjectMomo_RitualBehavior_TransformColonist</ritualBehavior>
+        <ritualBehavior>ProjectMamono_RitualBehavior_TransformColonist</ritualBehavior>
         <ritualOnlyForIdeoMembers>true</ritualOnlyForIdeoMembers>
-        <ritualOutcomeEffect>ProjectMomo_RitualOutcome_TransformColonist</ritualOutcomeEffect>
+        <ritualOutcomeEffect>ProjectMamono_RitualOutcome_TransformColonist</ritualOutcomeEffect>
         <tags>
-            <li>ProjectMomo_TransformColonist</li>
+            <li>ProjectMamono_TransformColonist</li>
         </tags>
     </RitualPatternDef>
 
     <RitualPatternDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualPattern_TransformCaptive</defName>
+        <defName>ProjectMamono_RitualPattern_TransformCaptive</defName>
         <alwaysStartAnytime>true</alwaysStartAnytime>
         <ritualObligationTargetFilter>RitualSpotIdeogramOrAltar</ritualObligationTargetFilter>
         <ritualTargetFilter>AltarIdeogramOrRitualSpot</ritualTargetFilter>
-        <ritualBehavior>ProjectMomo_RitualBehavior_TransformCaptive</ritualBehavior>
+        <ritualBehavior>ProjectMamono_RitualBehavior_TransformCaptive</ritualBehavior>
         <ritualOnlyForIdeoMembers>false</ritualOnlyForIdeoMembers>
-        <ritualOutcomeEffect>ProjectMomo_RitualOutcome_TransformCaptive</ritualOutcomeEffect>
+        <ritualOutcomeEffect>ProjectMamono_RitualOutcome_TransformCaptive</ritualOutcomeEffect>
         <tags>
-            <li>ProjectMomo_TransformCaptive</li>
+            <li>ProjectMamono_TransformCaptive</li>
         </tags>
     </RitualPatternDef>
 
@@ -315,11 +315,11 @@
          spot (scarification-style), then pours her mana in a speech while the
          convert lies in the ritual circle. -->
     <RitualBehaviorDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualBehavior_TransformColonist</defName>
+        <defName>ProjectMamono_RitualBehavior_TransformColonist</defName>
         <durationTicks>2500</durationTicks>
         <useVisualEffectsFromRoleIdIdeo>corruptor</useVisualEffectsFromRoleIdIdeo>
         <roles Inherit="False">
-            <li Class="ProjectMomo.RitualRoleMomo">
+            <li Class="ProjectMamono.RitualRoleMamono">
                 <label>corruptor</label>
                 <id>corruptor</id>
                 <maxCount>1</maxCount>
@@ -329,7 +329,7 @@
                 <allowChild>false</allowChild>
                 <mustBeAbleToReachTarget>True</mustBeAbleToReachTarget>
             </li>
-            <li Class="ProjectMomo.RitualRoleTransformableColonist">
+            <li Class="ProjectMamono.RitualRoleTransformableColonist">
                 <label>convert</label>
                 <id>convert</id>
                 <maxCount>1</maxCount>
@@ -400,7 +400,7 @@
                     <li>
                         <roleId>corruptor</roleId>
                         <dutyDef>SpeakOnCellFacingSpectators</dutyDef>
-                        <speakerInteraction>ProjectMomo_Speech_TransformRite</speakerInteraction>
+                        <speakerInteraction>ProjectMamono_Speech_TransformRite</speakerInteraction>
                         <customPositions>
                             <li Class="RitualPosition_Lectern">
                                 <maxDistanceToFocus>5</maxDistanceToFocus>
@@ -420,11 +420,11 @@
     <!-- Captive rite: the corruptor escorts the prisoner/slave to the ritual
          focus (execution-style), then pours her mana over her. -->
     <RitualBehaviorDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualBehavior_TransformCaptive</defName>
+        <defName>ProjectMamono_RitualBehavior_TransformCaptive</defName>
         <durationTicks>2500</durationTicks>
         <useVisualEffectsFromRoleIdIdeo>corruptor</useVisualEffectsFromRoleIdIdeo>
         <roles Inherit="False">
-            <li Class="ProjectMomo.RitualRoleMomo">
+            <li Class="ProjectMamono.RitualRoleMamono">
                 <label>corruptor</label>
                 <id>corruptor</id>
                 <maxCount>1</maxCount>
@@ -434,7 +434,7 @@
                 <allowChild>false</allowChild>
                 <mustBeAbleToReachTarget>True</mustBeAbleToReachTarget>
             </li>
-            <li Class="ProjectMomo.RitualRoleTransformableCaptive">
+            <li Class="ProjectMamono.RitualRoleTransformableCaptive">
                 <label>captive</label>
                 <id>captive</id>
                 <maxCount>1</maxCount>
@@ -488,7 +488,7 @@
                     <li>
                         <roleId>corruptor</roleId>
                         <dutyDef>SpeakOnCellFacingSpectators</dutyDef>
-                        <speakerInteraction>ProjectMomo_Speech_TransformCaptiveRite</speakerInteraction>
+                        <speakerInteraction>ProjectMamono_Speech_TransformCaptiveRite</speakerInteraction>
                         <customPositions>
                             <li Class="RitualPosition_OnInteractionCell" />
                         </customPositions>
@@ -505,9 +505,9 @@
     <!-- ===================== Ritual outcomes ===================== -->
 
     <RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualOutcome_TransformColonist</defName>
+        <defName>ProjectMamono_RitualOutcome_TransformColonist</defName>
         <description>If the rite goes well, the convert will be transformed into the corruptor's own monster xenotype. If it goes badly, the mana fails to take hold and nothing happens.</description>
-        <workerClass>ProjectMomo.RitualOutcomeEffectWorker_TransformColonist</workerClass>
+        <workerClass>ProjectMamono.RitualOutcomeEffectWorker_TransformColonist</workerClass>
         <givesDevelopmentPoints>false</givesDevelopmentPoints>
         <comps>
             <li Class="RitualOutcomeComp_RoomStat">
@@ -561,9 +561,9 @@
     </RitualOutcomeEffectDef>
 
     <RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_RitualOutcome_TransformCaptive</defName>
+        <defName>ProjectMamono_RitualOutcome_TransformCaptive</defName>
         <description>If the rite goes well, the captive will be transformed into a random monster xenotype, and her will, resistance and certainty in her old beliefs will be shaken. If it goes badly, the mana fails to take hold and nothing happens.</description>
-        <workerClass>ProjectMomo.RitualOutcomeEffectWorker_TransformCaptive</workerClass>
+        <workerClass>ProjectMamono.RitualOutcomeEffectWorker_TransformCaptive</workerClass>
         <givesDevelopmentPoints>false</givesDevelopmentPoints>
         <comps>
             <li Class="RitualOutcomeComp_RoomStat">
@@ -619,7 +619,7 @@
     <!-- ===================== The meme ===================== -->
 
     <MemeDef MayRequire="Ludeon.RimWorld.Ideology">
-        <defName>ProjectMomo_Meme_MonsterExtremists</defName>
+        <defName>ProjectMamono_Meme_MonsterExtremists</defName>
         <label>monster extremists</label>
         <description>All men should be drained, and all women should be transformed! The baseline human form is a larval state, unworthy of respect: women must be remade as monsters, and men must be claimed and drained by them. Only the ascended - monsters and their bonded mates - are truly worthy.</description>
         <iconPath>UI/Memes/Monsterbucker</iconPath>
@@ -633,15 +633,15 @@
         </exclusionTags>
         <requireOne>
             <li>
-                <li>ProjectMomo_MonsterAscension_Relaxed</li>
-                <li>ProjectMomo_MonsterAscension_Exalted</li>
-                <li>ProjectMomo_MonsterAscension_Strict</li>
+                <li>ProjectMamono_MonsterAscension_Relaxed</li>
+                <li>ProjectMamono_MonsterAscension_Exalted</li>
+                <li>ProjectMamono_MonsterAscension_Strict</li>
             </li>
             <li>
-                <li>ProjectMomo_Ritual_TransformColonist</li>
+                <li>ProjectMamono_Ritual_TransformColonist</li>
             </li>
             <li>
-                <li>ProjectMomo_Ritual_TransformCaptive</li>
+                <li>ProjectMamono_Ritual_TransformCaptive</li>
             </li>
         </requireOne>
         <generalRules>

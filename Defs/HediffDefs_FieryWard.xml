@@ -1,17 +1,17 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!--
-        The lesser fire ward a fiery momo's bond spreads to her tsugai partner:
+        The lesser fire ward a fiery mamono's bond spreads to her tsugai partner:
         +40C max comfortable temperature, 15% less flammable. The 15% flame-
         damage reduction itself is applied by FireImmunityPatch (any damage in
         the Heat armour category). Severity stays fixed at 1, marker style like
         the tsugai bond hediff; FireWardComponent grants and strips it hourly
-        as a living tsugai bond to a fiery-momo carrier appears or ends.
+        as a living tsugai bond to a fiery-mamono carrier appears or ends.
     -->
     <HediffDef>
-        <defName>ProjectMomo_FieryBondWard</defName>
+        <defName>ProjectMamono_FieryBondWard</defName>
         <label>fire-warded</label>
-        <description>Warmth radiates through the bond with a fiery momo. The partner shrugs off heat that would fell others - though nothing like her own immunity.</description>
+        <description>Warmth radiates through the bond with a fiery mamono. The partner shrugs off heat that would fell others - though nothing like her own immunity.</description>
         <hediffClass>HediffWithComps</hediffClass>
         <defaultLabelColor>(1.0, 0.55, 0.25)</defaultLabelColor>
         <isBad>false</isBad>

@@ -2,7 +2,7 @@
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld DefsSchema.xsd" xmlns="rimworld">
     <!-- Positive moodlet replacing bond grief when a dead tsugai bond returns to life. -->
     <ThoughtDef>
-        <defName>ProjectMomo_TsugaiRestored</defName>
+        <defName>ProjectMamono_TsugaiRestored</defName>
         <thoughtClass>Thought_Memory</thoughtClass>
         <durationDays>15</durationDays>
         <stackLimit>1</stackLimit>

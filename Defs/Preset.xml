@@ -2,8 +2,8 @@
     <!-- Auto Mod Config (Continued) preset. Bump <version> whenever files in
          Settings/ change so existing installs auto-update (safe merge). -->
     <ModlistConfigurator.ModlistPresetDef>
-        <defName>ProjectMomo</defName>
-        <presetLabel>Project Momo</presetLabel>
-        <version>1.1</version>
+        <defName>ProjectMamono</defName>
+        <presetLabel>Project Mamono</presetLabel>
+        <version>1.2</version>
     </ModlistConfigurator.ModlistPresetDef>
 </Defs>

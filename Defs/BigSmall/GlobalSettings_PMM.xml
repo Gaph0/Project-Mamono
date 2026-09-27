@@ -1,7 +1,7 @@
 ﻿
 <Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
 
-    <!-- Big & Small feature switches for Project Momo.
+    <!-- Big & Small feature switches for Project Mamono.
 
          Nothing is enabled yet. Phase 5 (Insects) decides if SapientAnimals
          turns on, and nothing else needs these switches for now. Keeping the
