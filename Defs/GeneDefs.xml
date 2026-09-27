@@ -15,12 +15,6 @@
         <disablesNeeds>
             <li>ProjectMamono_Essence</li>
         </disablesNeeds>
-        <customEffectDescriptions>
-            <li>This monster bears the mark of the current Mamono Lord.</li>
-            <li>Melee strikes inflict tease damage on pawns without this gene, eroding their willpower.</li>
-            <li>Her fertility never fades with age.</li>
-            <li>The ailments of old age never touch her; ones she already has silently melt away.</li>
-        </customEffectDescriptions>
     </GeneDef>
 
     <!--
@@ -54,11 +48,6 @@
         <statOffsets>
             <CaravanRidingSpeedFactor>2.5</CaravanRidingSpeedFactor>
         </statOffsets>
-        <customEffectDescriptions>
-            <li>Grants the "Fly" ability: leap through the air to a distant location, soaring over obstacles.</li>
-            <li>In a caravan she flies instead of walking, and can airlift one passenger on her back: each flyer counts as two caravan members moving at 350% speed.</li>
-            <li>On foot she ignores rough ground: mud, sand, snow and slush never slow her down, and she crosses water at her own pace.</li>
-        </customEffectDescriptions>
         <descriptionHyperlinks>
             <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
         </descriptionHyperlinks>
@@ -138,11 +127,6 @@
         <abilities>
             <li>PMM_Ability_FlightLeap</li>
         </abilities>
-        <customEffectDescriptions>
-            <li>Grants the "Fly" ability: leap through the air to a distant location, soaring over obstacles.</li>
-            <li>Her wings lift only herself: she carries no passenger and adds no mount of her own.</li>
-            <li>On foot she ignores rough ground: mud, sand, snow and slush never slow her down, and she crosses water at her own pace.</li>
-        </customEffectDescriptions>
         <descriptionHyperlinks>
             <AbilityDef>PMM_Ability_FlightLeap</AbilityDef>
         </descriptionHyperlinks>
@@ -332,11 +316,6 @@
         <iconPath>UI/Icons/Genes/Gene_PartialToxicityResistance</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
-        <customEffectDescriptions>
-            <li>Melee strikes inject venom into any living victim - humans, animals and other mamonos alike.</li>
-            <li>The venom slows the victim as it builds (about 20 strikes to fully pin), then wears off completely within 4 hours.</li>
-            <li>Non-lethal: a fully envenomed victim simply collapses, conscious and alive.</li>
-        </customEffectDescriptions>
     </GeneDef>
 
     <!--
@@ -362,10 +341,6 @@
         <statOffsets>
             <ComfyTemperatureMax>1000</ComfyTemperatureMax>
         </statOffsets>
-        <customEffectDescriptions>
-            <li>Immune to fire, heat and lava: she cannot be set aflame, takes no flame damage, and no heat can discomfort her.</li>
-            <li>A man bonded to her shares a lesser ward: +40C max comfortable temperature, 15% less flammable, 15% less flame damage.</li>
-        </customEffectDescriptions>
     </GeneDef>
 
     <!--
@@ -382,10 +357,6 @@
         <iconPath>UI/Icons/Genes/Gene_StrongMeleeDamage</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
-        <customEffectDescriptions>
-            <li>Tease damage dealt +15%.</li>
-            <li>Manipulation -15%.</li>
-        </customEffectDescriptions>
     </GeneDef>
 
     <!--
@@ -430,12 +401,72 @@
             <CaravanBonusSpeedFactor>0.2</CaravanBonusSpeedFactor>
             <CaravanRidingSpeedFactor>0.3</CaravanRidingSpeedFactor>
         </statOffsets>
-        <customEffectDescriptions>
-            <li>In a caravan she is 20% faster than a normal pawn, so any caravan she joins travels 20% faster.</li>
-            <li>Caravans count her as a riding animal, so she speeds the whole caravan up.</li>
-        </customEffectDescriptions>
         <exclusionTags>
             <li>PMM_CaravanCarrier</li>
         </exclusionTags>
+    </GeneDef>
+
+    <!-- Blood rush (user, 2026-09-27; rewritten the same day - the first pass
+         gave her permanent gifts, and the spec was conditional). While her blood
+         runs high she is fast, and the point of the gene is that being full does
+         not last.
+
+         The condition is hemogen at 75% or more, and vanilla has no affecter for
+         it: its ConditionalStatAffecter ships for light, clothes, pain, vacuum,
+         pollution and temperature, and for no resource at all. A gene CAN hold a
+         conditional affecter, so the hook is vanilla's and only the condition is
+         ours - Source/ProjectMamono/ConditionalStatAffecter_HemogenHigh.cs, named
+         in `conditionalStatAffecters` below, with the stats themselves left in
+         the XML exactly as vanilla's own affecters do. 0.75 is the same threshold
+         Hemogenic paints on its own gizmo, so the bar the player watches and the
+         bar the gene reads are one bar.
+
+         The gifts, both under that condition: MoveSpeed as a FACTOR (+15%, so it
+         scales with whoever holds it) and MeleeCooldownFactor 0.85 - lower is
+         faster, it multiplies the time spent recovering after a melee attack.
+
+         The cost is +2 hemogen a day, flat, on vanilla's own machinery:
+         `resourceLossPerDay 0.02` with geneClass Gene_HemogenDrain, the field
+         Biotech's HemogenDrain (0.08) and VRE's drain genes (0.04, 0.12) use -
+         0.01 is 1 hemogen a day. It is deliberately NOT gated on the 75%: the loss
+         field is unconditional, and gating it means subclassing Gene_HemogenDrain
+         itself. In play the flat burn is mostly felt as what ENDS the buff, since
+         it is what drops her back under the threshold, but it does bite while she
+         is low too.
+
+         Cost: -2 metabolic efficiency. Her blood burns two a day faster and the
+         player feeds her more for it, which is the price of the two gifts.
+
+         NO customEffectDescriptions here, on purpose. Every line the player needs
+         is printed by the engine: the two stat lines above come out of the
+         affecter, and Gene_HemogenDrain prints the 2 a day. A prose line restating
+         them is the duplicate already cut from the insect gene's toxic line.
+
+         The 75% threshold is in the DESCRIPTION, not in the affecter's Label. With
+         a label the pawn's Stats tab read "Blood rush (while her hemogen is 75% or
+         more): x115%", and the user wanted the bare gene line there (2026-09-27).
+         The affecter's Label is empty for that reason. -->
+    <GeneDef>
+        <defName>PMM_Gene_BloodRush</defName>
+        <label>blood rush</label>
+        <labelShortAdj>rushing</labelShortAdj>
+        <description>This woman is quicker on her feet and quicker with her claws whenever her blood runs high - at 75% of her hemogen bar or more - and her blood burns away faster for it.</description>
+        <iconPath>UI/Icons/Genes/Gene_Bloodfeeder</iconPath>
+        <geneClass>Gene_HemogenDrain</geneClass>
+        <resourceLabel>hemogen</resourceLabel>
+        <prerequisite>Hemogenic</prerequisite>
+        <resourceLossPerDay>0.02</resourceLossPerDay>
+        <displayCategory>Hemogen</displayCategory>
+        <displayOrderInCategory>0</displayOrderInCategory>
+        <minAgeActive>3</minAgeActive>
+        <biostatMet>-2</biostatMet>
+        <conditionalStatAffecters>
+            <li Class="ProjectMamono.ConditionalStatAffecter_HemogenHigh">
+                <statFactors>
+                    <MoveSpeed>1.15</MoveSpeed>
+                    <MeleeCooldownFactor>0.85</MeleeCooldownFactor>
+                </statFactors>
+            </li>
+        </conditionalStatAffecters>
     </GeneDef>
 </Defs>

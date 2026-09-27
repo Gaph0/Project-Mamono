@@ -14,6 +14,12 @@ namespace ProjectMamono
     /// age-driven application on a Mamono-carrier. RemoveAgeAilments then strips
     /// the ailments a carrier already had when she gained the gene. No letters,
     /// no messages: the diseases simply cease to exist.
+    ///
+    /// A species can opt out with AllowsAgeAilmentsExtension on one of its genes -
+    /// the insect mamono do, ruled 2026-09-27 - and then ages like anyone else,
+    /// givers and all. Fertility is deliberately NOT part of that: the Mamono
+    /// fertility floor is MomoFertilityPatch's business and still holds for an
+    /// opted-out pawn unless a sterile gene releases her.
     /// </summary>
     [HarmonyPatch(typeof(HediffGiver), "TryApply")]
     public static class MamonoAgeAilmentPatch
@@ -28,6 +34,12 @@ namespace ProjectMamono
         public static bool Prefix(HediffGiver __instance, Pawn pawn, ref bool __result)
         {
             if (pawn == null || !IsAgeGiver(__instance))
+            {
+                return true;
+            }
+
+            // An opted-out species ages: the giver fires on her like on anyone else.
+            if (AllowsAgeAilments(pawn))
             {
                 return true;
             }
@@ -48,6 +60,31 @@ namespace ProjectMamono
         }
 
         /// <summary>
+        /// True when any active gene of the pawn carries AllowsAgeAilmentsExtension:
+        /// the species opted out of the age-ailment cure and suffers her years. Core
+        /// names no gene here - the marker is the whole contract, so any mod can opt
+        /// a species out without core knowing it exists.
+        /// </summary>
+        public static bool AllowsAgeAilments(Pawn pawn)
+        {
+            List<Gene> genes = pawn?.genes?.GenesListForReading;
+            if (genes == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                if (genes[i].Active && genes[i].def.HasModExtension<AllowsAgeAilmentsExtension>())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Silently removes every purely-age-related ailment from the pawn.
         /// Hediffs that non-age givers can also cause (a heart attack from an
         /// artery blockage drug side-effect, say) are left alone - the patch
@@ -56,6 +93,14 @@ namespace ProjectMamono
         public static void RemoveAgeAilments(Pawn pawn)
         {
             if (pawn?.health?.hediffSet == null)
+            {
+                return;
+            }
+
+            // The opt-out is enforced here rather than at the three call sites, because
+            // Gene_Mamono.Tick sweeps once an hour: without this guard an opted-out pawn
+            // would be cured within the hour whatever the prefix above decided.
+            if (AllowsAgeAilments(pawn))
             {
                 return;
             }

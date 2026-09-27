@@ -2,6 +2,9 @@
 
 ## Player-facing
 
+- 2026-09-27: Changed the protection from old age so a species can switch it off with a marker on its gene. It stays on for every momo that does not ask, and fertility is untouched either way.
+- 2026-09-27: Removed the prose lines from the gene effect lists, leaving the lines the game prints for itself. Each gene's description is unchanged.
+- 2026-09-27: Changed the blood rush gene to run on blood. While her hemogen is at 75% or more she moves 15% faster and recovers 15% faster between melee attacks, and she burns 2 more hemogen a day either way.
 - 2026-09-27: Changed every internal name to Mamono, so saves from earlier versions no longer load.
 - 2026-09-27: Changed the mod name to Project Mamono.
 - 2026-09-27: Changed the word momo to mamono in the mod's labels and descriptions.

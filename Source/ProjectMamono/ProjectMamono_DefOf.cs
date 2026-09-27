@@ -14,6 +14,7 @@ namespace ProjectMamono
         public static GeneDef ProjectMamono_MamonoVenom;
         public static GeneDef ProjectMamono_MamonoFiery;
         public static GeneDef ProjectMamono_MamonoClaws;
+        public static GeneDef PMM_Gene_BloodRush;
         public static HediffDef ProjectMamono_TeaseDamage;
         public static HediffDef ProjectMamono_VenomBuildup;
         public static HediffDef ProjectMamono_FieryBondWard;
