@@ -4,7 +4,10 @@
         <defName>ProjectMamono_Mamono</defName>
         <label>Mamono</label>
         <description>This monster bears the mark of the current Mamono Lord.</description>
-        <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
+        <!-- The Mamono Lord's mark: our own art (2026-09-30), dropped in the Project Mamono
+             Textures art folder and copied here as Textures/UI/Icons/Genes/PMM_Gene_Mamono.png.
+             One icon for every mamono in the family, wherever this gene is listed. -->
+        <iconPath>UI/Icons/Genes/PMM_Gene_Mamono</iconPath>
         <geneClass>ProjectMamono.Gene_Mamono</geneClass>
         <displayCategory>Reproduction</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>

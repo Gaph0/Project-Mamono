@@ -2,6 +2,12 @@
 
 ## Player-facing
 
+- 2026-10-01: Changed the preview image on the mod page.
+
+- 2026-09-30: Changed the Mamono gene's icon to the Mamono Lord's mark, instead of the borrowed fertility icon.
+
+- 2026-09-29: Changed a Mamono's willpower to start at 100%, the same as anyone else. Being a Mamono used to raise it to 150%.
+
 - 2026-09-27: Changed the protection from old age so a species can switch it off with a marker on its gene. It stays on for every momo that does not ask, and fertility is untouched either way.
 - 2026-09-27: Removed the prose lines from the gene effect lists, leaving the lines the game prints for itself. Each gene's description is unchanged.
 - 2026-09-27: Changed the blood rush gene to run on blood. While her hemogen is at 75% or more she moves 15% faster and recovers 15% faster between melee attacks, and she burns 2 more hemogen a day either way.

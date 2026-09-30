@@ -1,0 +1,33 @@
+{
+	"folders": [
+		{
+			"name": "Project Mamono",
+			"path": "."
+		},
+		{
+			"name": "Project Mamono Slime Faction",
+			"path": "../Project Mamono Slime Faction"
+		},
+		{
+			"name": "Project Mamono Elementals",
+			"path": "../Project Mamono Elementals"
+		},
+		{
+			"name": "Project Mamono Reptiles",
+			"path": "../Project Mamono Reptiles"
+		},
+		{
+			"name": "MGEWiki",
+			"path": "../MGEWiki"
+		},
+		{
+			"path": "../Project Mamono Insects"
+		},
+		{
+			"path": "../Project Mamono Textures"
+		}
+	],
+	"settings": {
+		"kimi3Copilot.modelConfigs": {}
+	}
+}

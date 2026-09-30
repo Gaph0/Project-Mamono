@@ -7,24 +7,17 @@ namespace ProjectMamono
 {
     /// <summary>
     /// Computes Willpower as a pawn capacity shown on the Health tab (alongside
-    /// Consciousness, Manipulation, etc.). Mamono-carriers get a 1.5x bonus; bonded
-    /// (tsugai) pawns get a configurable bonus; tease damage reduces it by its
+    /// Consciousness, Manipulation, etc.). A pawn starts at 100%, bonded
+    /// (tsugai) pawns get a configurable bonus, and tease damage reduces it by its
     /// severity (Willpower = base * (1 - teaseSeverity)).
     /// </summary>
     public class PawnCapacityWorker_Willpower : PawnCapacityWorker
     {
-        private const float MamonoBonus = 1.5f;
-
         public override float CalculateCapacityLevel(HediffSet diffSet, List<PawnCapacityUtility.CapacityImpactor> impactors = null)
         {
             Pawn pawn = diffSet?.pawn;
 
             float level = 1f;
-
-            if (pawn != null && pawn.genes != null && pawn.genes.HasActiveGene(ProjectMamono_DefOf.ProjectMamono_Mamono))
-            {
-                level *= MamonoBonus;
-            }
 
             // ISEKAI: VIT boosts willpower.
             level *= IsekaiCompat.WillpowerMultiplier(pawn);

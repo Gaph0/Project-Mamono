@@ -100,7 +100,6 @@ Mamono-carriers themselves, via `WillpowerVisibilityPatch`):
 
 ```
 Willpower = 1
-          × 1.5                                  (Mamono gene)
           × (1 + (VIT-5) × 0.02)                 (clamped 0.5–3)
           × (1 + 0.25 × living tsugai bonds)
           × 1.15                                 (incubisation ≥ 75%)
