@@ -2,6 +2,7 @@
 
 ## Player-facing
 
+- 2026-10-01: Changed the mamono venom, fiery mamono and mamono claws genes to use their own icons, instead of the vanilla ones they borrowed.
 - 2026-10-01: Changed the preview image on the mod page.
 
 - 2026-09-30: Changed the Mamono gene's icon to the Mamono Lord's mark, instead of the borrowed fertility icon.

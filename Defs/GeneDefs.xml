@@ -316,7 +316,7 @@
         <defName>ProjectMamono_MamonoVenom</defName>
         <label>mamono venom</label>
         <description>This mamono's body produces a slowing venom that her strikes pass into her victims. As it builds, limbs grow heavy until the victim can no longer stand - helpless, unharmed, and fully conscious. The venom is never lethal and wears off completely within hours.</description>
-        <iconPath>UI/Icons/Genes/Gene_PartialToxicityResistance</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoVenom</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
     </GeneDef>
@@ -334,7 +334,7 @@
         <defName>ProjectMamono_MamonoFiery</defName>
         <label>fiery mamono</label>
         <description>These mamono are unaffected by heat, fire or lava, being infused with an excess of the Fire Element. Typically these mamono can control the Fire Element in other ways too.</description>
-        <iconPath>UI/Icons/Genes/Gene_FireResistant</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoFiery</iconPath>
         <displayCategory>Temperature</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <biostatMet>-4</biostatMet>
@@ -357,7 +357,7 @@
         <defName>ProjectMamono_MamonoClaws</defName>
         <label>mamono claws</label>
         <description>These sharp claws, meant for vicious killing during the time of the last Mamono Lord, now serve a different, more lustful purpose. Mamono claws cut the skin, causing a great heat to radiate into the victim's body, inflaming their lusts. These claws however do interfere with the dexterity of the mamono.</description>
-        <iconPath>UI/Icons/Genes/Gene_StrongMeleeDamage</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoClaws</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
     </GeneDef>
