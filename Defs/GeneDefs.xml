@@ -44,7 +44,9 @@
         <iconPath>UI/Icons/Genes/Gene_LongJumpLegs</iconPath>
         <displayCategory>Movement</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
-        <biostatMet>-2</biostatMet>
+        <!-- Four points, raised from two at the user's call (2026-10-03): she flies,
+             carries a passenger and hurries the caravan along. -->
+        <biostatMet>-4</biostatMet>
         <abilities>
             <li>PMM_Ability_FlightLeap</li>
         </abilities>
@@ -116,7 +118,7 @@
              ones draw. One gene therefore serves every race - the vamp
              mosquito and the soldier beetle get this exact smaller set.
         The shared Wings exclusion tag keeps the two flight genes from stacking.
-        Cheaper than the strong gene (-1 metabolic efficiency instead of -2)
+        Cheaper than the strong gene (-1 metabolic efficiency instead of -4)
         because she gives up the mount.
     -->
     <GeneDef>
@@ -316,7 +318,7 @@
         <defName>ProjectMamono_MamonoVenom</defName>
         <label>mamono venom</label>
         <description>This mamono's body produces a slowing venom that her strikes pass into her victims. As it builds, limbs grow heavy until the victim can no longer stand - helpless, unharmed, and fully conscious. The venom is never lethal and wears off completely within hours.</description>
-        <iconPath>UI/Icons/Genes/Gene_PartialToxicityResistance</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoVenom</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
     </GeneDef>
@@ -334,7 +336,7 @@
         <defName>ProjectMamono_MamonoFiery</defName>
         <label>fiery mamono</label>
         <description>These mamono are unaffected by heat, fire or lava, being infused with an excess of the Fire Element. Typically these mamono can control the Fire Element in other ways too.</description>
-        <iconPath>UI/Icons/Genes/Gene_FireResistant</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoFiery</iconPath>
         <displayCategory>Temperature</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <biostatMet>-4</biostatMet>
@@ -357,7 +359,7 @@
         <defName>ProjectMamono_MamonoClaws</defName>
         <label>mamono claws</label>
         <description>These sharp claws, meant for vicious killing during the time of the last Mamono Lord, now serve a different, more lustful purpose. Mamono claws cut the skin, causing a great heat to radiate into the victim's body, inflaming their lusts. These claws however do interfere with the dexterity of the mamono.</description>
-        <iconPath>UI/Icons/Genes/Gene_StrongMeleeDamage</iconPath>
+        <iconPath>UI/Icons/Genes/PMM_Gene_MamonoClaws</iconPath>
         <displayCategory>Violence</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
     </GeneDef>
@@ -398,8 +400,9 @@
         <displayCategory>Miscellaneous</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <!-- Large is already a downside, and caravans are a small part of the game,
-             so this gene costs no metabolic efficiency. -->
-        <biostatMet>0</biostatMet>
+             so this gene is cheap rather than free: one point (user's call,
+             2026-10-03). -->
+        <biostatMet>-1</biostatMet>
         <statOffsets>
             <CaravanBonusSpeedFactor>0.2</CaravanBonusSpeedFactor>
             <CaravanRidingSpeedFactor>0.3</CaravanRidingSpeedFactor>
