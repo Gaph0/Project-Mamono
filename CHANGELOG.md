@@ -2,6 +2,8 @@
 
 ## Player-facing
 
+- 2026-10-03: Rebalanced the flight gene: it now costs 4 metabolic efficiency.
+- 2026-10-03: Rebalanced the large frame gene: it now costs 1 metabolic efficiency, instead of nothing.
 - 2026-10-01: Changed the mamono venom, fiery mamono and mamono claws genes to use their own icons, instead of the vanilla ones they borrowed.
 - 2026-10-01: Changed the preview image on the mod page.
 
