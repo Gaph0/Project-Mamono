@@ -331,9 +331,9 @@ namespace ProjectMamono
         /// <summary>
         /// Actually starts the vanilla lovin' job between the pair so they perform the
         /// real lovin' animation. Runs a tick after the transfer (via LovinQueueComponent)
-        /// so it's safe to change the Mamono's job. Requires a free, reservable bed both
-        /// can use; silently does nothing if none is available by then. The initiator's
-        /// job drives the bounce for both.
+        /// so it's safe to change the Mamono's job. Requires a free, reservable bed with
+        /// room for both; silently does nothing if none is available by then. The
+        /// initiator's job drives the bounce for both.
         /// </summary>
         public static void StartLovinNow(Pawn mamono, Pawn human)
         {
@@ -350,12 +350,7 @@ namespace ProjectMamono
                 return;
             }
 
-            // The vanilla lovin' job needs a bed both partners can reserve.
-            Building_Bed bed = RestUtility.FindBedFor(mamono, human, true, false, null);
-            if (bed == null)
-            {
-                bed = RestUtility.FindBedFor(human, mamono, true, false, null);
-            }
+            Building_Bed bed = FindSharedBed(mamono, human);
             if (bed == null)
             {
                 return;
@@ -363,6 +358,63 @@ namespace ProjectMamono
 
             Job lovin = JobMaker.MakeJob(JobDefOf.Lovin, human, bed);
             mamono.jobs.StartJob(lovin, JobCondition.InterruptForced);
+        }
+
+        /// <summary>
+        /// The bed the pair can both lie in, or null. Prefers what
+        /// <see cref="RestUtility.FindBedFor"/> would give either of them - her own bed, her
+        /// lover's, then the nearest free one - and then looks for a bed for two anywhere on
+        /// the map, so a pair whose own beds are singles still gets the animation when the
+        /// colony owns a double.
+        /// </summary>
+        private static Building_Bed FindSharedBed(Pawn mamono, Pawn human)
+        {
+            Building_Bed bed = UsableSharedBed(RestUtility.FindBedFor(mamono, human, true, false, null), mamono, human);
+            if (bed != null)
+            {
+                return bed;
+            }
+
+            bed = UsableSharedBed(RestUtility.FindBedFor(human, mamono, true, false, null), mamono, human);
+            if (bed != null)
+            {
+                return bed;
+            }
+
+            return (Building_Bed)GenClosest.ClosestThingReachable(
+                mamono.Position,
+                mamono.Map,
+                ThingRequest.ForGroup(ThingRequestGroup.Bed),
+                PathEndMode.OnCell,
+                TraverseParms.For(mamono),
+                9999f,
+                thing => UsableSharedBed(thing as Building_Bed, mamono, human) != null);
+        }
+
+        /// <summary>
+        /// The bed when it has room for two and one of the pair may use it, else null. The
+        /// vanilla lovin' job lays BOTH pawns in the bed, and each of them reserves it with
+        /// <c>Bed.SleepingSlotsCount</c> as the reservation's maxPawns - so a one-slot bed
+        /// allows exactly one of the two: the second reservation fails, RimWorld logs
+        /// "Could not reserve ... for maxPawns 1 and stackCount 0" and the job ends with
+        /// JobCondition.Errored. Vanilla keeps the same rule: its lovin' giver only fires between
+        /// two pawns already lying in one bed, and LovePartnerRelationUtility.GetPartnerInMyBed
+        /// returns null for a bed with fewer than two slots. Either pawn may be the bed's owner,
+        /// so both directions are asked - <see cref="RestUtility.FindBedFor"/> is called for each
+        /// of them in turn.
+        /// </summary>
+        private static Building_Bed UsableSharedBed(Building_Bed bed, Pawn mamono, Pawn human)
+        {
+            if (bed == null || bed.SleepingSlotsCount <= 1)
+            {
+                return null;
+            }
+            if (RestUtility.IsValidBedFor(bed, mamono, human, true, false, false, null)
+                || RestUtility.IsValidBedFor(bed, human, mamono, true, false, false, null))
+            {
+                return bed;
+            }
+            return null;
         }
     }
 }

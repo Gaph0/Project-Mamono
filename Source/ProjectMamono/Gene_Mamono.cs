@@ -7,6 +7,23 @@ namespace ProjectMamono
 {
     public class Gene_Mamono : Gene
     {
+        /// <summary>
+        /// The "Tease attacks" switch on the inspect pane of a player-controlled
+        /// mamono. On - the default, and what every mamono carries until her player
+        /// says otherwise - her melee strikes deal tease damage; off, they wound
+        /// normally.
+        /// It lives on the gene rather than in a game component so that it saves
+        /// with the pawn, follows her through save and load, and is dropped with the
+        /// gene if she ever loses it.
+        /// </summary>
+        public bool TeaseMeleeEnabled = true;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref TeaseMeleeEnabled, "teaseMeleeEnabled", true);
+        }
+
         public override void PostAdd()
         {
             base.PostAdd();

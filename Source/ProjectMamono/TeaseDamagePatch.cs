@@ -7,7 +7,10 @@ namespace ProjectMamono
 {
     /// <summary>
     /// After a Mamono-carrier lands a melee hit on a pawn without the Mamono gene,
-    /// applies (or builds up) tease damage on the victim's brain.
+    /// applies (or builds up) tease damage on the victim's brain. A mamono whose
+    /// player has switched her melee tease off (TeaseMeleeSwitch) is not a tease
+    /// attacker at all: the prefix leaves her vanilla damage alone and the postfix
+    /// applies nothing.
     /// Targets the concrete Verb_MeleeAttackDamage implementation - the base
     /// Verb_MeleeAttack.ApplyMeleeDamageToTarget is abstract (no body) and
     /// cannot be patched.
@@ -31,6 +34,13 @@ namespace ProjectMamono
             if (!IsMamonoCarrier(attacker) || victim == null)
             {
                 return true; // not a Mamono attack - vanilla damage
+            }
+
+            // The player switch: with her melee tease off she swings for real, so
+            // the hit keeps its physical damage.
+            if (TeaseMeleeSwitch.IsOff(attacker))
+            {
+                return true;
             }
 
             if (IsMamonoCarrier(victim))
@@ -124,6 +134,13 @@ namespace ProjectMamono
             }
 
             if (!IsMamonoCarrier(attacker) || IsMamonoCarrier(victim))
+            {
+                return false;
+            }
+
+            // Switched off on her inspect pane: her melee does not tease, which is
+            // also what stopped the prefix from cancelling the physical damage.
+            if (TeaseMeleeSwitch.IsOff(attacker))
             {
                 return false;
             }
