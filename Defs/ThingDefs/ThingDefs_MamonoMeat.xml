@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Defs>
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
 
 	<!--
 		One shared "mamono meat" for every mamono race that butchers into meat.
@@ -60,7 +60,7 @@
 		<stackLimit>75</stackLimit>
 		<tickerType>Rare</tickerType>
 		<comps>
-			<li Class="CompProperties_Forbiddable"/>
+			<li Class="CompProperties_Forbiddable" />
 			<li Class="CompProperties_Rottable">
 				<daysToRotStart>2</daysToRotStart>
 				<rotDestroys>true</rotDestroys>
