@@ -152,4 +152,4 @@ Thanks to:
 - Vanilla Psycasts Expanded - the psycast paths a monster xenotype can opt into.
 - yayo's Animation - the bonding and feeding animations.
 - Intimacy - Friends n' Lovers - the lovin' that feeds a mamono.
-- The Monster Girl Encyclopedia wiki - the creatures and the lore this mod is built from.
+- Kenkou Cross - the Monster Girl Encyclopedia, where these creatures come from.
