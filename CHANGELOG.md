@@ -2,6 +2,10 @@
 
 ## Player-facing
 
+- 2026-10-04: Added one shared mamono meat, so every species that butchers into meat drops the same item instead of its own.
+- 2026-10-04: Fixed an error in the log when a mamono fed on a man and both of them only had a single bed. The two no longer try to lie in a one-person bed, and if the colony owns a free double bed they now use it.
+- 2026-10-04: Added a switch to your own mamonos. Turn it off and her melee hits wound normally instead of dealing tease damage.
+- 2026-10-04: Fixed genepacks from traders, loot and quests being able to contain the Mamono gene.
 - 2026-10-03: Rebalanced the flight gene: it now costs 4 metabolic efficiency.
 - 2026-10-03: Rebalanced the large frame gene: it now costs 1 metabolic efficiency, instead of nothing.
 - 2026-10-01: Changed the mamono venom, fiery mamono and mamono claws genes to use their own icons, instead of the vanilla ones they borrowed.

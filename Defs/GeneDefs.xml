@@ -12,6 +12,23 @@
         <displayCategory>Reproduction</displayCategory>
         <displayOrderInCategory>1000</displayOrderInCategory>
         <biostatMet>3</biostatMet>
+        <!-- Out of the random gene sets (user's ruling 2026-10-04). `GeneDef.canGenerateInGeneSet`
+             has exactly one reader, `GeneSet.CanAddGeneDuringGeneration`
+             (RimWorld/GeneSet.cs:169), and that is the filter `GeneUtility.GenerateGeneSet`
+             applies to every candidate - the generator behind every def-spawned pack, since
+             both `Genepack.PostMake` and `Xenogerm.PostMake` go through it. A trader's stock,
+             raid loot, a quest reward and the gene bank's dev fill can therefore no longer
+             hand out the Mamono gene. Why it matters: an implanted Mamono gene completes the
+             woman into the base `ProjectMamono_Xenotype_Mamono`, because
+             XenogermCompletionPatch picks the smallest matching monster xenotype and the
+             one-gene base always wins - so a pack was a route to a xenotype whose own
+             description reads "you should not see this".
+             Deliberately NOT covered: the gene extractor. `Building_GeneExtractor.Finish`
+             chooses from `GenesListForReading` with its own weight function and reads no
+             opt-out field at all, so taking the gene off a mamono into a pack is unaffected by
+             this line. Vanilla's own endogenes (ears, nose, jaw, hands, melanin, hair colour)
+             opt out here the same way, as do this mod's submod genes. -->
+        <canGenerateInGeneSet>false</canGenerateInGeneSet>
         <enablesNeeds>
             <li>ProjectMamono_Mana</li>
         </enablesNeeds>

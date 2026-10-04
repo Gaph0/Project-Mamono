@@ -1,0 +1,108 @@
+﻿
+<Defs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="rimworld ../DefsSchema.xsd" xmlns="rimworld">
+
+	<!--
+		One shared "mamono meat" for every mamono race that butchers into meat.
+
+		The def lives in this mod, not in a species mod, so the whole family can share the
+		same item - the same reason PMM_MamonoCorpses lives here.
+
+		Why a species needs to name it: vanilla gives each race its own meat.
+		ThingDefGenerator_Meat.ImpliedMeatDefs runs from DefGenerator.
+		GenerateImpliedDefs_PreResolve and builds Meat_<defName> for every pawn def with
+		hasMeat and hasCorpse that names no <specificMeatDef> and no <useMeatFrom>, then
+		assigns race.meatDef to the result. It never checks whether meatDef was already
+		set, so even a race that inherits Human's Meat_Human gets a brand-new one.
+
+		Two fields redirect that, and they are not equivalent. A plain <meatDef> does
+		work: it is a cross-reference, and the pass that resolves cross-references
+		(ResolveAllWantedCrossReferences, called from the same PreResolve method) runs
+		after the generator, so the XML value is applied last and wins. What a plain
+		<meatDef> does not do is stop the race's own generated def from being created and
+		registered, unused. <specificMeatDef> is part of the generator's skip test, so it
+		does both: RaceProperties.ResolveReferencesSpecial points race.meatDef at it, and
+		no dead per-race def exists. That is why the eleven reptiles and the seven
+		elemental mamono use it: one meat in the butcher menu, in the food filter and in
+		the stockpile, with nothing generated behind them.
+
+		The field values below are what the generator would have written for a humanlike
+		race, so nothing a player can see changes except the item's identity:
+		- MarketValue 0.8 is Human's own meatMarketValue, which every mamono race
+		  inherited, so a butchered mamono is still worth exactly what it was.
+		- sourceDef keeps the meat classified as HUMANLIKE meat.
+		  FoodUtility.GetMeatSourceCategory reads that one field, and everything else
+		  follows from it: the cannibalism thoughts, the Ideology "ate human meat"
+		  precepts, and the moods of anyone who eats the meat or a meal made with it.
+		  Left empty, mamono meat would stop counting as humanlike to every eater.
+		- Untinted vanilla human meat art, which is what the per-race defs drew: no
+		  mamono race sets <meatColor>, so those defs were untinted too.
+		- No specialThoughtDirect and no specialThoughtAsIngredient: the generator copies
+		  those from the race's flesh type, and Human's Normal flesh type leaves both
+		  empty.
+		- MeatAmount is untouched - it stays on the race, so a basilisk still gives more
+		  meat than a gnome.
+
+		Deliberately NOT on this def: slime mamono (slime jelly), insect mamono (vanilla
+		Meat_Megaspider, which their flesh gene and the insect meals are built around) and
+		the dryad mamono (WoodLog). Each of those names its own def in <specificMeatDef>.
+	-->
+	<ThingDef>
+		<defName>PMM_MamonoMeat</defName>
+		<label>mamono meat</label>
+		<description>Raw, red meat cut from a mamono's body. It rots like any other raw meat and can be cooked into any meal.\n\nMamono are human enough that eating their meat counts as eating human meat.</description>
+		<thingClass>ThingWithComps</thingClass>
+		<category>Item</category>
+		<drawerType>MapMeshOnly</drawerType>
+		<resourceReadoutPriority>Middle</resourceReadoutPriority>
+		<useHitPoints>true</useHitPoints>
+		<selectable>true</selectable>
+		<altitudeLayer>Item</altitudeLayer>
+		<stackLimit>75</stackLimit>
+		<tickerType>Rare</tickerType>
+		<comps>
+			<li Class="CompProperties_Forbiddable" />
+			<li Class="CompProperties_Rottable">
+				<daysToRotStart>2</daysToRotStart>
+				<rotDestroys>true</rotDestroys>
+			</li>
+			<!-- The harbinger tree eats it, the way it eats the meat the game generates
+			     for every other race. -->
+			<li MayRequire="Ludeon.RimWorld.Anomaly">
+				<compClass>CompHarbingerTreeConsumable</compClass>
+			</li>
+		</comps>
+		<alwaysHaulable>true</alwaysHaulable>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<rotatable>false</rotatable>
+		<pathCost>14</pathCost>
+		<possessionCount>5</possessionCount>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<socialPropernessMatters>true</socialPropernessMatters>
+		<graphicData>
+			<texPath>Things/Item/Resource/MeatFoodRaw/Meat_Human</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<statBases>
+			<MarketValue>0.8</MarketValue>
+			<MaxHitPoints>60</MaxHitPoints>
+			<DeteriorationRate>6</DeteriorationRate>
+			<Mass>0.03</Mass>
+			<Flammability>0.5</Flammability>
+			<Nutrition>0.05</Nutrition>
+			<FoodPoisonChanceFixedHuman>0.02</FoodPoisonChanceFixedHuman>
+			<Beauty>-4</Beauty>
+		</statBases>
+		<ingestible>
+			<foodType>Meat</foodType>
+			<preferability>RawBad</preferability>
+			<tasteThought>AteRawFood</tasteThought>
+			<ingestEffect>EatMeat</ingestEffect>
+			<ingestSound>RawMeat_Eat</ingestSound>
+			<sourceDef>Human</sourceDef>
+		</ingestible>
+		<thingCategories>
+			<li>MeatRaw</li>
+		</thingCategories>
+	</ThingDef>
+
+</Defs>

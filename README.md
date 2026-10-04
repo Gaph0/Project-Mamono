@@ -2,9 +2,8 @@
 
 Core mod of the Mamono Project: monster-girl (MGE-flavored) mechanics for
 RimWorld 1.6. Mamonos - women carrying the Mamono Lord's "Inma" - feed on the
-essence of men, erode wills with teasing strikes, claim mates through the
-tsugai bond, remake women into monsters, and slowly turn the men they feed on
-into incubi.
+essence of men, eroding his will with teasing strikes, claiming their mates, 
+remake women into monsters, and slowly turn the men they feed on into incubi.
 
 ## Requirements
 
@@ -19,8 +18,8 @@ Hard dependencies (must load before this mod):
 Optional integrations (detected at runtime):
 
 - Ideology (DLC) - the Monster Extremists meme: opinions + transformation rites
-- yayo's Animation (continued) - bonding/feeding/sex animations
-- Intimacy – Friends n' Lovers - sex feeds the Mamono
+- yayo's Animation (continued) - "animations"
+- Intimacy – Friends n' Lovers - "lovin'" feeds the Mamono
 - Vanilla Psycasts Expanded - monster xenotypes can spawn as psycasters
 
 ## The Mamono gene and xenotype
@@ -28,40 +27,29 @@ Optional integrations (detected at runtime):
 The `Mamono` gene (`ProjectMamono_Mamono`, geneClass `ProjectMamono.Gene_Mamono`,
 Reproduction category):
 
-- Forces its holder female on add (gender, body type, feminine hairstyle).
+- Forces its holder to become female (gender, body type, feminine hairstyle).
 - Silently cures age-related ailments and blocks new ones (hourly backstop
   sweep catches mod/quest-forced ones).
 - Fertility never declines with age, and nothing makes her sterile - not
-  sterilization, drained or removed ovaries, or sterile genes (Biotech).
+  sterilization, drained or removed ovaries, except the sterile gene (Biotech).
 - Immune to all nudity thoughts; lovin' age factor forced to 1.
-- Enables the Mana need, disables the Essence need.
+- Enables the "Mana" need, disables the new "Essence" need.
 - Melee strikes inflict tease damage instead of physical damage (see below).
 
-`ProjectMamono_Xenotype_Mamono` is the base Mamono xenotype: just the Mamono gene,
-inheritable, never spawns naturally - the only ways to become one are birth,
-corruption, or a xenogerm. It is the fallback corruption outcome when the
-corrupting Mamono has no def-based monster xenotype of her own; submods (e.g.
-the Slime Faction) define their own monster xenotypes that include the Mamono
-gene, and those imprint instead.
-
 Children of a Mamono mother inherit her full endogenes (nothing from the
-father, never a hybrid) and are always female; her xenotype is re-applied
-after birth. Implanting a xenogerm that contains any monster-xenotype gene
-completes the full transformation into the smallest matching xenotype
-(implanted genes stay xenogenes, the rest become endogenes; gated on the
-Corruption master switch).
+father, no hybrids) and so are always female. 
 
 ## Needs: mana and essence
 
-### Mana (`ProjectMamono_Mana` - Mamono-carriers only)
+### Mana (`ProjectMamono_Mana` - Mamono only)
 
 - Drains a full bar over 2 days. Avg(WIS, INT) above 5 reduces the drain
   3%/point (clamped 0.3x–1.2x); wild Mamonos drain at 0.25x.
-- A Mamono in a caravan keeps her mana. The drain and the starvation decline
-  pause while she travels, and start again when she is back on a map.
+- A Mamono in a caravan keeps her mana. The drain 
+  pauses while she travels, and start again when she is back on a map.
 - Eating restores 0.15 mana per nutrition - a supplement, not a substitute.
-- Feeding moves essence into mana 1:1 (Give/Drain jobs, bonding, Intimacy
-  sex).
+- Feeding converts essence into mana 1:1 (Give/Drain essence, Intimacy jobs
+  lovin').
 - At empty, `ProjectMamono_ManaStarvation` escalates to full over 1.5 days:
   **drained** (Manipulation ≤ 90%) → **desperate** (Consciousness ≤ 70%,
   Moving ≤ 80%, Manipulation ≤ 60%) → **collapsed** (Consciousness ≤ 10%).
@@ -75,8 +63,6 @@ Corruption master switch).
 - Regenerates from empty to full in 1 day. Avg(STR, VIT) above 5 speeds this
   3%/point (clamped 0.5x–3x); incubisation multiplies it (up to 2x for a full
   incubus).
-- A transfer moves `min(requested, his essence, her headroom)`; an empty man
-  simply can't be drained.
 - Each transfer awards Isekai XP (50 per full essence point) and gives both
   parties the +5 "shared essence" moodlet (1 day); intimate transfers queue
   vanilla lovin' next tick when a usable bed exists. Feeding while in a
@@ -118,6 +104,11 @@ severity/hit = 0.05 × CHA mult (+5%/point over 5, clamped 0.5–3)
                     × (1 + beauty × 0.25)          (clamped 0.3–3)
 ```
 
+**Melee switch:** your own mamonos carry a "Tease attacks" switch on their
+inspect pane (`Gene_Mamono.TeaseMeleeEnabled`, read through `TeaseMeleeSwitch`).
+Turned off, her melee hits deal ordinary wounds again. It changes melee only -
+her tease abilities and tease psycasts keep teasing.
+
 Tease also multiplies the victim's Blood Pumping and Breathing by
 `1 + severity × 0.5` - arousal makes the body overperform even as the mind
 gives out.
@@ -141,11 +132,10 @@ Effects while the bond lives:
 - +25% willpower per living bond (both partners; up to 10 bonds).
 - Opinion floored at 100; compatibility and romance/lovin' chance factors
   floored at max between bonded partners.
-- Feeding exclusivity (above); Intimacy sex with a bonded partner feeds her.
+- Feeding exclusivity (above); Intimacy lovin' with a bonded partner feeds her.
 - "Found my mate" moodlet scaling with bond count (+10/+16/+22).
 - Harem-friendly: the "cheated on me" thought is suppressed between pawns
-  who share a living mate; body-purist / prosthetic-precept thoughts are
-  suppressed for bonded pawns and Mamonos.
+  who share a living mate.
 
 ### Forced bonding
 
@@ -153,13 +143,11 @@ Effects while the bond lives:
   16+, non-Mamono, unattached (an Isekai Protagonist can be harem-claimed while
   attached); one living husband per Mamono.
 - A ~30s bonding ritual (pink progress bar, yayo animation) seals the bond
-  and drains all his remaining essence into her mana - with a full
-  incubisation dose.
-- A wild Mamono bonded by a colonist is tamed outright. Otherwise a faction
+  and drains all his remaining essence into her mana.
+- A wild Mamono bonded by a colonist is tamed and becomes a colonist. Otherwise a faction
   Mamono rolls to join the colony: 25% + 5% per level gap (husband − Mamono),
   capped at 90%; a Protagonist husband always succeeds. On failure she
-  kidnaps the downed husband off-map as her faction's captive (ransom /
-  rescue, `ThreatBig` letter).
+  kidnaps the downed husband off-map as her faction's captive.
 
 ### Voluntary bonding
 
@@ -343,11 +331,11 @@ per-xenotype by submods.
 ### yayo's Animation (optional)
 
 Romancin'-style bounce animation on both partners during tsugai bonding,
-essence give/drain jobs, and Intimacy sex acts.
+essence give/drain jobs, and Intimacy lovin'.
 
 ### Intimacy – Friends n' Lovers (optional)
 
-After each completed Intimacy sex act involving exactly one Mamono, she
+After each completed Intimacy lovin' involving exactly one Mamono, she
 drains exactly enough essence from her partner to fill her mana bar.
 
 ## The flight gene and wings

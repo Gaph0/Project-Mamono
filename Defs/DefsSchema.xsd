@@ -12777,6 +12777,7 @@
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
@@ -16484,6 +16485,7 @@
       <xs:enumeration value="PlantPot_Bonsai" />
       <xs:enumeration value="Plasteel" />
       <xs:enumeration value="Plates_Spikecore" />
+      <xs:enumeration value="PMM_MamonoMeat" />
       <xs:enumeration value="PodLauncher" />
       <xs:enumeration value="PokerTable" />
       <xs:enumeration value="PollutionPump" />
@@ -50835,6 +50837,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
@@ -53700,6 +53703,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       </xs:element>
       <xs:element minOccurs="0" name="Props" type="BigAndSmall.ProductionGeneSettings" />
       <xs:element minOccurs="0" name="targetValue" type="xs:float" />
+      <xs:element minOccurs="0" name="TeaseMeleeEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="tickDown" type="xs:int" />
       <xs:element minOccurs="0" name="tickDown" type="xs:int" />
       <xs:element minOccurs="0" name="ticksToHeal" type="xs:int" />
@@ -75709,6 +75713,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
@@ -85847,6 +85852,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
@@ -86765,7 +86771,9 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
   <xs:complexType name="ProjectMamono.Gene_Mamono">
     <xs:complexContent>
       <xs:extension base="Gene">
-        <xs:all />
+        <xs:all>
+          <xs:element minOccurs="0" name="TeaseMeleeEnabled" type="xs:boolean" />
+        </xs:all>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -107502,6 +107510,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
@@ -121366,6 +121375,7 @@ This value must match what the game expects from the SubSoundDef with this name.
       <xs:enumeration value="PlantPot" />
       <xs:enumeration value="PlantPot_Bonsai" />
       <xs:enumeration value="Plasteel" />
+      <xs:enumeration value="PMM_MamonoMeat" />
       <xs:enumeration value="PodLauncher" />
       <xs:enumeration value="PokerTable" />
       <xs:enumeration value="PollutionPump" />
@@ -123409,6 +123419,7 @@ This value must match what the game expects from the SubSoundDef with this name.
       <xs:element minOccurs="0" name="PlantPot" type="xs:float" />
       <xs:element minOccurs="0" name="PlantPot_Bonsai" type="xs:float" />
       <xs:element minOccurs="0" name="Plasteel" type="xs:float" />
+      <xs:element minOccurs="0" name="PMM_MamonoMeat" type="xs:float" />
       <xs:element minOccurs="0" name="PodLauncher" type="xs:float" />
       <xs:element minOccurs="0" name="PokerTable" type="xs:float" />
       <xs:element minOccurs="0" name="PollutionPump" type="xs:float" />
