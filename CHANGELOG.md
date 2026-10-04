@@ -112,6 +112,7 @@
 
 ## Internal
 
+- 2026-10-04: Changed the weak flight gene to draw no wings of its own.
 - 2026-09-27: Changed the folder, project, solution and assembly names to Mamono.
 - 2026-09-27: Fixed the csc build's Big and Small reference to use the workshop copy.
 - 2026-09-27: Changed the defNames, class names, scribe labels and file names to Mamono.
