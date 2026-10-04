@@ -360,11 +360,11 @@ mosquito and the soldier beetle. They get the same `PMM_Ability_FlightLeap`, but
 them: a weak flyer carries no rider and adds no mount of her own. She still ignores rough
 ground on a map, though, just like a strong flyer.
 
-The weak gene also draws its own wings, and smaller ones: six nodes at `drawSize 0.8`
-where B&S uses 1.23, scaled by editing `renderNodeProperties` on the gene. It has no
-Flagger on purpose, so the winged body or race tracker blanks its full-size wings and
-these are the only ones drawn. That is what makes one gene fit both the tiny vamp
-mosquito and the heavy soldier beetle.
+The weak gene draws no wings of its own any more. Until 2026-10-04 it carried the same
+six B&S nodes as the winged tracker at `drawSize 0.8` - "smaller wings" - with the
+tracker blanking itself so they were the only pair drawn. The winged insect castes now
+take VRE Insector's cosmetic insect wings on their own xenotype, so a weak flyer and a
+strong one show the same pair of wings.
 
 ### The swap only works on Human-race pawns
 
@@ -375,10 +375,12 @@ body and the swap is refused. That is why dragons, wyverns, malef dragons and la
 all xenotype-only species on vanilla Human pawns - get their wings and tails, while a
 species with its own race def does not.
 
-Species with their own race def carry the wings themselves: the three flying insect
-mamonos put `BS_HumanoidWithWings_Body` in `<race>` and `BS_HumanoidWithWings_Race` in the
-race's `raceHediffList`. The gene still supplies `PMM_Ability_FlightLeap` and the
-`ShowBaseWingsRight/Left` flags that keep the winged tracker from blanking its own art.
+Species with their own race def carry the body themselves, because that is the only way to
+get the real `BS_Wing` parts: the winged insect mamonos put `BS_HumanoidWithWings_Body` (or
+their own four-armed winged body) in `<race>`. Their wings themselves are VRE Insector's
+cosmetic insect wings, carried as a gene on each caste and drawn behind her in her caste's
+colour. The gene supplies `PMM_Ability_FlightLeap`, plus the `ShowBaseWingsRight/Left` flags
+that keep a winged tracker from blanking its own art wherever one is still used.
 
 ## The large frame gene
 

@@ -49,10 +49,12 @@
         SwapThingDef with force:false + targetPriority:0 (Genes/GenePatches.cs),
         and a race def that isn't Human is entered at priority 200, so it wins
         the "no fusion found" fallback and the swap is silently refused. A
-        species on its own race def must carry the winged body and
-        BS_HumanoidWithWings_Race on its race def instead (see the winged insect
-        mamonos in Project Mamono Insects). The Flagger below is still required
-        there: the winged tracker blanks its own art for "Wings"-tagged genes.
+        species that wants these wings must carry the winged body on its own race
+        def instead. Our winged insect mamonos did exactly that until 2026-10-04,
+        when they dropped the tracker for VRE's cosmetic insect wings (route 1,
+        the user's call) and now draw no B&S wing at all. The Flagger below is
+        still required wherever the tracker is kept: it blanks its own art for
+        "Wings"-tagged genes.
     -->
     <GeneDef>
         <defName>PMM_Gene_Flight</defName>
@@ -76,7 +78,10 @@
         <!-- Big & Small: draw the wings. Two pieces, both needed:
              1. thingDefSwap -> BS_HumanoidWithWings gives the pawn the winged BODY
                 (real BS_Wing parts) and applies B&S's BS_HumanoidWithWings_Race
-                tracker hediff. The tracker is the ONLY wing renderer we use.
+                tracker hediff. The tracker is the ONLY wing renderer this gene
+                uses. Our winged insect mamonos dropped that tracker on
+                2026-10-04 and draw VRE's cosmetic insect wings instead, so
+                these two pieces are what a pawn on a Human-race body gets.
              2. The Flagger un-blanks that tracker: it hides its wing graphics on
                 pawns carrying a gene tagged Wing/Wings (it expects the separate
                 BigSmall_Genes mod to draw them). Raising ShowBaseWingsRight/Left
@@ -121,19 +126,19 @@
     </GeneDef>
 
     <!--
-        Weak flight: the same wings and the same "fly" leap as PMM_Gene_Flight,
-        for mamonos with thin, weak wings (the vamp mosquito and soldier beetle).
-        Two differences from the strong gene:
-          1. No CaravanRidingSpeedFactor offset - the stat stays at its 1.0 base,
-             so CaravanMountSpeedPatch never counts her as a mount. She flies
-             for herself only: no passenger, and no faster caravan travel.
-          2. She draws her OWN, smaller wings (renderNodeProperties below). The
-             strong gene instead raises ShowBaseWingsRight/Left so the winged
-             body/race tracker keeps drawing its full-size wings. This gene has
-             no Flagger on purpose: the winged tracker blanks itself for a
-             wings-tagged gene, so its big wings vanish and only these smaller
-             ones draw. One gene therefore serves every race - the vamp
-             mosquito and the soldier beetle get this exact smaller set.
+        Weak flight: the same "fly" leap as PMM_Gene_Flight, for mamonos with
+        thin, weak wings (the vamp mosquito and soldier beetle). One difference
+        from the strong gene: no CaravanRidingSpeedFactor offset - the stat stays
+        at its 1.0 base, so CaravanMountSpeedPatch never counts her as a mount.
+        She flies for herself only: no passenger, and no faster caravan travel.
+
+        She draws no wings of her own any more. Until 2026-10-04 this gene
+        carried the same six B&S nodes as the winged tracker at drawSize 0.8 -
+        the "smaller wings" - with the tracker blanking itself so they were the
+        only pair drawn. The art now comes from VRE's cosmetic insect wings on
+        her caste (route 1, the user's call 2026-10-04) and every winged caste
+        dropped the B&S tracker the same day, so a render node here would be a
+        second pair of wings rather than her only pair.
         The shared Wings exclusion tag keeps the two flight genes from stacking.
         Cheaper than the strong gene (-1 metabolic efficiency instead of -4)
         because she gives up the mount.
@@ -155,10 +160,11 @@
         <exclusionTags>
             <li>Wings</li>
         </exclusionTags>
-        <!-- Same Big & Small body plumbing as PMM_Gene_Flight: forced body swap
-             (which also brings the real BS_Wing parts) and render cache off
-             (wings reach past the body atlas). No toughness hediff and no
-             Flagger here - see the notes above. -->
+        <!-- Same Big & Small body plumbing as PMM_Gene_Flight: forced body swap,
+             whose use now is the real BS_Wing parts a Human-race pawn gains with
+             it (our own castes carry the winged body on their race def instead),
+             and render cache off. No toughness hediff and no Flagger here - see
+             the notes above. -->
         <modExtensions>
             <li Class="BigAndSmall.PawnExtension">
                 <forceThingDefSwap>true</forceThingDefSwap>
@@ -166,162 +172,6 @@
                 <thingDefSwap>BS_HumanoidWithWings</thingDefSwap>
             </li>
         </modExtensions>
-        <!--
-            Her wings: the same six nodes B&S puts on BS_HumanoidWithWings_Race
-            (BS_FeatheredWingFront/Inner/Back, each side, with their layers and
-            facings), at drawSize 0.8 instead of B&S's 1.23 - about 65% of a
-            strong flyer's wings. The six drawSize lines are the only knob.
-
-            Only the body-part alt is kept: no BS_Wing part, no wings. The
-            gene-tag alt from B&S's tracker is deliberately absent, because this
-            gene carries the Wings tag itself and would blank its own art.
-        -->
-        <renderNodeProperties>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingFront</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClrDark_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>South</li><li>East</li></visibleFacing>
-                <drawData><defaultData><layer>92</layer></defaultData></drawData>
-            </li>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingInner</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClr_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrSaturated_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>South</li><li>East</li><li>North</li></visibleFacing>
-                <drawData><defaultData><layer>-1</layer></defaultData><dataNorth><layer>92</layer><flip>true</flip></dataNorth></drawData>
-            </li>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingBack</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClrSaturated_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>false</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>West</li></visibleFacing>
-                <drawData><defaultData><layer>-2</layer></defaultData><dataEast><flip>true</flip></dataEast></drawData>
-            </li>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingFront</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClrDark_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>South</li><li>West</li></visibleFacing>
-                <drawData><defaultData><layer>92</layer></defaultData><dataNorth><layer>91</layer><flip>true</flip></dataNorth><dataSouth><layer>92</layer><flip>true</flip></dataSouth></drawData>
-            </li>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingInner</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClr_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrSaturated_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>West</li><li>South</li><li>North</li></visibleFacing>
-                <drawData><defaultData><layer>-1</layer></defaultData><dataSouth><layer>-1</layer><flip>true</flip></dataSouth><dataNorth><layer>92</layer><flip>false</flip></dataNorth></drawData>
-            </li>
-            <li Class="BigAndSmall.PawnRenderingProps_Ultimate">
-                <nodeClass>BigAndSmall.PawnRenderNode_Ultimate</nodeClass>
-                <workerClass>BigAndSmall.UltimateRenderNodeWorker</workerClass>
-                <parentTagDef>Body</parentTagDef>
-                <shader>BS_TransparentThreeColor</shader>
-                <conditionalGraphics>
-                    <props><replaceFlags><WingGraphics /></replaceFlags></props>
-                    <conditionalPaths><altDefs><li>BS_FeatheredWingBack</li></altDefs></conditionalPaths>
-                    <colorA><altDefs><li>BS_WingClrSaturated_A</li></altDefs></colorA>
-                    <colorB><altDefs><li>BS_WingClrDark_B</li></altDefs></colorB>
-                    <alts>
-                        <li>
-                            <triggerBodyPart>
-                                <li><bodyPartDef>BS_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                                <li><bodyPartDef>BS_Mech_Wing</bodyPartDef><mirrored>true</mirrored><partMissing>true</partMissing></li>
-                            </triggerBodyPart>
-                            <texturePaths><default>BS_Blank</default></texturePaths>
-                        </li>
-                    </alts>
-                </conditionalGraphics>
-                <drawSize>(0.8,0.8)</drawSize>
-                <visibleFacing><li>East</li></visibleFacing>
-                <drawData><defaultData><layer>-2</layer></defaultData></drawData>
-            </li>
-        </renderNodeProperties>
     </GeneDef>
 
     <!--

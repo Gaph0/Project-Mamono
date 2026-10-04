@@ -2,6 +2,7 @@
 
 ## Player-facing
 
+- 2026-10-04: Added one shared mamono meat, so every species that butchers into meat drops the same item instead of its own.
 - 2026-10-04: Fixed an error in the log when a mamono fed on a man and both of them only had a single bed. The two no longer try to lie in a one-person bed, and if the colony owns a free double bed they now use it.
 - 2026-10-04: Added a switch to your own mamonos. Turn it off and her melee hits wound normally instead of dealing tease damage.
 - 2026-10-04: Fixed genepacks from traders, loot and quests being able to contain the Mamono gene.
@@ -115,6 +116,7 @@
 
 ## Internal
 
+- 2026-10-04: Changed the weak flight gene to draw no wings of its own.
 - 2026-09-27: Changed the folder, project, solution and assembly names to Mamono.
 - 2026-09-27: Fixed the csc build's Big and Small reference to use the workshop copy.
 - 2026-09-27: Changed the defNames, class names, scribe labels and file names to Mamono.

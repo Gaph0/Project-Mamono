@@ -53700,6 +53700,7 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
       </xs:element>
       <xs:element minOccurs="0" name="Props" type="BigAndSmall.ProductionGeneSettings" />
       <xs:element minOccurs="0" name="targetValue" type="xs:float" />
+      <xs:element minOccurs="0" name="TeaseMeleeEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="tickDown" type="xs:int" />
       <xs:element minOccurs="0" name="tickDown" type="xs:int" />
       <xs:element minOccurs="0" name="ticksToHeal" type="xs:int" />
@@ -86765,7 +86766,9 @@ Sustainers will choose a different random volume for each sample.</xs:documentat
   <xs:complexType name="ProjectMamono.Gene_Mamono">
     <xs:complexContent>
       <xs:extension base="Gene">
-        <xs:all />
+        <xs:all>
+          <xs:element minOccurs="0" name="TeaseMeleeEnabled" type="xs:boolean" />
+        </xs:all>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
